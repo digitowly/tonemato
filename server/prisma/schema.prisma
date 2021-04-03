@@ -11,6 +11,11 @@ generator client {
     binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
+generator typegraphql {
+    provider = "typegraphql-prisma"
+    output   = "../src/type-graphql"
+}
+
 model User {
     id    Int     @id @default(autoincrement())
     name  String?
