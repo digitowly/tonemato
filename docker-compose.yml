@@ -2,7 +2,26 @@ version: '3.8'
 
 services:
   server:
+    container_name: server
     build:
       context: ./server
     ports:
       - 8080:8080
+    volumes:
+      - ./server:/usr/src/app
+    command: npm run dev
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: tonemato_db
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
