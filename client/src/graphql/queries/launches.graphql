@@ -1,0 +1,9 @@
+query launchesPast {
+  launchesPast(limit: 10) {
+    id
+    mission_name
+    rocket {
+      rocket_name
+    }
+  }
+}
