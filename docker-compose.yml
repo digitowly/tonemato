@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   server:
-    container_name: server
+    container_name: tonemato_server
     build:
       context: ./server
     ports:
@@ -12,6 +12,7 @@ services:
     command: npm run dev
 
   db:
+    container_name: tonemato_db
     image: postgres
     restart: always
     environment:
