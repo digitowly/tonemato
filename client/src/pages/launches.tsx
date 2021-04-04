@@ -1,21 +1,21 @@
 import client from '../apollo/apolloClient';
-import { LaunchesPastQuery } from '../generated/types';
-import LAUNCHES from '../graphql/queries/launches.graphql';
+import { ListUsersQuery } from '../generated/types';
+import LISTUSERS from '../graphql/queries/ListUsers.graphql';
 
 interface LaunchesProps {
-  launchesPastQuery: LaunchesPastQuery;
+  listUsersQuery: ListUsersQuery;
 }
 
-const Launches: React.FC<LaunchesProps> = ({ launchesPastQuery }) => {
-  console.log(launchesPastQuery.launchesPast);
+const Launches: React.FC<LaunchesProps> = ({ listUsersQuery }) => {
+  console.log(listUsersQuery.users);
   return (
     <div>
       <h1>SpaceX Launches</h1>
-      {launchesPastQuery?.launchesPast.map((launch) => {
+      {listUsersQuery?.users.map((user) => {
         return (
-          <div key={launch.id}>
-            <h1>{launch.mission_name}</h1>
-            <p>{launch.rocket.rocket_name}</p>
+          <div key={user.id}>
+            <h1>{user.name}</h1>
+            <p>{user.email}</p>
           </div>
         );
       })}
@@ -24,10 +24,10 @@ const Launches: React.FC<LaunchesProps> = ({ launchesPastQuery }) => {
 };
 
 export async function getStaticProps() {
-  const { data } = await client.query({ query: LAUNCHES });
-  const launchesPastQuery: LaunchesPastQuery = data;
+  const { data } = await client.query({ query: LISTUSERS });
+  const listUsersQuery: ListUsersQuery = data;
 
-  return { props: { launchesPastQuery } };
+  return { props: { listUsersQuery } };
 }
 
 export default Launches;
