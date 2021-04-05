@@ -1,9 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-const apolloClient = new ApolloClient({
-  uri: 'http://localhost:8080/graphql',
+const apolloDockerClient = new ApolloClient({
+  uri: process.env.GRAPHQL_API_DOCKER,
   cache: new InMemoryCache(),
   connectToDevTools: true,
 });
 
-export default apolloClient;
+export default apolloDockerClient;
