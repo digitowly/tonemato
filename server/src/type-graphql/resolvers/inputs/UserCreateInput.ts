@@ -8,12 +8,12 @@ import { DecimalJSScalar } from "../../scalars";
 })
 export class UserCreateInput {
   @TypeGraphQL.Field(_type => String, {
-    nullable: true
-  })
-  name?: string | undefined;
-
-  @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
   email!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  name?: string | undefined;
 }

@@ -27,36 +27,36 @@ const resolversInfo = {
   User: ["user", "findFirstUser", "users", "createUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser"]
 };
 const modelsInfo = {
-  User: ["id", "name", "email"]
+  User: ["id", "email", "name"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "name", "email"],
-  UserOrderByInput: ["id", "name", "email"],
-  UserWhereUniqueInput: ["id"],
-  UserCreateInput: ["name", "email"],
-  UserUpdateInput: ["name", "email"],
-  UserUpdateManyMutationInput: ["name", "email"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "name"],
+  UserOrderByInput: ["id", "email", "name"],
+  UserWhereUniqueInput: ["id", "email"],
+  UserCreateInput: ["email", "name"],
+  UserUpdateInput: ["email", "name"],
+  UserUpdateManyMutationInput: ["email", "name"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
-  NullableStringFieldUpdateOperationsInput: ["set"],
+  StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   StringFieldUpdateOperationsInput: ["set"],
+  NullableStringFieldUpdateOperationsInput: ["set"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"]
+  NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
+  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"]
 };
 const outputsInfo = {
   Query: ["findFirstUser", "findManyUser", "aggregateUser", "findUniqueUser"],
   Mutation: ["createOneUser", "upsertOneUser", "deleteOneUser", "updateOneUser", "updateManyUser", "deleteManyUser", "executeRaw", "queryRaw"],
   AggregateUser: ["count", "avg", "sum", "min", "max"],
   AffectedRowsOutput: ["count"],
-  UserCountAggregate: ["id", "name", "email", "_all"],
+  UserCountAggregate: ["id", "email", "name", "_all"],
   UserAvgAggregate: ["id"],
   UserSumAggregate: ["id"],
-  UserMinAggregate: ["id", "name", "email"],
-  UserMaxAggregate: ["id", "name", "email"],
-  User: ["id", "name", "email"]
+  UserMinAggregate: ["id", "email", "name"],
+  UserMaxAggregate: ["id", "email", "name"],
+  User: ["id", "email", "name"]
 };
 const argsInfo = {
   FindUniqueUserArgs: ["where"],
