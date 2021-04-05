@@ -288,6 +288,20 @@ export type UserUpdateManyMutationInput = {
   email?: Maybe<StringFieldUpdateOperationsInput>;
 };
 
+export type CreateUserMutationVariables = Exact<{
+  username: Scalars['String'];
+  email: Scalars['String'];
+}>;
+
+
+export type CreateUserMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'email'>
+  ) }
+);
+
 export type ListUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
