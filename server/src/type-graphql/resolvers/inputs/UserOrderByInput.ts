@@ -22,4 +22,9 @@ export class UserOrderByInput {
     nullable: true
   })
   name?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  image?: "asc" | "desc" | undefined;
 }

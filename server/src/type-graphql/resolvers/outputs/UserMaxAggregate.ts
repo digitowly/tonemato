@@ -21,4 +21,9 @@ export class UserMaxAggregate {
     nullable: true
   })
   name!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  image!: string | null;
 }

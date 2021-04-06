@@ -1,13 +1,19 @@
 import { ClassType } from "type-graphql";
 import * as crudResolvers from "./resolvers/crud/resolvers-crud.index";
 import * as actionResolvers from "./resolvers/crud/resolvers-actions.index";
+import * as relationResolvers from "./resolvers/relations/resolvers.index";
 import * as models from "./models";
 import * as outputTypes from "./resolvers/outputs";
 import * as inputTypes from "./resolvers/inputs";
 import * as argsTypes from "./resolvers/crud/args.index";
 
 const crudResolversMap = {
-  User: crudResolvers.UserCrudResolver
+  User: crudResolvers.UserCrudResolver,
+  Post: crudResolvers.PostCrudResolver
+};
+const relationResolversMap = {
+  User: relationResolvers.UserRelationsResolver,
+  Post: relationResolvers.PostRelationsResolver
 };
 const actionResolversMap = {
   User: {
@@ -21,42 +27,90 @@ const actionResolversMap = {
     updateManyUser: actionResolvers.UpdateManyUserResolver,
     upsertUser: actionResolvers.UpsertUserResolver,
     aggregateUser: actionResolvers.AggregateUserResolver
+  },
+  Post: {
+    post: actionResolvers.FindUniquePostResolver,
+    findFirstPost: actionResolvers.FindFirstPostResolver,
+    posts: actionResolvers.FindManyPostResolver,
+    createPost: actionResolvers.CreatePostResolver,
+    deletePost: actionResolvers.DeletePostResolver,
+    updatePost: actionResolvers.UpdatePostResolver,
+    deleteManyPost: actionResolvers.DeleteManyPostResolver,
+    updateManyPost: actionResolvers.UpdateManyPostResolver,
+    upsertPost: actionResolvers.UpsertPostResolver,
+    aggregatePost: actionResolvers.AggregatePostResolver
   }
 };
 const resolversInfo = {
-  User: ["user", "findFirstUser", "users", "createUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser"]
+  User: ["user", "findFirstUser", "users", "createUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser"],
+  Post: ["post", "findFirstPost", "posts", "createPost", "deletePost", "updatePost", "deleteManyPost", "updateManyPost", "upsertPost", "aggregatePost"]
+};
+const relationResolversInfo = {
+  User: ["Post"],
+  Post: ["author"]
 };
 const modelsInfo = {
-  User: ["id", "email", "name"]
+  User: ["id", "email", "name", "image"],
+  Post: ["id", "title", "body", "userId"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "name"],
-  UserOrderByInput: ["id", "email", "name"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "name", "image", "Post"],
+  UserOrderByInput: ["id", "email", "name", "image"],
   UserWhereUniqueInput: ["id", "email"],
-  UserCreateInput: ["email", "name"],
-  UserUpdateInput: ["email", "name"],
-  UserUpdateManyMutationInput: ["email", "name"],
+  PostWhereInput: ["AND", "OR", "NOT", "id", "title", "body", "author", "userId"],
+  PostOrderByInput: ["id", "title", "body", "userId"],
+  PostWhereUniqueInput: ["id"],
+  UserCreateInput: ["email", "name", "image", "Post"],
+  UserUpdateInput: ["email", "name", "image", "Post"],
+  UserUpdateManyMutationInput: ["email", "name", "image"],
+  PostCreateInput: ["id", "title", "body", "author"],
+  PostUpdateInput: ["id", "title", "body", "author"],
+  PostUpdateManyMutationInput: ["id", "title", "body"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
+  PostListRelationFilter: ["every", "some", "none"],
+  UserRelationFilter: ["is", "isNot"],
+  PostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "connect"],
   StringFieldUpdateOperationsInput: ["set"],
   NullableStringFieldUpdateOperationsInput: ["set"],
+  PostUpdateManyWithoutAuthorInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
+  UserCreateNestedOneWithoutPostInput: ["create", "connectOrCreate", "connect"],
+  UserUpdateOneRequiredWithoutPostInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"]
+  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
+  PostCreateWithoutAuthorInput: ["id", "title", "body"],
+  PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
+  PostUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
+  PostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
+  PostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
+  PostScalarWhereInput: ["AND", "OR", "NOT", "id", "title", "body", "userId"],
+  UserCreateWithoutPostInput: ["email", "name", "image"],
+  UserCreateOrConnectWithoutPostInput: ["where", "create"],
+  UserUpsertWithoutPostInput: ["update", "create"],
+  UserUpdateWithoutPostInput: ["email", "name", "image"],
+  PostUpdateWithoutAuthorInput: ["id", "title", "body"]
 };
 const outputsInfo = {
-  Query: ["findFirstUser", "findManyUser", "aggregateUser", "findUniqueUser"],
-  Mutation: ["createOneUser", "upsertOneUser", "deleteOneUser", "updateOneUser", "updateManyUser", "deleteManyUser", "executeRaw", "queryRaw"],
+  Query: ["findFirstUser", "findManyUser", "aggregateUser", "findUniqueUser", "findFirstPost", "findManyPost", "aggregatePost", "findUniquePost"],
+  Mutation: ["createOneUser", "upsertOneUser", "deleteOneUser", "updateOneUser", "updateManyUser", "deleteManyUser", "createOnePost", "upsertOnePost", "deleteOnePost", "updateOnePost", "updateManyPost", "deleteManyPost", "executeRaw", "queryRaw"],
   AggregateUser: ["count", "avg", "sum", "min", "max"],
+  AggregatePost: ["count", "avg", "sum", "min", "max"],
   AffectedRowsOutput: ["count"],
-  UserCountAggregate: ["id", "email", "name", "_all"],
+  UserCountAggregate: ["id", "email", "name", "image", "_all"],
   UserAvgAggregate: ["id"],
   UserSumAggregate: ["id"],
-  UserMinAggregate: ["id", "email", "name"],
-  UserMaxAggregate: ["id", "email", "name"],
-  User: ["id", "email", "name"]
+  UserMinAggregate: ["id", "email", "name", "image"],
+  UserMaxAggregate: ["id", "email", "name", "image"],
+  PostCountAggregate: ["id", "title", "body", "userId", "_all"],
+  PostAvgAggregate: ["id", "userId"],
+  PostSumAggregate: ["id", "userId"],
+  PostMinAggregate: ["id", "title", "body", "userId"],
+  PostMaxAggregate: ["id", "title", "body", "userId"],
+  User: ["id", "email", "name", "image", "Post"],
+  Post: ["id", "title", "body", "author", "userId"]
 };
 const argsInfo = {
   FindUniqueUserArgs: ["where"],
@@ -68,7 +122,17 @@ const argsInfo = {
   DeleteManyUserArgs: ["where"],
   UpdateManyUserArgs: ["data", "where"],
   UpsertUserArgs: ["where", "create", "update"],
-  AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"]
+  AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  FindUniquePostArgs: ["where"],
+  FindFirstPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManyPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  CreatePostArgs: ["data"],
+  DeletePostArgs: ["where"],
+  UpdatePostArgs: ["data", "where"],
+  DeleteManyPostArgs: ["where"],
+  UpdateManyPostArgs: ["data", "where"],
+  UpsertPostArgs: ["where", "create", "update"],
+  AggregatePostArgs: ["where", "orderBy", "cursor", "take", "skip"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
@@ -134,6 +198,57 @@ export function applyResolversEnhanceMap(
           actionTarget,
           resolverActionName,
           Object.getOwnPropertyDescriptor(actionTarget, resolverActionName)!,
+        );
+      }
+    }
+  }
+}
+
+type RelationResolverModelNames = keyof typeof relationResolversMap;
+
+type RelationResolverActionNames<
+  TModel extends RelationResolverModelNames
+  > = keyof typeof relationResolversMap[TModel]["prototype"];
+
+export type RelationResolverActionsConfig<TModel extends RelationResolverModelNames>
+  = Partial<Record<RelationResolverActionNames<TModel> | "_all", MethodDecorator[]>>;
+
+export type RelationResolversEnhanceMap = {
+  [TModel in RelationResolverModelNames]?: RelationResolverActionsConfig<TModel>;
+};
+
+export function applyRelationResolversEnhanceMap(
+  relationResolversEnhanceMap: RelationResolversEnhanceMap,
+) {
+  for (const relationResolversEnhanceMapKey of Object.keys(relationResolversEnhanceMap)) {
+    const modelName = relationResolversEnhanceMapKey as keyof typeof relationResolversEnhanceMap;
+    const relationResolverTarget = relationResolversMap[modelName].prototype;
+    const relationResolverActionsConfig = relationResolversEnhanceMap[modelName]!;
+    if (relationResolverActionsConfig._all) {
+      const allActionsDecorators = relationResolverActionsConfig._all;
+      const relationResolverActionNames = relationResolversInfo[modelName as keyof typeof relationResolversInfo];
+      for (const relationResolverActionName of relationResolverActionNames) {
+        for (const allActionsDecorator of allActionsDecorators) {
+          allActionsDecorator(
+            relationResolverTarget,
+            relationResolverActionName,
+            Object.getOwnPropertyDescriptor(relationResolverTarget, relationResolverActionName)!,
+          );
+        }
+      }
+    }
+    const relationResolverActionsToApply = Object.keys(relationResolverActionsConfig).filter(
+      it => it !== "_all"
+    );
+    for (const relationResolverActionName of relationResolverActionsToApply) {
+      const decorators = relationResolverActionsConfig[
+        relationResolverActionName as keyof typeof relationResolverActionsConfig
+      ] as MethodDecorator[];
+      for (const decorator of decorators) {
+        decorator(
+          relationResolverTarget,
+          relationResolverActionName,
+          Object.getOwnPropertyDescriptor(relationResolverTarget, relationResolverActionName)!,
         );
       }
     }
@@ -329,6 +444,7 @@ export function applyArgsTypesEnhanceMap(
     );
   }
 }
+
 
 
 

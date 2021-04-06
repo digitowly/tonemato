@@ -14,8 +14,13 @@ export class UserUpdateManyMutationInput {
   })
   email?: StringFieldUpdateOperationsInput | undefined;
 
+  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  name?: StringFieldUpdateOperationsInput | undefined;
+
   @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
     nullable: true
   })
-  name?: NullableStringFieldUpdateOperationsInput | undefined;
+  image?: NullableStringFieldUpdateOperationsInput | undefined;
 }

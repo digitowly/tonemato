@@ -19,5 +19,15 @@ generator typegraphql {
 model User {
     id    Int     @id @default(autoincrement())
     email String  @unique
-    name  String?
+    name  String
+    image String?
+    Post  Post[]
+}
+
+model Post {
+    id     Int    @id
+    title  String
+    body   String
+    author User   @relation(fields: [userId], references: [id])
+    userId Int
 }
