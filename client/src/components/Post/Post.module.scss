@@ -1,0 +1,13 @@
+.post {
+  background: lightgray;
+  border-radius: 2rem;
+  padding: 1rem;
+
+  &__author {
+    align-items: center;
+    display: flex;
+    img {
+      width: 3rem;
+    }
+  }
+}
