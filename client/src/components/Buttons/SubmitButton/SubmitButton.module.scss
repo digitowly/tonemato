@@ -1,0 +1,12 @@
+@use '../../../styles/colors';
+
+.submit-button {
+  background: colors.$blue;
+  color: colors.$white;
+  font-weight: bold;
+
+  &__large {
+    padding: 0.5rem 1.5rem;
+    font-size: 1.1rem;
+  }
+}
