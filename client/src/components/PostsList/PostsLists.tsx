@@ -7,7 +7,8 @@ import Post from '../Post/Post';
 const PostsList: React.FC = () => {
   const { data } = useQuery<ListPostsQuery>(LISTS_POSTS);
   return (
-    <>
+    <div>
+      <h1>Posts</h1>
       {data?.posts.map((post) => (
         <Post
           key={post.id}
@@ -16,7 +17,7 @@ const PostsList: React.FC = () => {
           author={post.author}
         />
       ))}
-    </>
+    </div>
   );
 };
 

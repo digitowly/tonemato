@@ -1,12 +1,12 @@
 import PostCreator from '../components/Forms/PostCreator/PostCreator';
 import Layout from '../components/Layout/Layout';
-import PostsList from '../components/PostsList/PostsLists';
+import PostsView from '../components/PostsView/PostsView';
 
 const PostsPage: React.FC = () => {
   return (
     <Layout>
       <PostCreator />
-      <PostsList />
+      <PostsView />
     </Layout>
   );
 };

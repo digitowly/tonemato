@@ -1,5 +1,7 @@
+@use '../../styles/colors';
+
 .post {
-  background: lightgray;
+  background: colors.$lightgrey;
   border-radius: 2rem;
   padding: 1rem;
 
