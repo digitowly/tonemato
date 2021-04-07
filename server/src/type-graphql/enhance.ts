@@ -46,7 +46,7 @@ const resolversInfo = {
   Post: ["post", "findFirstPost", "posts", "createPost", "deletePost", "updatePost", "deleteManyPost", "updateManyPost", "upsertPost", "aggregatePost"]
 };
 const relationResolversInfo = {
-  User: ["Post"],
+  User: ["posts"],
   Post: ["author"]
 };
 const modelsInfo = {
@@ -54,18 +54,18 @@ const modelsInfo = {
   Post: ["id", "title", "body", "userId"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "name", "image", "Post"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "name", "image", "posts"],
   UserOrderByInput: ["id", "email", "name", "image"],
   UserWhereUniqueInput: ["id", "email"],
   PostWhereInput: ["AND", "OR", "NOT", "id", "title", "body", "author", "userId"],
   PostOrderByInput: ["id", "title", "body", "userId"],
   PostWhereUniqueInput: ["id"],
-  UserCreateInput: ["email", "name", "image", "Post"],
-  UserUpdateInput: ["email", "name", "image", "Post"],
+  UserCreateInput: ["email", "name", "image", "posts"],
+  UserUpdateInput: ["email", "name", "image", "posts"],
   UserUpdateManyMutationInput: ["email", "name", "image"],
-  PostCreateInput: ["id", "title", "body", "author"],
-  PostUpdateInput: ["id", "title", "body", "author"],
-  PostUpdateManyMutationInput: ["id", "title", "body"],
+  PostCreateInput: ["title", "body", "author"],
+  PostUpdateInput: ["title", "body", "author"],
+  PostUpdateManyMutationInput: ["title", "body"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
@@ -76,22 +76,22 @@ const inputsInfo = {
   NullableStringFieldUpdateOperationsInput: ["set"],
   PostUpdateManyWithoutAuthorInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
-  UserCreateNestedOneWithoutPostInput: ["create", "connectOrCreate", "connect"],
-  UserUpdateOneRequiredWithoutPostInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
+  UserUpdateOneRequiredWithoutPostsInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  PostCreateWithoutAuthorInput: ["id", "title", "body"],
+  PostCreateWithoutAuthorInput: ["title", "body"],
   PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
   PostUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
   PostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
   PostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
   PostScalarWhereInput: ["AND", "OR", "NOT", "id", "title", "body", "userId"],
-  UserCreateWithoutPostInput: ["email", "name", "image"],
-  UserCreateOrConnectWithoutPostInput: ["where", "create"],
-  UserUpsertWithoutPostInput: ["update", "create"],
-  UserUpdateWithoutPostInput: ["email", "name", "image"],
-  PostUpdateWithoutAuthorInput: ["id", "title", "body"]
+  UserCreateWithoutPostsInput: ["email", "name", "image"],
+  UserCreateOrConnectWithoutPostsInput: ["where", "create"],
+  UserUpsertWithoutPostsInput: ["update", "create"],
+  UserUpdateWithoutPostsInput: ["email", "name", "image"],
+  PostUpdateWithoutAuthorInput: ["title", "body"]
 };
 const outputsInfo = {
   Query: ["findFirstUser", "findManyUser", "aggregateUser", "findUniqueUser", "findFirstPost", "findManyPost", "aggregatePost", "findUniquePost"],
@@ -109,7 +109,7 @@ const outputsInfo = {
   PostSumAggregate: ["id", "userId"],
   PostMinAggregate: ["id", "title", "body", "userId"],
   PostMaxAggregate: ["id", "title", "body", "userId"],
-  User: ["id", "email", "name", "image", "Post"],
+  User: ["id", "email", "name", "image", "posts"],
   Post: ["id", "title", "body", "author", "userId"]
 };
 const argsInfo = {

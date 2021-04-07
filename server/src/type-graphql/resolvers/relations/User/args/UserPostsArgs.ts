@@ -6,7 +6,7 @@ import { PostWhereUniqueInput } from "../../../inputs/PostWhereUniqueInput";
 import { PostScalarFieldEnum } from "../../../../enums/PostScalarFieldEnum";
 
 @TypeGraphQL.ArgsType()
-export class UserPostArgs {
+export class UserPostsArgs {
   @TypeGraphQL.Field(_type => PostWhereInput, {
     nullable: true
   })

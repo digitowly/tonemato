@@ -28,5 +28,5 @@ export class UserUpdateInput {
   @TypeGraphQL.Field(_type => PostUpdateManyWithoutAuthorInput, {
     nullable: true
   })
-  Post?: PostUpdateManyWithoutAuthorInput | undefined;
+  posts?: PostUpdateManyWithoutAuthorInput | undefined;
 }

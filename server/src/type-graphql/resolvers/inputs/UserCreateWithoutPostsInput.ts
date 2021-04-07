@@ -6,7 +6,7 @@ import { DecimalJSScalar } from "../../scalars";
 @TypeGraphQL.InputType({
   isAbstract: true
 })
-export class UserCreateWithoutPostInput {
+export class UserCreateWithoutPostsInput {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

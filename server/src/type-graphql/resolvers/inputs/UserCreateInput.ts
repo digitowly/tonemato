@@ -26,5 +26,5 @@ export class UserCreateInput {
   @TypeGraphQL.Field(_type => PostCreateNestedManyWithoutAuthorInput, {
     nullable: true
   })
-  Post?: PostCreateNestedManyWithoutAuthorInput | undefined;
+  posts?: PostCreateNestedManyWithoutAuthorInput | undefined;
 }

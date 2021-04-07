@@ -2,19 +2,13 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { IntFieldUpdateOperationsInput } from "../inputs/IntFieldUpdateOperationsInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
-import { UserUpdateOneRequiredWithoutPostInput } from "../inputs/UserUpdateOneRequiredWithoutPostInput";
+import { UserUpdateOneRequiredWithoutPostsInput } from "../inputs/UserUpdateOneRequiredWithoutPostsInput";
 
 @TypeGraphQL.InputType({
   isAbstract: true
 })
 export class PostUpdateInput {
-  @TypeGraphQL.Field(_type => IntFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  id?: IntFieldUpdateOperationsInput | undefined;
-
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -25,8 +19,8 @@ export class PostUpdateInput {
   })
   body?: StringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutPostInput, {
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutPostsInput, {
     nullable: true
   })
-  author?: UserUpdateOneRequiredWithoutPostInput | undefined;
+  author?: UserUpdateOneRequiredWithoutPostsInput | undefined;
 }

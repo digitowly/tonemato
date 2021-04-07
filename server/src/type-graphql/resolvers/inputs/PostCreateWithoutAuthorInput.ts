@@ -7,11 +7,6 @@ import { DecimalJSScalar } from "../../scalars";
   isAbstract: true
 })
 export class PostCreateWithoutAuthorInput {
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
-  })
-  id!: number;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

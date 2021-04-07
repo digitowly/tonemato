@@ -28,5 +28,5 @@ export class User {
   })
   image?: string | null;
 
-  Post?: Post[];
+  posts?: Post[];
 }

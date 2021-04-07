@@ -21,11 +21,11 @@ model User {
     email String  @unique
     name  String
     image String?
-    Post  Post[]
+    posts Post[]
 }
 
 model Post {
-    id     Int    @id
+    id     Int    @id @default(autoincrement())
     title  String
     body   String
     author User   @relation(fields: [userId], references: [id])

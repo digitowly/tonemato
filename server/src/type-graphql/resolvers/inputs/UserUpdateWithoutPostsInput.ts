@@ -8,7 +8,7 @@ import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOpe
 @TypeGraphQL.InputType({
   isAbstract: true
 })
-export class UserUpdateWithoutPostInput {
+export class UserUpdateWithoutPostsInput {
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
