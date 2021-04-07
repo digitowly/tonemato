@@ -12,6 +12,11 @@ export class PostMaxAggregate {
   })
   id!: number;
 
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  createdAt!: Date | null;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
@@ -26,4 +31,9 @@ export class PostMaxAggregate {
     nullable: false
   })
   userId!: number;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  published!: boolean | null;
 }

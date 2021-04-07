@@ -8,6 +8,11 @@ import { PostCreateNestedManyWithoutAuthorInput } from "../inputs/PostCreateNest
   isAbstract: true
 })
 export class UserCreateInput {
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  createdAt?: Date | undefined;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

@@ -8,6 +8,11 @@ import { UserCreateNestedOneWithoutPostsInput } from "../inputs/UserCreateNested
   isAbstract: true
 })
 export class PostCreateInput {
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  createdAt?: Date | undefined;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -17,6 +22,11 @@ export class PostCreateInput {
     nullable: false
   })
   body!: string;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  published?: boolean | undefined;
 
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutPostsInput, {
     nullable: false

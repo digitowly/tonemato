@@ -7,6 +7,11 @@ import { DecimalJSScalar } from "../../scalars";
   isAbstract: true
 })
 export class PostCreateWithoutAuthorInput {
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  createdAt?: Date | undefined;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -16,4 +21,9 @@ export class PostCreateWithoutAuthorInput {
     nullable: false
   })
   body!: string;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  published?: boolean | undefined;
 }

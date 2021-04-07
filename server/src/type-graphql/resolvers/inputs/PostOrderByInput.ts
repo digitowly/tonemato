@@ -16,6 +16,11 @@ export class PostOrderByInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
+  createdAt?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
   title?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
@@ -27,4 +32,9 @@ export class PostOrderByInput {
     nullable: true
   })
   userId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  published?: "asc" | "desc" | undefined;
 }

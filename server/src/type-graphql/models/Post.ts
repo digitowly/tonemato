@@ -13,6 +13,11 @@ export class Post {
   })
   id!: number;
 
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: false
+  })
+  createdAt!: Date;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -29,4 +34,9 @@ export class Post {
     nullable: false
   })
   userId!: number;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  published!: boolean;
 }

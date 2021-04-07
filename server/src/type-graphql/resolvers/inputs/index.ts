@@ -1,5 +1,11 @@
+export { BoolFieldUpdateOperationsInput } from "./BoolFieldUpdateOperationsInput";
+export { BoolFilter } from "./BoolFilter";
+export { DateTimeFieldUpdateOperationsInput } from "./DateTimeFieldUpdateOperationsInput";
+export { DateTimeFilter } from "./DateTimeFilter";
 export { IntFieldUpdateOperationsInput } from "./IntFieldUpdateOperationsInput";
 export { IntFilter } from "./IntFilter";
+export { NestedBoolFilter } from "./NestedBoolFilter";
+export { NestedDateTimeFilter } from "./NestedDateTimeFilter";
 export { NestedIntFilter } from "./NestedIntFilter";
 export { NestedStringFilter } from "./NestedStringFilter";
 export { NestedStringNullableFilter } from "./NestedStringNullableFilter";
