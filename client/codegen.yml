@@ -1,4 +1,4 @@
-schema: ${GRAPHQL_API}
+schema: ${GRAPHQL_API_DOCKER}
 documents: ./src/**/*.graphql
 generates:
   ./src/generated/types.d.ts:
