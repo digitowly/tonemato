@@ -26,14 +26,19 @@ const options = {
       const isSignIn = user ? true : false;
       // TODO: check if user exists
       if (isSignIn) {
-        console.log('USER', user);
         const response = await axios({
           url: process.env.GRAPHQL_API_DOCKER,
           method: 'post',
           data: {
             query: `
                 mutation CreateUser {
-                    createUser(data: { name: "${user.name}", email: "${user.email}" }) {
+                    createUser(
+                        data: { 
+                            name: "${user.name}", 
+                            email: "${user.email}", 
+                            image: "${user.image}" 
+                        }
+                    ) {
                         id
                         name
                         email
