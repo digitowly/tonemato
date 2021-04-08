@@ -12,12 +12,12 @@ interface PostProps {
 const Post: React.FC<PostProps> = ({ title, body, author }) => {
   return (
     <div className={styles.post}>
-      <h1>{title}</h1>
-      <p>{body}</p>
       <div className={styles['post__author']}>
-        <b>{author.name}</b>
         {author.image ? <img src={author.image} /> : <span>no image</span>}
+        <b>{author.name}</b>
       </div>
+      <h2>{title}</h2>
+      <p>{body}</p>
     </div>
   );
 };

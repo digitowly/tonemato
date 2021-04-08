@@ -1,0 +1,18 @@
+@use '../../../styles/colors';
+
+.link-button {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+
+  a {
+    margin-right: 1rem;
+    color: colors.$blue;
+    font-weight: bold;
+  }
+  &__inner {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+  }
+}

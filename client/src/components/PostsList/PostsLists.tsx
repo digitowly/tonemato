@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 import { ListPostsQuery } from '../../generated/types';
-import LISTS_POSTS from '../../graphql/queries/ListPosts.graphql';
+import LIST_POSTS from '../../graphql/queries/ListPosts.graphql';
 import SubmitButton, { ButtonSize } from '../Buttons/SubmitButton/SubmitButton';
 import Post from '../Post/Post';
+import BandPostsList from './BandPostsList';
 import style from './PostsList.module.scss';
 
 const PostsList: React.FC = () => {
-  const { data } = useQuery<ListPostsQuery>(LISTS_POSTS);
+  const { data } = useQuery<ListPostsQuery>(LIST_POSTS);
   return (
     <div className={style['posts-list']}>
       <div className={style['posts-list__header']}>
@@ -22,6 +23,7 @@ const PostsList: React.FC = () => {
           author={post.author}
         />
       ))}
+      <BandPostsList />
     </div>
   );
 };
