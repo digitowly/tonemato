@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
+import { BandPost } from "../models/BandPost";
 import { Post } from "../models/Post";
 
 @TypeGraphQL.ObjectType({
@@ -34,4 +35,6 @@ export class User {
   image?: string | null;
 
   posts?: Post[];
+
+  bandPosts?: BandPost[];
 }

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
@@ -17,12 +14,13 @@ generator typegraphql {
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
-    createdAt DateTime @default(now())
-    email     String   @unique
+    id        Int        @id @default(autoincrement())
+    createdAt DateTime   @default(now())
+    email     String     @unique
     name      String
     image     String?
     posts     Post[]
+    bandPosts BandPost[]
 }
 
 model Post {
@@ -33,4 +31,30 @@ model Post {
     author    User     @relation(fields: [userId], references: [id])
     userId    Int
     published Boolean  @default(false)
+}
+
+model BandPost {
+    id          Int          @id @default(autoincrement())
+    createdAt   DateTime     @default(now())
+    title       String
+    body        String
+    published   Boolean      @default(false)
+    author      User         @relation(fields: [userId], references: [id])
+    userId      Int
+    searchTypes SearchType[]
+}
+
+model SearchType {
+    id         Int       @id @default(autoincrement())
+    amount     Int
+    instrument Intrument
+
+    bandPost   BandPost? @relation(fields: [bandPostId], references: [id])
+    bandPostId Int?
+}
+
+enum Intrument {
+    GUITAR
+    BASS
+    DRUMS
 }

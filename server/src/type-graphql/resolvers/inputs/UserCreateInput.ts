@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { BandPostCreateNestedManyWithoutAuthorInput } from "../inputs/BandPostCreateNestedManyWithoutAuthorInput";
 import { PostCreateNestedManyWithoutAuthorInput } from "../inputs/PostCreateNestedManyWithoutAuthorInput";
 
 @TypeGraphQL.InputType({
@@ -32,4 +33,9 @@ export class UserCreateInput {
     nullable: true
   })
   posts?: PostCreateNestedManyWithoutAuthorInput | undefined;
+
+  @TypeGraphQL.Field(_type => BandPostCreateNestedManyWithoutAuthorInput, {
+    nullable: true
+  })
+  bandPosts?: BandPostCreateNestedManyWithoutAuthorInput | undefined;
 }

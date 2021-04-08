@@ -9,11 +9,15 @@ import * as argsTypes from "./resolvers/crud/args.index";
 
 const crudResolversMap = {
   User: crudResolvers.UserCrudResolver,
-  Post: crudResolvers.PostCrudResolver
+  Post: crudResolvers.PostCrudResolver,
+  BandPost: crudResolvers.BandPostCrudResolver,
+  SearchType: crudResolvers.SearchTypeCrudResolver
 };
 const relationResolversMap = {
   User: relationResolvers.UserRelationsResolver,
-  Post: relationResolvers.PostRelationsResolver
+  Post: relationResolvers.PostRelationsResolver,
+  BandPost: relationResolvers.BandPostRelationsResolver,
+  SearchType: relationResolvers.SearchTypeRelationsResolver
 };
 const actionResolversMap = {
   User: {
@@ -39,71 +43,154 @@ const actionResolversMap = {
     updateManyPost: actionResolvers.UpdateManyPostResolver,
     upsertPost: actionResolvers.UpsertPostResolver,
     aggregatePost: actionResolvers.AggregatePostResolver
+  },
+  BandPost: {
+    bandPost: actionResolvers.FindUniqueBandPostResolver,
+    findFirstBandPost: actionResolvers.FindFirstBandPostResolver,
+    bandPosts: actionResolvers.FindManyBandPostResolver,
+    createBandPost: actionResolvers.CreateBandPostResolver,
+    deleteBandPost: actionResolvers.DeleteBandPostResolver,
+    updateBandPost: actionResolvers.UpdateBandPostResolver,
+    deleteManyBandPost: actionResolvers.DeleteManyBandPostResolver,
+    updateManyBandPost: actionResolvers.UpdateManyBandPostResolver,
+    upsertBandPost: actionResolvers.UpsertBandPostResolver,
+    aggregateBandPost: actionResolvers.AggregateBandPostResolver
+  },
+  SearchType: {
+    searchType: actionResolvers.FindUniqueSearchTypeResolver,
+    findFirstSearchType: actionResolvers.FindFirstSearchTypeResolver,
+    searchTypes: actionResolvers.FindManySearchTypeResolver,
+    createSearchType: actionResolvers.CreateSearchTypeResolver,
+    deleteSearchType: actionResolvers.DeleteSearchTypeResolver,
+    updateSearchType: actionResolvers.UpdateSearchTypeResolver,
+    deleteManySearchType: actionResolvers.DeleteManySearchTypeResolver,
+    updateManySearchType: actionResolvers.UpdateManySearchTypeResolver,
+    upsertSearchType: actionResolvers.UpsertSearchTypeResolver,
+    aggregateSearchType: actionResolvers.AggregateSearchTypeResolver
   }
 };
 const resolversInfo = {
   User: ["user", "findFirstUser", "users", "createUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser"],
-  Post: ["post", "findFirstPost", "posts", "createPost", "deletePost", "updatePost", "deleteManyPost", "updateManyPost", "upsertPost", "aggregatePost"]
+  Post: ["post", "findFirstPost", "posts", "createPost", "deletePost", "updatePost", "deleteManyPost", "updateManyPost", "upsertPost", "aggregatePost"],
+  BandPost: ["bandPost", "findFirstBandPost", "bandPosts", "createBandPost", "deleteBandPost", "updateBandPost", "deleteManyBandPost", "updateManyBandPost", "upsertBandPost", "aggregateBandPost"],
+  SearchType: ["searchType", "findFirstSearchType", "searchTypes", "createSearchType", "deleteSearchType", "updateSearchType", "deleteManySearchType", "updateManySearchType", "upsertSearchType", "aggregateSearchType"]
 };
 const relationResolversInfo = {
-  User: ["posts"],
-  Post: ["author"]
+  User: ["posts", "bandPosts"],
+  Post: ["author"],
+  BandPost: ["author", "searchTypes"],
+  SearchType: ["bandPost"]
 };
 const modelsInfo = {
   User: ["id", "createdAt", "email", "name", "image"],
-  Post: ["id", "createdAt", "title", "body", "userId", "published"]
+  Post: ["id", "createdAt", "title", "body", "userId", "published"],
+  BandPost: ["id", "createdAt", "title", "body", "published", "userId"],
+  SearchType: ["id", "amount", "instrument", "bandPostId"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "email", "name", "image", "posts"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "email", "name", "image", "posts", "bandPosts"],
   UserOrderByInput: ["id", "createdAt", "email", "name", "image"],
   UserWhereUniqueInput: ["id", "email"],
   PostWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "title", "body", "author", "userId", "published"],
   PostOrderByInput: ["id", "createdAt", "title", "body", "userId", "published"],
   PostWhereUniqueInput: ["id"],
-  UserCreateInput: ["createdAt", "email", "name", "image", "posts"],
-  UserUpdateInput: ["createdAt", "email", "name", "image", "posts"],
+  BandPostWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "title", "body", "published", "author", "userId", "searchTypes"],
+  BandPostOrderByInput: ["id", "createdAt", "title", "body", "published", "userId"],
+  BandPostWhereUniqueInput: ["id"],
+  SearchTypeWhereInput: ["AND", "OR", "NOT", "id", "amount", "instrument", "bandPost", "bandPostId"],
+  SearchTypeOrderByInput: ["id", "amount", "instrument", "bandPostId"],
+  SearchTypeWhereUniqueInput: ["id"],
+  UserCreateInput: ["createdAt", "email", "name", "image", "posts", "bandPosts"],
+  UserUpdateInput: ["createdAt", "email", "name", "image", "posts", "bandPosts"],
   UserUpdateManyMutationInput: ["createdAt", "email", "name", "image"],
   PostCreateInput: ["createdAt", "title", "body", "published", "author"],
   PostUpdateInput: ["createdAt", "title", "body", "published", "author"],
   PostUpdateManyMutationInput: ["createdAt", "title", "body", "published"],
+  BandPostCreateInput: ["createdAt", "title", "body", "published", "author", "searchTypes"],
+  BandPostUpdateInput: ["createdAt", "title", "body", "published", "author", "searchTypes"],
+  BandPostUpdateManyMutationInput: ["createdAt", "title", "body", "published"],
+  SearchTypeCreateInput: ["amount", "instrument", "bandPost"],
+  SearchTypeUpdateInput: ["amount", "instrument", "bandPost"],
+  SearchTypeUpdateManyMutationInput: ["amount", "instrument"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   PostListRelationFilter: ["every", "some", "none"],
+  BandPostListRelationFilter: ["every", "some", "none"],
   UserRelationFilter: ["is", "isNot"],
   BoolFilter: ["equals", "not"],
+  SearchTypeListRelationFilter: ["every", "some", "none"],
+  EnumIntrumentFilter: ["equals", "in", "notIn", "not"],
+  BandPostRelationFilter: ["is", "isNot"],
+  IntNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   PostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "connect"],
+  BandPostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "connect"],
   DateTimeFieldUpdateOperationsInput: ["set"],
   StringFieldUpdateOperationsInput: ["set"],
   NullableStringFieldUpdateOperationsInput: ["set"],
   PostUpdateManyWithoutAuthorInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
+  BandPostUpdateManyWithoutAuthorInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
   BoolFieldUpdateOperationsInput: ["set"],
   UserUpdateOneRequiredWithoutPostsInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  UserCreateNestedOneWithoutBandPostsInput: ["create", "connectOrCreate", "connect"],
+  SearchTypeCreateNestedManyWithoutBandPostInput: ["create", "connectOrCreate", "connect"],
+  UserUpdateOneRequiredWithoutBandPostsInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  SearchTypeUpdateManyWithoutBandPostInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
+  BandPostCreateNestedOneWithoutSearchTypesInput: ["create", "connectOrCreate", "connect"],
+  EnumIntrumentFieldUpdateOperationsInput: ["set"],
+  BandPostUpdateOneWithoutSearchTypesInput: ["create", "connectOrCreate", "upsert", "connect", "disconnect", "delete", "update"],
+  NullableIntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedBoolFilter: ["equals", "not"],
+  NestedEnumIntrumentFilter: ["equals", "in", "notIn", "not"],
+  NestedIntNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   PostCreateWithoutAuthorInput: ["createdAt", "title", "body", "published"],
   PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
+  BandPostCreateWithoutAuthorInput: ["createdAt", "title", "body", "published", "searchTypes"],
+  BandPostCreateOrConnectWithoutAuthorInput: ["where", "create"],
   PostUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
   PostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
   PostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
   PostScalarWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "title", "body", "userId", "published"],
-  UserCreateWithoutPostsInput: ["createdAt", "email", "name", "image"],
+  BandPostUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
+  BandPostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
+  BandPostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
+  BandPostScalarWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "title", "body", "published", "userId"],
+  UserCreateWithoutPostsInput: ["createdAt", "email", "name", "image", "bandPosts"],
   UserCreateOrConnectWithoutPostsInput: ["where", "create"],
   UserUpsertWithoutPostsInput: ["update", "create"],
-  UserUpdateWithoutPostsInput: ["createdAt", "email", "name", "image"],
-  PostUpdateWithoutAuthorInput: ["createdAt", "title", "body", "published"]
+  UserUpdateWithoutPostsInput: ["createdAt", "email", "name", "image", "bandPosts"],
+  UserCreateWithoutBandPostsInput: ["createdAt", "email", "name", "image", "posts"],
+  UserCreateOrConnectWithoutBandPostsInput: ["where", "create"],
+  SearchTypeCreateWithoutBandPostInput: ["amount", "instrument"],
+  SearchTypeCreateOrConnectWithoutBandPostInput: ["where", "create"],
+  UserUpsertWithoutBandPostsInput: ["update", "create"],
+  UserUpdateWithoutBandPostsInput: ["createdAt", "email", "name", "image", "posts"],
+  SearchTypeUpsertWithWhereUniqueWithoutBandPostInput: ["where", "update", "create"],
+  SearchTypeUpdateWithWhereUniqueWithoutBandPostInput: ["where", "data"],
+  SearchTypeUpdateManyWithWhereWithoutBandPostInput: ["where", "data"],
+  SearchTypeScalarWhereInput: ["AND", "OR", "NOT", "id", "amount", "instrument", "bandPostId"],
+  BandPostCreateWithoutSearchTypesInput: ["createdAt", "title", "body", "published", "author"],
+  BandPostCreateOrConnectWithoutSearchTypesInput: ["where", "create"],
+  BandPostUpsertWithoutSearchTypesInput: ["update", "create"],
+  BandPostUpdateWithoutSearchTypesInput: ["createdAt", "title", "body", "published", "author"],
+  PostUpdateWithoutAuthorInput: ["createdAt", "title", "body", "published"],
+  BandPostUpdateWithoutAuthorInput: ["createdAt", "title", "body", "published", "searchTypes"],
+  SearchTypeUpdateWithoutBandPostInput: ["amount", "instrument"]
 };
 const outputsInfo = {
-  Query: ["findFirstUser", "findManyUser", "aggregateUser", "findUniqueUser", "findFirstPost", "findManyPost", "aggregatePost", "findUniquePost"],
-  Mutation: ["createOneUser", "upsertOneUser", "deleteOneUser", "updateOneUser", "updateManyUser", "deleteManyUser", "createOnePost", "upsertOnePost", "deleteOnePost", "updateOnePost", "updateManyPost", "deleteManyPost", "executeRaw", "queryRaw"],
+  Query: ["findFirstUser", "findManyUser", "aggregateUser", "findUniqueUser", "findFirstPost", "findManyPost", "aggregatePost", "findUniquePost", "findFirstBandPost", "findManyBandPost", "aggregateBandPost", "findUniqueBandPost", "findFirstSearchType", "findManySearchType", "aggregateSearchType", "findUniqueSearchType"],
+  Mutation: ["createOneUser", "upsertOneUser", "deleteOneUser", "updateOneUser", "updateManyUser", "deleteManyUser", "createOnePost", "upsertOnePost", "deleteOnePost", "updateOnePost", "updateManyPost", "deleteManyPost", "createOneBandPost", "upsertOneBandPost", "deleteOneBandPost", "updateOneBandPost", "updateManyBandPost", "deleteManyBandPost", "createOneSearchType", "upsertOneSearchType", "deleteOneSearchType", "updateOneSearchType", "updateManySearchType", "deleteManySearchType", "executeRaw", "queryRaw"],
   AggregateUser: ["count", "avg", "sum", "min", "max"],
   AggregatePost: ["count", "avg", "sum", "min", "max"],
+  AggregateBandPost: ["count", "avg", "sum", "min", "max"],
+  AggregateSearchType: ["count", "avg", "sum", "min", "max"],
   AffectedRowsOutput: ["count"],
   UserCountAggregate: ["id", "createdAt", "email", "name", "image", "_all"],
   UserAvgAggregate: ["id"],
@@ -115,8 +202,20 @@ const outputsInfo = {
   PostSumAggregate: ["id", "userId"],
   PostMinAggregate: ["id", "createdAt", "title", "body", "userId", "published"],
   PostMaxAggregate: ["id", "createdAt", "title", "body", "userId", "published"],
-  User: ["id", "createdAt", "email", "name", "image", "posts"],
-  Post: ["id", "createdAt", "title", "body", "author", "userId", "published"]
+  BandPostCountAggregate: ["id", "createdAt", "title", "body", "published", "userId", "_all"],
+  BandPostAvgAggregate: ["id", "userId"],
+  BandPostSumAggregate: ["id", "userId"],
+  BandPostMinAggregate: ["id", "createdAt", "title", "body", "published", "userId"],
+  BandPostMaxAggregate: ["id", "createdAt", "title", "body", "published", "userId"],
+  SearchTypeCountAggregate: ["id", "amount", "instrument", "bandPostId", "_all"],
+  SearchTypeAvgAggregate: ["id", "amount", "bandPostId"],
+  SearchTypeSumAggregate: ["id", "amount", "bandPostId"],
+  SearchTypeMinAggregate: ["id", "amount", "instrument", "bandPostId"],
+  SearchTypeMaxAggregate: ["id", "amount", "instrument", "bandPostId"],
+  User: ["id", "createdAt", "email", "name", "image", "posts", "bandPosts"],
+  Post: ["id", "createdAt", "title", "body", "author", "userId", "published"],
+  BandPost: ["id", "createdAt", "title", "body", "published", "author", "userId", "searchTypes"],
+  SearchType: ["id", "amount", "instrument", "bandPost", "bandPostId"]
 };
 const argsInfo = {
   FindUniqueUserArgs: ["where"],
@@ -138,7 +237,27 @@ const argsInfo = {
   DeleteManyPostArgs: ["where"],
   UpdateManyPostArgs: ["data", "where"],
   UpsertPostArgs: ["where", "create", "update"],
-  AggregatePostArgs: ["where", "orderBy", "cursor", "take", "skip"]
+  AggregatePostArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  FindUniqueBandPostArgs: ["where"],
+  FindFirstBandPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManyBandPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  CreateBandPostArgs: ["data"],
+  DeleteBandPostArgs: ["where"],
+  UpdateBandPostArgs: ["data", "where"],
+  DeleteManyBandPostArgs: ["where"],
+  UpdateManyBandPostArgs: ["data", "where"],
+  UpsertBandPostArgs: ["where", "create", "update"],
+  AggregateBandPostArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  FindUniqueSearchTypeArgs: ["where"],
+  FindFirstSearchTypeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManySearchTypeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  CreateSearchTypeArgs: ["data"],
+  DeleteSearchTypeArgs: ["where"],
+  UpdateSearchTypeArgs: ["data", "where"],
+  DeleteManySearchTypeArgs: ["where"],
+  UpdateManySearchTypeArgs: ["data", "where"],
+  UpsertSearchTypeArgs: ["where", "create", "update"],
+  AggregateSearchTypeArgs: ["where", "orderBy", "cursor", "take", "skip"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
