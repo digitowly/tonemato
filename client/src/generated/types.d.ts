@@ -15,14 +15,56 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  bandPost?: Maybe<BandPost>;
+  findFirstBandPost?: Maybe<BandPost>;
+  bandPosts: Array<BandPost>;
+  aggregateBandPost: AggregateBandPost;
   post?: Maybe<Post>;
   findFirstPost?: Maybe<Post>;
   posts: Array<Post>;
   aggregatePost: AggregatePost;
+  searchType?: Maybe<SearchType>;
+  findFirstSearchType?: Maybe<SearchType>;
+  searchTypes: Array<SearchType>;
+  aggregateSearchType: AggregateSearchType;
   user?: Maybe<User>;
   findFirstUser?: Maybe<User>;
   users: Array<User>;
   aggregateUser: AggregateUser;
+};
+
+
+export type QueryBandPostArgs = {
+  where: BandPostWhereUniqueInput;
+};
+
+
+export type QueryFindFirstBandPostArgs = {
+  where?: Maybe<BandPostWhereInput>;
+  orderBy?: Maybe<Array<BandPostOrderByInput>>;
+  cursor?: Maybe<BandPostWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<BandPostScalarFieldEnum>>;
+};
+
+
+export type QueryBandPostsArgs = {
+  where?: Maybe<BandPostWhereInput>;
+  orderBy?: Maybe<Array<BandPostOrderByInput>>;
+  cursor?: Maybe<BandPostWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<BandPostScalarFieldEnum>>;
+};
+
+
+export type QueryAggregateBandPostArgs = {
+  where?: Maybe<BandPostWhereInput>;
+  orderBy?: Maybe<Array<BandPostOrderByInput>>;
+  cursor?: Maybe<BandPostWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
 };
 
 
@@ -55,6 +97,40 @@ export type QueryAggregatePostArgs = {
   where?: Maybe<PostWhereInput>;
   orderBy?: Maybe<Array<PostOrderByInput>>;
   cursor?: Maybe<PostWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySearchTypeArgs = {
+  where: SearchTypeWhereUniqueInput;
+};
+
+
+export type QueryFindFirstSearchTypeArgs = {
+  where?: Maybe<SearchTypeWhereInput>;
+  orderBy?: Maybe<Array<SearchTypeOrderByInput>>;
+  cursor?: Maybe<SearchTypeWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<SearchTypeScalarFieldEnum>>;
+};
+
+
+export type QuerySearchTypesArgs = {
+  where?: Maybe<SearchTypeWhereInput>;
+  orderBy?: Maybe<Array<SearchTypeOrderByInput>>;
+  cursor?: Maybe<SearchTypeWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<SearchTypeScalarFieldEnum>>;
+};
+
+
+export type QueryAggregateSearchTypeArgs = {
+  where?: Maybe<SearchTypeWhereInput>;
+  orderBy?: Maybe<Array<SearchTypeOrderByInput>>;
+  cursor?: Maybe<SearchTypeWhereUniqueInput>;
   take?: Maybe<Scalars['Int']>;
   skip?: Maybe<Scalars['Int']>;
 };
@@ -93,15 +169,26 @@ export type QueryAggregateUserArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-export type Post = {
-  __typename?: 'Post';
+export type BandPost = {
+  __typename?: 'BandPost';
   id: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   title: Scalars['String'];
   body: Scalars['String'];
-  userId: Scalars['Int'];
   published: Scalars['Boolean'];
+  userId: Scalars['Int'];
   author: User;
+  searchTypes: Array<SearchType>;
+};
+
+
+export type BandPostSearchTypesArgs = {
+  where?: Maybe<SearchTypeWhereInput>;
+  orderBy?: Maybe<Array<SearchTypeOrderByInput>>;
+  cursor?: Maybe<SearchTypeWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<SearchTypeScalarFieldEnum>>;
 };
 
 
@@ -113,6 +200,7 @@ export type User = {
   name: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   posts: Array<Post>;
+  bandPosts: Array<BandPost>;
 };
 
 
@@ -123,6 +211,27 @@ export type UserPostsArgs = {
   take?: Maybe<Scalars['Int']>;
   skip?: Maybe<Scalars['Int']>;
   distinct?: Maybe<Array<PostScalarFieldEnum>>;
+};
+
+
+export type UserBandPostsArgs = {
+  where?: Maybe<BandPostWhereInput>;
+  orderBy?: Maybe<Array<BandPostOrderByInput>>;
+  cursor?: Maybe<BandPostWhereUniqueInput>;
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  distinct?: Maybe<Array<BandPostScalarFieldEnum>>;
+};
+
+export type Post = {
+  __typename?: 'Post';
+  id: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
+  title: Scalars['String'];
+  body: Scalars['String'];
+  userId: Scalars['Int'];
+  published: Scalars['Boolean'];
+  author: User;
 };
 
 export type PostWhereInput = {
@@ -231,6 +340,7 @@ export type UserWhereInput = {
   name?: Maybe<StringFilter>;
   image?: Maybe<StringNullableFilter>;
   posts?: Maybe<PostListRelationFilter>;
+  bandPosts?: Maybe<BandPostListRelationFilter>;
 };
 
 export type StringNullableFilter = {
@@ -268,6 +378,26 @@ export type PostListRelationFilter = {
   none?: Maybe<PostWhereInput>;
 };
 
+export type BandPostListRelationFilter = {
+  every?: Maybe<BandPostWhereInput>;
+  some?: Maybe<BandPostWhereInput>;
+  none?: Maybe<BandPostWhereInput>;
+};
+
+export type BandPostWhereInput = {
+  AND?: Maybe<Array<BandPostWhereInput>>;
+  OR?: Maybe<Array<BandPostWhereInput>>;
+  NOT?: Maybe<Array<BandPostWhereInput>>;
+  id?: Maybe<IntFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  title?: Maybe<StringFilter>;
+  body?: Maybe<StringFilter>;
+  published?: Maybe<BoolFilter>;
+  author?: Maybe<UserRelationFilter>;
+  userId?: Maybe<IntFilter>;
+  searchTypes?: Maybe<SearchTypeListRelationFilter>;
+};
+
 export type BoolFilter = {
   equals?: Maybe<Scalars['Boolean']>;
   not?: Maybe<NestedBoolFilter>;
@@ -276,6 +406,70 @@ export type BoolFilter = {
 export type NestedBoolFilter = {
   equals?: Maybe<Scalars['Boolean']>;
   not?: Maybe<NestedBoolFilter>;
+};
+
+export type SearchTypeListRelationFilter = {
+  every?: Maybe<SearchTypeWhereInput>;
+  some?: Maybe<SearchTypeWhereInput>;
+  none?: Maybe<SearchTypeWhereInput>;
+};
+
+export type SearchTypeWhereInput = {
+  AND?: Maybe<Array<SearchTypeWhereInput>>;
+  OR?: Maybe<Array<SearchTypeWhereInput>>;
+  NOT?: Maybe<Array<SearchTypeWhereInput>>;
+  id?: Maybe<IntFilter>;
+  amount?: Maybe<IntFilter>;
+  instrument?: Maybe<EnumIntrumentFilter>;
+  bandPost?: Maybe<BandPostRelationFilter>;
+  bandPostId?: Maybe<IntNullableFilter>;
+};
+
+export type EnumIntrumentFilter = {
+  equals?: Maybe<Intrument>;
+  in?: Maybe<Array<Intrument>>;
+  notIn?: Maybe<Array<Intrument>>;
+  not?: Maybe<NestedEnumIntrumentFilter>;
+};
+
+export enum Intrument {
+  Guitar = 'GUITAR',
+  Bass = 'BASS',
+  Drums = 'DRUMS'
+}
+
+export type NestedEnumIntrumentFilter = {
+  equals?: Maybe<Intrument>;
+  in?: Maybe<Array<Intrument>>;
+  notIn?: Maybe<Array<Intrument>>;
+  not?: Maybe<NestedEnumIntrumentFilter>;
+};
+
+export type BandPostRelationFilter = {
+  is?: Maybe<BandPostWhereInput>;
+  isNot?: Maybe<BandPostWhereInput>;
+};
+
+export type IntNullableFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  not?: Maybe<NestedIntNullableFilter>;
+};
+
+export type NestedIntNullableFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  not?: Maybe<NestedIntNullableFilter>;
 };
 
 export type PostOrderByInput = {
@@ -304,6 +498,107 @@ export enum PostScalarFieldEnum {
   UserId = 'userId',
   Published = 'published'
 }
+
+export type BandPostOrderByInput = {
+  id?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  title?: Maybe<SortOrder>;
+  body?: Maybe<SortOrder>;
+  published?: Maybe<SortOrder>;
+  userId?: Maybe<SortOrder>;
+};
+
+export type BandPostWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+export enum BandPostScalarFieldEnum {
+  Id = 'id',
+  CreatedAt = 'createdAt',
+  Title = 'title',
+  Body = 'body',
+  Published = 'published',
+  UserId = 'userId'
+}
+
+export type SearchType = {
+  __typename?: 'SearchType';
+  id: Scalars['Int'];
+  amount: Scalars['Int'];
+  instrument: Intrument;
+  bandPostId?: Maybe<Scalars['Int']>;
+  bandPost?: Maybe<BandPost>;
+};
+
+export type SearchTypeOrderByInput = {
+  id?: Maybe<SortOrder>;
+  amount?: Maybe<SortOrder>;
+  instrument?: Maybe<SortOrder>;
+  bandPostId?: Maybe<SortOrder>;
+};
+
+export type SearchTypeWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+export enum SearchTypeScalarFieldEnum {
+  Id = 'id',
+  Amount = 'amount',
+  Instrument = 'instrument',
+  BandPostId = 'bandPostId'
+}
+
+export type AggregateBandPost = {
+  __typename?: 'AggregateBandPost';
+  count?: Maybe<BandPostCountAggregate>;
+  avg?: Maybe<BandPostAvgAggregate>;
+  sum?: Maybe<BandPostSumAggregate>;
+  min?: Maybe<BandPostMinAggregate>;
+  max?: Maybe<BandPostMaxAggregate>;
+};
+
+export type BandPostCountAggregate = {
+  __typename?: 'BandPostCountAggregate';
+  id: Scalars['Int'];
+  createdAt?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['Int']>;
+  body?: Maybe<Scalars['Int']>;
+  published?: Maybe<Scalars['Int']>;
+  userId: Scalars['Int'];
+  _all: Scalars['Int'];
+};
+
+export type BandPostAvgAggregate = {
+  __typename?: 'BandPostAvgAggregate';
+  id: Scalars['Float'];
+  userId: Scalars['Float'];
+};
+
+export type BandPostSumAggregate = {
+  __typename?: 'BandPostSumAggregate';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+};
+
+export type BandPostMinAggregate = {
+  __typename?: 'BandPostMinAggregate';
+  id: Scalars['Int'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  title?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['String']>;
+  published?: Maybe<Scalars['Boolean']>;
+  userId: Scalars['Int'];
+};
+
+export type BandPostMaxAggregate = {
+  __typename?: 'BandPostMaxAggregate';
+  id: Scalars['Int'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  title?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['String']>;
+  published?: Maybe<Scalars['Boolean']>;
+  userId: Scalars['Int'];
+};
 
 export type AggregatePost = {
   __typename?: 'AggregatePost';
@@ -355,6 +650,54 @@ export type PostMaxAggregate = {
   body?: Maybe<Scalars['String']>;
   userId: Scalars['Int'];
   published?: Maybe<Scalars['Boolean']>;
+};
+
+export type AggregateSearchType = {
+  __typename?: 'AggregateSearchType';
+  count?: Maybe<SearchTypeCountAggregate>;
+  avg?: Maybe<SearchTypeAvgAggregate>;
+  sum?: Maybe<SearchTypeSumAggregate>;
+  min?: Maybe<SearchTypeMinAggregate>;
+  max?: Maybe<SearchTypeMaxAggregate>;
+};
+
+export type SearchTypeCountAggregate = {
+  __typename?: 'SearchTypeCountAggregate';
+  id: Scalars['Int'];
+  amount: Scalars['Int'];
+  instrument?: Maybe<Scalars['Int']>;
+  bandPostId?: Maybe<Scalars['Int']>;
+  _all: Scalars['Int'];
+};
+
+export type SearchTypeAvgAggregate = {
+  __typename?: 'SearchTypeAvgAggregate';
+  id: Scalars['Float'];
+  amount: Scalars['Float'];
+  bandPostId?: Maybe<Scalars['Float']>;
+};
+
+export type SearchTypeSumAggregate = {
+  __typename?: 'SearchTypeSumAggregate';
+  id: Scalars['Int'];
+  amount: Scalars['Int'];
+  bandPostId?: Maybe<Scalars['Int']>;
+};
+
+export type SearchTypeMinAggregate = {
+  __typename?: 'SearchTypeMinAggregate';
+  id: Scalars['Int'];
+  amount: Scalars['Int'];
+  instrument?: Maybe<Intrument>;
+  bandPostId?: Maybe<Scalars['Int']>;
+};
+
+export type SearchTypeMaxAggregate = {
+  __typename?: 'SearchTypeMaxAggregate';
+  id: Scalars['Int'];
+  amount: Scalars['Int'];
+  instrument?: Maybe<Intrument>;
+  bandPostId?: Maybe<Scalars['Int']>;
 };
 
 export type UserWhereUniqueInput = {
@@ -427,18 +770,64 @@ export type UserMaxAggregate = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createBandPost: BandPost;
+  deleteBandPost?: Maybe<BandPost>;
+  updateBandPost?: Maybe<BandPost>;
+  deleteManyBandPost: AffectedRowsOutput;
+  updateManyBandPost: AffectedRowsOutput;
+  upsertBandPost: BandPost;
   createPost: Post;
   deletePost?: Maybe<Post>;
   updatePost?: Maybe<Post>;
   deleteManyPost: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
   upsertPost: Post;
+  createSearchType: SearchType;
+  deleteSearchType?: Maybe<SearchType>;
+  updateSearchType?: Maybe<SearchType>;
+  deleteManySearchType: AffectedRowsOutput;
+  updateManySearchType: AffectedRowsOutput;
+  upsertSearchType: SearchType;
   createUser: User;
   deleteUser?: Maybe<User>;
   updateUser?: Maybe<User>;
   deleteManyUser: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   upsertUser: User;
+};
+
+
+export type MutationCreateBandPostArgs = {
+  data: BandPostCreateInput;
+};
+
+
+export type MutationDeleteBandPostArgs = {
+  where: BandPostWhereUniqueInput;
+};
+
+
+export type MutationUpdateBandPostArgs = {
+  data: BandPostUpdateInput;
+  where: BandPostWhereUniqueInput;
+};
+
+
+export type MutationDeleteManyBandPostArgs = {
+  where?: Maybe<BandPostWhereInput>;
+};
+
+
+export type MutationUpdateManyBandPostArgs = {
+  data: BandPostUpdateManyMutationInput;
+  where?: Maybe<BandPostWhereInput>;
+};
+
+
+export type MutationUpsertBandPostArgs = {
+  where: BandPostWhereUniqueInput;
+  create: BandPostCreateInput;
+  update: BandPostUpdateInput;
 };
 
 
@@ -476,6 +865,40 @@ export type MutationUpsertPostArgs = {
 };
 
 
+export type MutationCreateSearchTypeArgs = {
+  data: SearchTypeCreateInput;
+};
+
+
+export type MutationDeleteSearchTypeArgs = {
+  where: SearchTypeWhereUniqueInput;
+};
+
+
+export type MutationUpdateSearchTypeArgs = {
+  data: SearchTypeUpdateInput;
+  where: SearchTypeWhereUniqueInput;
+};
+
+
+export type MutationDeleteManySearchTypeArgs = {
+  where?: Maybe<SearchTypeWhereInput>;
+};
+
+
+export type MutationUpdateManySearchTypeArgs = {
+  data: SearchTypeUpdateManyMutationInput;
+  where?: Maybe<SearchTypeWhereInput>;
+};
+
+
+export type MutationUpsertSearchTypeArgs = {
+  where: SearchTypeWhereUniqueInput;
+  create: SearchTypeCreateInput;
+  update: SearchTypeUpdateInput;
+};
+
+
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
 };
@@ -509,89 +932,22 @@ export type MutationUpsertUserArgs = {
   update: UserUpdateInput;
 };
 
-export type PostCreateInput = {
+export type BandPostCreateInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   title: Scalars['String'];
   body: Scalars['String'];
   published?: Maybe<Scalars['Boolean']>;
-  author: UserCreateNestedOneWithoutPostsInput;
+  author: UserCreateNestedOneWithoutBandPostsInput;
+  searchTypes?: Maybe<SearchTypeCreateNestedManyWithoutBandPostInput>;
 };
 
-export type UserCreateNestedOneWithoutPostsInput = {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connectOrCreate?: Maybe<UserCreateOrConnectWithoutPostsInput>;
+export type UserCreateNestedOneWithoutBandPostsInput = {
+  create?: Maybe<UserCreateWithoutBandPostsInput>;
+  connectOrCreate?: Maybe<UserCreateOrConnectWithoutBandPostsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 };
 
-export type UserCreateWithoutPostsInput = {
-  createdAt?: Maybe<Scalars['DateTime']>;
-  email: Scalars['String'];
-  name: Scalars['String'];
-  image?: Maybe<Scalars['String']>;
-};
-
-export type UserCreateOrConnectWithoutPostsInput = {
-  where: UserWhereUniqueInput;
-  create: UserCreateWithoutPostsInput;
-};
-
-export type PostUpdateInput = {
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  title?: Maybe<StringFieldUpdateOperationsInput>;
-  body?: Maybe<StringFieldUpdateOperationsInput>;
-  published?: Maybe<BoolFieldUpdateOperationsInput>;
-  author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-};
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['DateTime']>;
-};
-
-export type StringFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['String']>;
-};
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['Boolean']>;
-};
-
-export type UserUpdateOneRequiredWithoutPostsInput = {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connectOrCreate?: Maybe<UserCreateOrConnectWithoutPostsInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-  update?: Maybe<UserUpdateWithoutPostsInput>;
-};
-
-export type UserUpsertWithoutPostsInput = {
-  update: UserUpdateWithoutPostsInput;
-  create: UserCreateWithoutPostsInput;
-};
-
-export type UserUpdateWithoutPostsInput = {
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  email?: Maybe<StringFieldUpdateOperationsInput>;
-  name?: Maybe<StringFieldUpdateOperationsInput>;
-  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
-};
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['String']>;
-};
-
-export type AffectedRowsOutput = {
-  __typename?: 'AffectedRowsOutput';
-  count: Scalars['Int'];
-};
-
-export type PostUpdateManyMutationInput = {
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  title?: Maybe<StringFieldUpdateOperationsInput>;
-  body?: Maybe<StringFieldUpdateOperationsInput>;
-  published?: Maybe<BoolFieldUpdateOperationsInput>;
-};
-
-export type UserCreateInput = {
+export type UserCreateWithoutBandPostsInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
   name: Scalars['String'];
@@ -617,12 +973,71 @@ export type PostCreateOrConnectWithoutAuthorInput = {
   create: PostCreateWithoutAuthorInput;
 };
 
-export type UserUpdateInput = {
+export type UserCreateOrConnectWithoutBandPostsInput = {
+  where: UserWhereUniqueInput;
+  create: UserCreateWithoutBandPostsInput;
+};
+
+export type SearchTypeCreateNestedManyWithoutBandPostInput = {
+  create?: Maybe<Array<SearchTypeCreateWithoutBandPostInput>>;
+  connectOrCreate?: Maybe<Array<SearchTypeCreateOrConnectWithoutBandPostInput>>;
+  connect?: Maybe<Array<SearchTypeWhereUniqueInput>>;
+};
+
+export type SearchTypeCreateWithoutBandPostInput = {
+  amount: Scalars['Int'];
+  instrument: Intrument;
+};
+
+export type SearchTypeCreateOrConnectWithoutBandPostInput = {
+  where: SearchTypeWhereUniqueInput;
+  create: SearchTypeCreateWithoutBandPostInput;
+};
+
+export type BandPostUpdateInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<StringFieldUpdateOperationsInput>;
+  published?: Maybe<BoolFieldUpdateOperationsInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutBandPostsInput>;
+  searchTypes?: Maybe<SearchTypeUpdateManyWithoutBandPostInput>;
+};
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['DateTime']>;
+};
+
+export type StringFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['String']>;
+};
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['Boolean']>;
+};
+
+export type UserUpdateOneRequiredWithoutBandPostsInput = {
+  create?: Maybe<UserCreateWithoutBandPostsInput>;
+  connectOrCreate?: Maybe<UserCreateOrConnectWithoutBandPostsInput>;
+  upsert?: Maybe<UserUpsertWithoutBandPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+  update?: Maybe<UserUpdateWithoutBandPostsInput>;
+};
+
+export type UserUpsertWithoutBandPostsInput = {
+  update: UserUpdateWithoutBandPostsInput;
+  create: UserCreateWithoutBandPostsInput;
+};
+
+export type UserUpdateWithoutBandPostsInput = {
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   email?: Maybe<StringFieldUpdateOperationsInput>;
   name?: Maybe<StringFieldUpdateOperationsInput>;
   image?: Maybe<NullableStringFieldUpdateOperationsInput>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+};
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['String']>;
 };
 
 export type PostUpdateManyWithoutAuthorInput = {
@@ -673,6 +1088,282 @@ export type PostScalarWhereInput = {
   published?: Maybe<BoolFilter>;
 };
 
+export type PostUpdateManyMutationInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<StringFieldUpdateOperationsInput>;
+  published?: Maybe<BoolFieldUpdateOperationsInput>;
+};
+
+export type SearchTypeUpdateManyWithoutBandPostInput = {
+  create?: Maybe<Array<SearchTypeCreateWithoutBandPostInput>>;
+  connectOrCreate?: Maybe<Array<SearchTypeCreateOrConnectWithoutBandPostInput>>;
+  upsert?: Maybe<Array<SearchTypeUpsertWithWhereUniqueWithoutBandPostInput>>;
+  connect?: Maybe<Array<SearchTypeWhereUniqueInput>>;
+  set?: Maybe<Array<SearchTypeWhereUniqueInput>>;
+  disconnect?: Maybe<Array<SearchTypeWhereUniqueInput>>;
+  delete?: Maybe<Array<SearchTypeWhereUniqueInput>>;
+  update?: Maybe<Array<SearchTypeUpdateWithWhereUniqueWithoutBandPostInput>>;
+  updateMany?: Maybe<Array<SearchTypeUpdateManyWithWhereWithoutBandPostInput>>;
+  deleteMany?: Maybe<Array<SearchTypeScalarWhereInput>>;
+};
+
+export type SearchTypeUpsertWithWhereUniqueWithoutBandPostInput = {
+  where: SearchTypeWhereUniqueInput;
+  update: SearchTypeUpdateWithoutBandPostInput;
+  create: SearchTypeCreateWithoutBandPostInput;
+};
+
+export type SearchTypeUpdateWithoutBandPostInput = {
+  amount?: Maybe<IntFieldUpdateOperationsInput>;
+  instrument?: Maybe<EnumIntrumentFieldUpdateOperationsInput>;
+};
+
+export type IntFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['Int']>;
+  increment?: Maybe<Scalars['Int']>;
+  decrement?: Maybe<Scalars['Int']>;
+  multiply?: Maybe<Scalars['Int']>;
+  divide?: Maybe<Scalars['Int']>;
+};
+
+export type EnumIntrumentFieldUpdateOperationsInput = {
+  set?: Maybe<Intrument>;
+};
+
+export type SearchTypeUpdateWithWhereUniqueWithoutBandPostInput = {
+  where: SearchTypeWhereUniqueInput;
+  data: SearchTypeUpdateWithoutBandPostInput;
+};
+
+export type SearchTypeUpdateManyWithWhereWithoutBandPostInput = {
+  where: SearchTypeScalarWhereInput;
+  data: SearchTypeUpdateManyMutationInput;
+};
+
+export type SearchTypeScalarWhereInput = {
+  AND?: Maybe<Array<SearchTypeScalarWhereInput>>;
+  OR?: Maybe<Array<SearchTypeScalarWhereInput>>;
+  NOT?: Maybe<Array<SearchTypeScalarWhereInput>>;
+  id?: Maybe<IntFilter>;
+  amount?: Maybe<IntFilter>;
+  instrument?: Maybe<EnumIntrumentFilter>;
+  bandPostId?: Maybe<IntNullableFilter>;
+};
+
+export type SearchTypeUpdateManyMutationInput = {
+  amount?: Maybe<IntFieldUpdateOperationsInput>;
+  instrument?: Maybe<EnumIntrumentFieldUpdateOperationsInput>;
+};
+
+export type AffectedRowsOutput = {
+  __typename?: 'AffectedRowsOutput';
+  count: Scalars['Int'];
+};
+
+export type BandPostUpdateManyMutationInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<StringFieldUpdateOperationsInput>;
+  published?: Maybe<BoolFieldUpdateOperationsInput>;
+};
+
+export type PostCreateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  title: Scalars['String'];
+  body: Scalars['String'];
+  published?: Maybe<Scalars['Boolean']>;
+  author: UserCreateNestedOneWithoutPostsInput;
+};
+
+export type UserCreateNestedOneWithoutPostsInput = {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connectOrCreate?: Maybe<UserCreateOrConnectWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+};
+
+export type UserCreateWithoutPostsInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  name: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  bandPosts?: Maybe<BandPostCreateNestedManyWithoutAuthorInput>;
+};
+
+export type BandPostCreateNestedManyWithoutAuthorInput = {
+  create?: Maybe<Array<BandPostCreateWithoutAuthorInput>>;
+  connectOrCreate?: Maybe<Array<BandPostCreateOrConnectWithoutAuthorInput>>;
+  connect?: Maybe<Array<BandPostWhereUniqueInput>>;
+};
+
+export type BandPostCreateWithoutAuthorInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  title: Scalars['String'];
+  body: Scalars['String'];
+  published?: Maybe<Scalars['Boolean']>;
+  searchTypes?: Maybe<SearchTypeCreateNestedManyWithoutBandPostInput>;
+};
+
+export type BandPostCreateOrConnectWithoutAuthorInput = {
+  where: BandPostWhereUniqueInput;
+  create: BandPostCreateWithoutAuthorInput;
+};
+
+export type UserCreateOrConnectWithoutPostsInput = {
+  where: UserWhereUniqueInput;
+  create: UserCreateWithoutPostsInput;
+};
+
+export type PostUpdateInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<StringFieldUpdateOperationsInput>;
+  published?: Maybe<BoolFieldUpdateOperationsInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
+};
+
+export type UserUpdateOneRequiredWithoutPostsInput = {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connectOrCreate?: Maybe<UserCreateOrConnectWithoutPostsInput>;
+  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+  update?: Maybe<UserUpdateWithoutPostsInput>;
+};
+
+export type UserUpsertWithoutPostsInput = {
+  update: UserUpdateWithoutPostsInput;
+  create: UserCreateWithoutPostsInput;
+};
+
+export type UserUpdateWithoutPostsInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  email?: Maybe<StringFieldUpdateOperationsInput>;
+  name?: Maybe<StringFieldUpdateOperationsInput>;
+  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  bandPosts?: Maybe<BandPostUpdateManyWithoutAuthorInput>;
+};
+
+export type BandPostUpdateManyWithoutAuthorInput = {
+  create?: Maybe<Array<BandPostCreateWithoutAuthorInput>>;
+  connectOrCreate?: Maybe<Array<BandPostCreateOrConnectWithoutAuthorInput>>;
+  upsert?: Maybe<Array<BandPostUpsertWithWhereUniqueWithoutAuthorInput>>;
+  connect?: Maybe<Array<BandPostWhereUniqueInput>>;
+  set?: Maybe<Array<BandPostWhereUniqueInput>>;
+  disconnect?: Maybe<Array<BandPostWhereUniqueInput>>;
+  delete?: Maybe<Array<BandPostWhereUniqueInput>>;
+  update?: Maybe<Array<BandPostUpdateWithWhereUniqueWithoutAuthorInput>>;
+  updateMany?: Maybe<Array<BandPostUpdateManyWithWhereWithoutAuthorInput>>;
+  deleteMany?: Maybe<Array<BandPostScalarWhereInput>>;
+};
+
+export type BandPostUpsertWithWhereUniqueWithoutAuthorInput = {
+  where: BandPostWhereUniqueInput;
+  update: BandPostUpdateWithoutAuthorInput;
+  create: BandPostCreateWithoutAuthorInput;
+};
+
+export type BandPostUpdateWithoutAuthorInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<StringFieldUpdateOperationsInput>;
+  published?: Maybe<BoolFieldUpdateOperationsInput>;
+  searchTypes?: Maybe<SearchTypeUpdateManyWithoutBandPostInput>;
+};
+
+export type BandPostUpdateWithWhereUniqueWithoutAuthorInput = {
+  where: BandPostWhereUniqueInput;
+  data: BandPostUpdateWithoutAuthorInput;
+};
+
+export type BandPostUpdateManyWithWhereWithoutAuthorInput = {
+  where: BandPostScalarWhereInput;
+  data: BandPostUpdateManyMutationInput;
+};
+
+export type BandPostScalarWhereInput = {
+  AND?: Maybe<Array<BandPostScalarWhereInput>>;
+  OR?: Maybe<Array<BandPostScalarWhereInput>>;
+  NOT?: Maybe<Array<BandPostScalarWhereInput>>;
+  id?: Maybe<IntFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  title?: Maybe<StringFilter>;
+  body?: Maybe<StringFilter>;
+  published?: Maybe<BoolFilter>;
+  userId?: Maybe<IntFilter>;
+};
+
+export type SearchTypeCreateInput = {
+  amount: Scalars['Int'];
+  instrument: Intrument;
+  bandPost?: Maybe<BandPostCreateNestedOneWithoutSearchTypesInput>;
+};
+
+export type BandPostCreateNestedOneWithoutSearchTypesInput = {
+  create?: Maybe<BandPostCreateWithoutSearchTypesInput>;
+  connectOrCreate?: Maybe<BandPostCreateOrConnectWithoutSearchTypesInput>;
+  connect?: Maybe<BandPostWhereUniqueInput>;
+};
+
+export type BandPostCreateWithoutSearchTypesInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  title: Scalars['String'];
+  body: Scalars['String'];
+  published?: Maybe<Scalars['Boolean']>;
+  author: UserCreateNestedOneWithoutBandPostsInput;
+};
+
+export type BandPostCreateOrConnectWithoutSearchTypesInput = {
+  where: BandPostWhereUniqueInput;
+  create: BandPostCreateWithoutSearchTypesInput;
+};
+
+export type SearchTypeUpdateInput = {
+  amount?: Maybe<IntFieldUpdateOperationsInput>;
+  instrument?: Maybe<EnumIntrumentFieldUpdateOperationsInput>;
+  bandPost?: Maybe<BandPostUpdateOneWithoutSearchTypesInput>;
+};
+
+export type BandPostUpdateOneWithoutSearchTypesInput = {
+  create?: Maybe<BandPostCreateWithoutSearchTypesInput>;
+  connectOrCreate?: Maybe<BandPostCreateOrConnectWithoutSearchTypesInput>;
+  upsert?: Maybe<BandPostUpsertWithoutSearchTypesInput>;
+  connect?: Maybe<BandPostWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  delete?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<BandPostUpdateWithoutSearchTypesInput>;
+};
+
+export type BandPostUpsertWithoutSearchTypesInput = {
+  update: BandPostUpdateWithoutSearchTypesInput;
+  create: BandPostCreateWithoutSearchTypesInput;
+};
+
+export type BandPostUpdateWithoutSearchTypesInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  title?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<StringFieldUpdateOperationsInput>;
+  published?: Maybe<BoolFieldUpdateOperationsInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutBandPostsInput>;
+};
+
+export type UserCreateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  name: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  posts?: Maybe<PostCreateNestedManyWithoutAuthorInput>;
+  bandPosts?: Maybe<BandPostCreateNestedManyWithoutAuthorInput>;
+};
+
+export type UserUpdateInput = {
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  email?: Maybe<StringFieldUpdateOperationsInput>;
+  name?: Maybe<StringFieldUpdateOperationsInput>;
+  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
+  bandPosts?: Maybe<BandPostUpdateManyWithoutAuthorInput>;
+};
+
 export type UserUpdateManyMutationInput = {
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   email?: Maybe<StringFieldUpdateOperationsInput>;
@@ -707,6 +1398,24 @@ export type CreateUserMutation = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'email'>
   ) }
+);
+
+export type ListBandPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListBandPostsQuery = (
+  { __typename?: 'Query' }
+  & { bandPosts: Array<(
+    { __typename?: 'BandPost' }
+    & Pick<BandPost, 'id' | 'title' | 'body'>
+    & { searchTypes: Array<(
+      { __typename?: 'SearchType' }
+      & Pick<SearchType, 'amount' | 'instrument'>
+    )>, author: (
+      { __typename?: 'User' }
+      & Pick<User, 'name' | 'image'>
+    ) }
+  )> }
 );
 
 export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
