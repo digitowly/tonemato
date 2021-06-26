@@ -1,10 +1,15 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import { useState } from 'react';
 import ProfileNavigation from '../Navigations/ProfileNavigation/ProfileNavigation';
 import styles from './Header.module.scss';
-// import logo from './assets/logo.svg';
+import { Session } from 'next-auth';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  session: Session;
+}
+
+const Header: React.FC<HeaderProps> = ({ session }) => {
+  const [userSubNavOpen, setUserSubNavOpen] = useState(false);
   return (
     <header className={styles.header}>
       <Link href='/'>
@@ -14,7 +19,11 @@ const Header: React.FC = () => {
       <nav>
         <Link href='/posts'>posts</Link>
       </nav>
-      <ProfileNavigation />
+      <ProfileNavigation
+        session={session}
+        subNavOpen={userSubNavOpen}
+        toggleSubnav={() => setUserSubNavOpen((isOpen) => !isOpen)}
+      />
     </header>
   );
 };

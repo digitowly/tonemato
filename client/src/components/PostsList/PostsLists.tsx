@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import { ListPostsQuery } from '../../generated/types';
 import LIST_POSTS from '../../graphql/queries/ListPosts.graphql';
-import SubmitButton, { ButtonSize } from '../Buttons/SubmitButton/SubmitButton';
+import PrimaryButton from '../Buttons/PrimaryButton/PrimaryButton';
 import Post from '../Post/Post';
 import BandPostsList from './BandPostsList';
 import style from './PostsList.module.scss';
@@ -13,7 +13,7 @@ const PostsList: React.FC = () => {
     <div className={style['posts-list']}>
       <div className={style['posts-list__header']}>
         <h1>Posts</h1>
-        <SubmitButton size={ButtonSize.large} value='create' />
+        <PrimaryButton label='create' />
       </div>
       {data?.posts.map((post) => (
         <Post

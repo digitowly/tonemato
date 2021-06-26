@@ -1,28 +1,38 @@
 import styles from './ProfileNavigation.module.scss';
-import { useSession } from 'next-auth/client';
-import { useState } from 'react';
+import { signIn } from 'next-auth/client';
+import { Session } from 'next-auth';
 
-const ProfileNavigation: React.FC = () => {
-  const [session] = useSession();
-  const [subnav, setSubnav] = useState(false);
+interface ProfileNavigationProps {
+  session: Session;
+  subNavOpen: boolean;
+  toggleSubnav: () => void;
+}
+
+const ProfileNavigation: React.FC<ProfileNavigationProps> = ({
+  session,
+  subNavOpen,
+  toggleSubnav,
+}) => {
   return (
     <>
       <div className={styles['profile-nav']}>
         {session ? (
-          <div onClick={() => setSubnav(!subnav)}>
+          <div onClick={() => toggleSubnav()}>
             <img src={session.user.image} />
           </div>
         ) : (
-          <button>login</button>
+          <button onClick={() => signIn()}>login</button>
         )}
       </div>
-      {subnav && (
+      {subNavOpen && (
         <div className={styles['profile-nav__subnav']}>
-          <ul>
-            <li>profile</li>
-            <li>settings</li>
-            <li>sign out</li>
-          </ul>
+          <div className={styles['profile-nav__subnav__inner']}>
+            <ul>
+              <li>profile</li>
+              <li>settings</li>
+              <li>sign out</li>
+            </ul>
+          </div>
         </div>
       )}
     </>

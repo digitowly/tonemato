@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from 'formik';
-import SubmitButton from '../Buttons/SubmitButton/SubmitButton';
+import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
 import FormWrapper from '../Forms/FormWrapper/FormWrapper';
 import styles from './PostsFilter.module.scss';
 
@@ -18,7 +18,7 @@ const PostsFilter: React.FC = () => {
                 <option value='drums'>Drums</option>
                 <option value='bass'>Bass</option>
               </Field>
-              <SubmitButton value='submit' />
+              <SecondaryButton label='submit' />
             </Form>
           </Formik>
         </div>
