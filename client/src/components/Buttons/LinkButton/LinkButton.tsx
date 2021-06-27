@@ -1,26 +1,21 @@
-import Link from 'next/link';
+import { ComponentType } from 'react';
+import { css } from 'styled-components';
+import { colors } from '../../../styles/globals';
+import BaseButton, { withButton } from '../BaseButton/BaseButton';
 import LinkButtonArrow from './LinkButtonArrow';
-import styles from './LinkButton.module.scss';
-interface LinkButtonProps {
-  value?: string;
-  arrowRight?: boolean;
-}
 
-const LinkButton: React.FC<LinkButtonProps> = ({
-  children,
-  value = 'more',
-  arrowRight = true,
-}) => {
-  return (
-    <div className={styles['link-button']}>
-      <Link href='/'>
-        <div className={styles['link-button__inner']}>
-          <a>{children ? children : value}</a>
-          {arrowRight && <LinkButtonArrow />}
-        </div>
-      </Link>
-    </div>
-  );
-};
+const LinkButton: ComponentType<any> = withButton(
+  BaseButton,
+  css`
+    background-color: transparent;
+    color: ${colors.highlight};
+    padding: 0%;
+
+    svg:last-child {
+      margin-left: 0.75rem;
+    }
+  `,
+  { after: <LinkButtonArrow /> }
+);
 
 export default LinkButton;

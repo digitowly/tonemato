@@ -1,6 +1,7 @@
 import styles from './ProfileNavigation.module.scss';
 import { signIn } from 'next-auth/client';
 import { Session } from 'next-auth';
+import SecondaryButton from '../../Buttons/SecondaryButton/SecondaryButton';
 
 interface ProfileNavigationProps {
   session: Session;
@@ -21,7 +22,7 @@ const ProfileNavigation: React.FC<ProfileNavigationProps> = ({
             <img src={session.user.image} />
           </div>
         ) : (
-          <button onClick={() => signIn()}>login</button>
+          <SecondaryButton label='login' onClick={() => signIn()} />
         )}
       </div>
       {subNavOpen && (

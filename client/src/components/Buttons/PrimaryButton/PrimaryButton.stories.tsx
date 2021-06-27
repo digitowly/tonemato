@@ -1,4 +1,5 @@
 import PrimaryButton from './PrimaryButton';
+PrimaryButton.displayName = 'PrimaryButton';
 
 export default {
   title: 'Components/Elements/Buttons/Primary',
@@ -9,7 +10,6 @@ export default {
 const Template = (args) => <PrimaryButton {...args} />;
 
 export const Primary = Template.bind({});
-Primary.displayName = 'PrimaryButton';
 Primary.args = {
   label: 'Primary Button',
 };

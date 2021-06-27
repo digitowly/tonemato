@@ -1,9 +1,9 @@
+import { ComponentType } from 'react';
 import { css } from 'styled-components';
 import { colors } from '../../../styles/globals';
-import BaseButton, { render } from '../BaseButton/BaseButton';
+import BaseButton, { withButton } from '../BaseButton/BaseButton';
 
-// Primary Button
-export default render(
+const PrimaryButton: ComponentType<any> = withButton(
   BaseButton,
   css`
     background-color: ${colors.highlight};
@@ -11,3 +11,5 @@ export default render(
     font-weight: bold;
   `
 );
+
+export default PrimaryButton;

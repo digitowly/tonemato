@@ -1,12 +1,15 @@
+import { ComponentType } from 'react';
 import { css } from 'styled-components';
-import BaseButton, { render } from '../BaseButton/BaseButton';
+import BaseButton, { withButton } from '../BaseButton/BaseButton';
 
-export default render(
+const SecondaryButton: ComponentType<any> = withButton(
   BaseButton,
   css`
-    background-color: lightgray;
+    background-color: #f2f2f2;
     color: black;
     font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 1.25rem;
   `
 );
+
+export default SecondaryButton;

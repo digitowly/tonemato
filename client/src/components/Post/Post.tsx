@@ -1,4 +1,6 @@
+import React from 'react';
 import { User } from '../../generated/types';
+import LinkButton from '../Buttons/LinkButton/LinkButton';
 import styles from './Post.module.scss';
 
 interface PostProps {
@@ -18,6 +20,7 @@ const Post: React.FC<PostProps> = ({ title, body, author }) => {
       </div>
       <h2>{title}</h2>
       <p>{body}</p>
+      <LinkButton label='more' />
     </div>
   );
 };

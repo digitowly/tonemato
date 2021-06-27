@@ -1,4 +1,5 @@
 import SecondaryButton from './SecondaryButton';
+SecondaryButton.displayName = 'SecondaryButton';
 
 export default {
   title: 'Components/Elements/Buttons/Secondary',
