@@ -1,8 +1,9 @@
-@use '../../styles/_colors.scss';
+import styled from 'styled-components';
+import { colors } from '../../styles/globals';
 
-.header {
+export const Header = styled.header`
   align-items: center;
-  background: colors.$lightgrey;
+  background: ${colors.lighgrey};
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   height: 80px;
@@ -25,4 +26,4 @@
   img {
     cursor: pointer;
   }
-}
+`;

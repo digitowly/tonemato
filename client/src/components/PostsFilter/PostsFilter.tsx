@@ -1,14 +1,14 @@
 import { Formik, Form, Field } from 'formik';
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
 import FormWrapper from '../Forms/FormWrapper/FormWrapper';
-import styles from './PostsFilter.module.scss';
+import * as S from './PostsFilter.style';
 
 const PostsFilter: React.FC = () => {
   return (
     <div>
       <h1>Search</h1>
       <FormWrapper>
-        <div className={styles['posts-filter']}>
+        <S.FilterWrapper>
           <Formik
             initialValues={{ instrument: 'guitar' }}
             onSubmit={(values) => console.log(values)}>
@@ -21,7 +21,7 @@ const PostsFilter: React.FC = () => {
               <SecondaryButton label='submit' />
             </Form>
           </Formik>
-        </div>
+        </S.FilterWrapper>
       </FormWrapper>
     </div>
   );
