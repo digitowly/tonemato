@@ -1,8 +1,8 @@
-import { ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 import { css } from 'styled-components';
 import { colors } from '../../../styles/globals';
 import BaseButton, { withButton } from '../BaseButton/BaseButton';
-import LinkButtonArrow from './LinkButtonArrow';
+import ArrowRight from '../../../icons/ArrowRight';
 
 const LinkButton: ComponentType<any> = withButton(
   BaseButton,
@@ -12,10 +12,19 @@ const LinkButton: ComponentType<any> = withButton(
     padding: 0%;
 
     svg:last-child {
-      margin-left: 0.75rem;
+      margin-left: 0.3rem;
     }
   `,
-  { after: <LinkButtonArrow /> }
+  {
+    after: (
+      <ArrowRight
+        fill={colors.highlight}
+        customStyle={css`
+          transform: scale(0.6);
+        `}
+      />
+    ),
+  }
 );
 
 export default LinkButton;
