@@ -1,1 +1,0 @@
-export { BandPostSearchTypesArgs } from "./BandPostSearchTypesArgs";
