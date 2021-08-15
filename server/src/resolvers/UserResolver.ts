@@ -1,6 +1,22 @@
 import { compare, hash } from 'bcryptjs';
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
+} from 'type-graphql';
+import { createAccessToken, createRefreshToken } from '../auth';
 import { User } from '../entities/UserEntity';
+import { AppContext } from '../types';
+
+@ObjectType()
+class LoginResponse {
+  @Field()
+  accessToken: string;
+}
 
 @Resolver()
 export class UserResolver {
@@ -9,8 +25,12 @@ export class UserResolver {
     return User.find();
   }
 
-  @Query(() => User)
-  async login(@Arg('email') email: string, @Arg('password') password: string) {
+  @Query(() => LoginResponse)
+  async login(
+    @Arg('email') email: string,
+    @Arg('password') password: string,
+    @Ctx() { res }: AppContext
+  ) {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -23,7 +43,11 @@ export class UserResolver {
       throw new Error('invalid password');
     }
 
-    return user;
+    res.cookie('jid', createRefreshToken(user), { httpOnly: true });
+
+    return {
+      accessToken: createAccessToken(user),
+    };
   }
 
   @Mutation(() => Boolean)
