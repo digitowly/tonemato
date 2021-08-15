@@ -1,28 +1,26 @@
 import styles from './ProfileNavigation.module.scss';
-import { signIn } from 'next-auth/client';
 import { Session } from 'next-auth';
 import SecondaryButton from '../../Buttons/SecondaryButton/SecondaryButton';
 
 interface ProfileNavigationProps {
-  session: Session;
   subNavOpen: boolean;
   toggleSubnav: () => void;
 }
 
 const ProfileNavigation: React.FC<ProfileNavigationProps> = ({
-  session,
   subNavOpen,
   toggleSubnav,
 }) => {
+  let loggedIn = false;
   return (
     <>
       <div className={styles['profile-nav']}>
-        {session ? (
+        {loggedIn ? (
           <div onClick={() => toggleSubnav()}>
-            <img src={session.user.image} />
+            {/* <img src={session.user.image} /> */}
           </div>
         ) : (
-          <SecondaryButton label='login' onClick={() => signIn()} />
+          <SecondaryButton label='login' onClick={() => {}} />
         )}
       </div>
       {subNavOpen && (

@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  client:
-    container_name: tonemato_client
+  web:
+    container_name: tonemato_web
     build:
-      context: ./client
+      context: ./web
     ports:
       - 3000:3000
     volumes:
-      - ./client:/usr/src/app
+      - ./web:/usr/src/app
     command: npm run dev
 
   server:
