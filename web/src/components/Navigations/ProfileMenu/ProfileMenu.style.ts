@@ -26,7 +26,7 @@ export const SubnavWrapper = styled.div`
 `;
 
 export const SubnavInner = styled.div`
-  animation: slideIn 0.15s;
+  animation: slideIn 0.2s;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   position: relative;
