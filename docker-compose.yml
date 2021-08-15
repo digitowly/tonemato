@@ -19,7 +19,7 @@ services:
       - 8080:8080
     volumes:
       - ./server:/usr/src/app
-    command: npm run dev
+    command: npm start
 
   db:
     container_name: tonemato_db
