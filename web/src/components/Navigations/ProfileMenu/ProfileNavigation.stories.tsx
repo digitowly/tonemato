@@ -1,12 +1,12 @@
-import ProfileNavigation from './ProfileNavigation';
+import { ProfileMenu } from './ProfileMenu.style';
 
 export default {
   title: 'Components/Header/ProfileNavigation',
-  component: ProfileNavigation,
+  component: ProfileMenu,
   argTypes: { onClick: { action: 'clicked' } },
 };
 
-const Template = (args) => <ProfileNavigation {...args} />;
+const Template = (args) => <ProfileMenu {...args} />;
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {

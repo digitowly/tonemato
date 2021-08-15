@@ -3,4 +3,6 @@ export const colors = Object.freeze({
   primary: '#55c79e',
   lighgrey: '#f8f8f8',
   white: 'white',
+  clash: '#55c79e',
+  who: '#5855c7',
 });

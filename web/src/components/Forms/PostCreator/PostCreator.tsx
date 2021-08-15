@@ -1,28 +1,12 @@
-import FormWrapper from '../FormWrapper/FormWrapper';
+import { FormWrapper } from '../FormWrapper/FormWrapper.style';
 import { Formik, Form, Field } from 'formik';
-import { useMutation } from '@apollo/client';
-import CREATE_POST from '../../../graphql/mutations/CreatePost.graphql';
 
 const PostCreator: React.FC = () => {
-  const [createPost] = useMutation(CREATE_POST);
-  let session = true;
   return (
     <FormWrapper>
       <Formik
         initialValues={{ title: '', body: '' }}
-        onSubmit={({ title, body }) => {
-          if (session) {
-            createPost({
-              variables: {
-                title,
-                body,
-                author: { connect: { email: '' } },
-              },
-            });
-          } else {
-            console.log('you are not logged in');
-          }
-        }}>
+        onSubmit={({ title, body }) => {}}>
         <Form>
           <Field type='text' name='title' />
           <Field type='text' name='body' />

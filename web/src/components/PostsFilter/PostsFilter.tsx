@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import React, { useReducer } from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
-import FormWrapper from '../Forms/FormWrapper/FormWrapper';
+import { FormWrapper } from '../Forms/FormWrapper/FormWrapper.style';
 import FilterTabs from './FilterTabs';
 import * as S from './PostsFilter.style';
 import {

@@ -1,5 +1,5 @@
 import Header from './Header';
-import * as ProfileNavigation from '../Navigations/ProfileNavigation/ProfileNavigation.stories';
+import * as ProfileNavigation from '../Navigations/ProfileMenu/ProfileNavigation.stories';
 
 export default {
   title: 'Components/Header/Header',

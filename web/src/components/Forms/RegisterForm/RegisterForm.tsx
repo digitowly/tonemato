@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import { useEffect } from 'react';
-import FormWrapper from '../FormWrapper/FormWrapper';
+import { FormWrapper } from '../FormWrapper/FormWrapper.style';
 import {
   useCreateNewUserMutation,
   useListUsersQuery,
