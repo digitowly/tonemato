@@ -3,13 +3,21 @@ import {
   Arg,
   Ctx,
   Field,
+  Int,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  UseMiddleware,
 } from 'type-graphql';
-import { createAccessToken, createRefreshToken } from '../auth';
+import { getConnection } from 'typeorm';
+import {
+  createAccessToken,
+  createRefreshToken,
+  sendRefreshToken,
+} from '../auth';
 import { User } from '../entities/UserEntity';
+import { isAuth } from '../middleware/isAuth';
 import { AppContext } from '../types';
 
 @ObjectType()
@@ -25,6 +33,23 @@ export class UserResolver {
     return User.find();
   }
 
+  @Query(() => String)
+  @UseMiddleware(isAuth)
+  secretConent(@Ctx() { payload }: AppContext) {
+    return 'this is a secret!' + payload.userId;
+  }
+
+  // REVOKE REFRESH TOKENS
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(@Arg('userId', () => Int) userId: number) {
+    await getConnection()
+      .getRepository(User)
+      .increment({ id: userId }, 'tokenVersion', 1);
+
+    return true;
+  }
+
+  // LOGIN
   @Query(() => LoginResponse)
   async login(
     @Arg('email') email: string,
@@ -43,6 +68,8 @@ export class UserResolver {
       throw new Error('invalid password');
     }
 
+    sendRefreshToken(res, user);
+
     res.cookie('jid', createRefreshToken(user), { httpOnly: true });
 
     return {
@@ -50,6 +77,7 @@ export class UserResolver {
     };
   }
 
+  // REGISTER
   @Mutation(() => Boolean)
   async register(
     @Arg('email') email: string,
@@ -73,6 +101,7 @@ export class UserResolver {
     }
   }
 
+  // REMOVE USER
   @Mutation(() => Boolean)
   async remove(@Arg('id') id: number) {
     const userToRemove = await User.findOne({ where: { id } });

@@ -8,7 +8,7 @@ import { UserResolver } from './resolvers/UserResolver';
 import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
 import { User } from './entities/UserEntity';
-import { createAccessToken } from './auth';
+import { createAccessToken, sendRefreshToken } from './auth';
 
 (async () => {
   const app = express();
@@ -31,12 +31,11 @@ import { createAccessToken } from './auth';
   });
 
   app.post('/refresh_token', async (req, res) => {
-    console.log(req.cookies);
     const token = req.cookies.jid;
 
     //check if cookie has valid refresh token
     if (!token) {
-      res.send({ ok: false, accessToken: '' });
+      return res.send({ ok: false, accessToken: '' });
     }
 
     let payload = null;
@@ -51,6 +50,16 @@ import { createAccessToken } from './auth';
     // if valid refresh token
     // return new access token
     const user = await User.findOne({ id: payload.userId });
+
+    if (!user) {
+      return res.send({ ok: false, accessToken: '' });
+    }
+
+    if (user.tokenVersion !== payload.tokenVersion) {
+      return res.send({ ok: false, accessToken: '' });
+    }
+
+    sendRefreshToken(res, user);
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
