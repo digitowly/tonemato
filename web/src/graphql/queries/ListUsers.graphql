@@ -1,7 +1,6 @@
-query listUsers {
+query ListUsers {
   users {
     id
-    name
     email
   }
 }

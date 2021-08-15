@@ -2,12 +2,10 @@ import FormWrapper from '../FormWrapper/FormWrapper';
 import { Formik, Form, Field } from 'formik';
 import { useMutation } from '@apollo/client';
 import CREATE_POST from '../../../graphql/mutations/CreatePost.graphql';
-import { useSession } from 'next-auth/client';
 
 const PostCreator: React.FC = () => {
   const [createPost] = useMutation(CREATE_POST);
-  const [session] = useSession();
-
+  let session = true;
   return (
     <FormWrapper>
       <Formik
@@ -18,7 +16,7 @@ const PostCreator: React.FC = () => {
               variables: {
                 title,
                 body,
-                author: { connect: { email: session.user.email } },
+                author: { connect: { email: '' } },
               },
             });
           } else {

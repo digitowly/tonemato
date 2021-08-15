@@ -1,7 +1,10 @@
-schema: ${GRAPHQL_API_DOCKER}
+schema: ${GRAPHQL_API}
 documents: ./src/**/*.graphql
 generates:
-  ./src/generated/types.d.ts:
+  ./src/generated/codegen_types.ts:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true

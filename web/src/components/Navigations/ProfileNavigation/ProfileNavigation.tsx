@@ -1,5 +1,4 @@
 import styles from './ProfileNavigation.module.scss';
-import { Session } from 'next-auth';
 import SecondaryButton from '../../Buttons/SecondaryButton/SecondaryButton';
 
 interface ProfileNavigationProps {
