@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import 'reflect-metadata';
+import cors from 'cors';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { createConnection } from 'typeorm';
@@ -12,7 +13,7 @@ import { createAccessToken, sendRefreshToken } from './auth';
 
 (async () => {
   const app = express();
-
+  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
   app.use(cookieParser());
 
   await createConnection();
@@ -24,7 +25,7 @@ import { createAccessToken, sendRefreshToken } from './auth';
     context: ({ req, res }) => ({ req, res }),
   });
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.get('/', (_req, res) => {
     res.send('hello from tonemato');
