@@ -24,7 +24,7 @@ interface ButtonIcon {
   after?: ReactElement<any, any>;
 }
 
-interface BottonProps {
+interface BottonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ButtonIcon;
   customStyle: FlattenSimpleInterpolation;
   label: string;
@@ -36,9 +36,10 @@ const Button: React.FC<BottonProps> = ({
   customStyle,
   icon,
   onClick,
+  ...props
 }) => {
   return (
-    <BaseButton customStyle={customStyle} onClick={onClick}>
+    <BaseButton customStyle={customStyle} onClick={onClick} {...props}>
       {icon && icon.before && icon.before}
       {label}
       {icon && icon.after && icon.after}
