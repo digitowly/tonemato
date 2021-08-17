@@ -32,7 +32,7 @@ export const SubnavInner = styled.div`
   position: relative;
   min-width: 200px;
   background: ${colors.white};
-  border: 1px solid ${colors.lighgrey};
+  border: 1px solid ${colors.lightgrey};
   box-shadow: 0px 8px 11px rgba(0, 0, 0, 0.1);
   z-index: 50;
 

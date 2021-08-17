@@ -1,4 +1,4 @@
-import { FormWrapper } from '../FormWrapper/FormWrapper.style';
+import { FormWrapper } from '../FormComponents/FormWrapper.style';
 import { Formik, Form, Field } from 'formik';
 
 const PostCreator: React.FC = () => {

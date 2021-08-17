@@ -3,7 +3,7 @@ import { colors } from '../../styles/globals';
 
 export const Header = styled.header`
   align-items: center;
-  background: ${colors.lighgrey};
+  background: ${colors.lightgrey};
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   height: 80px;
