@@ -5,6 +5,7 @@ import PrimaryButton from '../../Buttons/PrimaryButton/PrimaryButton';
 import LinkButton from '../../Buttons/LinkButton/LinkButton';
 import { useRouter } from 'next/router';
 import { useLoginUserMutation } from '../../../generated/codegen_types';
+import { setAccessToken } from '../../../accessToken';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const LoginForm: React.FC = () => {
         variables: { loginEmail: email, loginPassword: password },
       });
       console.log(result);
+      setAccessToken(result.data.login.accessToken);
     } catch (err) {
       console.log(err.message);
     }
