@@ -4,6 +4,7 @@ import { getAccessToken } from '../accessToken';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:8080/graphql',
+  credentials: 'include',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -17,10 +18,9 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:8080/graphql',
+  ssrMode: typeof window === 'undefined',
   cache: new InMemoryCache(),
   connectToDevTools: true,
-  credentials: 'include',
   link: authLink.concat(httpLink),
 });
 
