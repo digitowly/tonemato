@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
-import { addApolloState, initializeApollo } from '../apollo/apolloClientTest';
+import { addApolloState, initializeApollo } from '../lib/apollo';
 import PostCreator from '../components/Forms/PostCreator/PostCreator';
 import Layout from '../components/Layout/Layout';
 import PostsView from '../components/PostsView/PostsView';

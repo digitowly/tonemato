@@ -1,7 +1,7 @@
 import '../styles/globals.scss';
 import { ApolloProvider } from '@apollo/client';
 
-import { useApollo } from '../apollo/apolloClientTest';
+import { useApollo } from '../lib/apollo';
 
 function App({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps);
