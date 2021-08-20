@@ -19,25 +19,25 @@ const PostsPage: React.FC = () => {
   );
 };
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const client = initializeApollo(null, context);
+// export const getServerSideProps = async (
+//   context: GetServerSidePropsContext
+// ) => {
+//   const client = initializeApollo(null, context);
 
-  try {
-    const response = await client.query({
-      query: SECRET,
-    });
-    console.log('RESP:', response.data);
-    return addApolloState(client, {
-      props: {},
-    });
-  } catch (err) {
-    console.log('Error:', err.message);
-    return {
-      props: {},
-    };
-  }
-};
+//   try {
+//     const response = await client.query({
+//       query: SECRET,
+//     });
+//     console.log('RESP:', response.data);
+//     return addApolloState(client, {
+//       props: {},
+//     });
+//   } catch (err) {
+//     console.log('Error:', err.message);
+//     return {
+//       props: {},
+//     };
+//   }
+// };
 
 export default PostsPage;

@@ -31,8 +31,8 @@ const createApolloClient = (ctx?: GetServerSidePropsContext) => {
   const httpLink = new HttpLink({
     uri:
       typeof window === 'undefined'
-        ? 'http://server:8080/graphql'
-        : 'http://localhost:8080/graphql',
+        ? process.env.NEXT_PUBLIC_GRAPHQL_API_CONTAINER
+        : process.env.NEXT_PUBLIC_GRAPHQL_API,
     credentials: 'include',
   });
 
@@ -43,12 +43,26 @@ const createApolloClient = (ctx?: GetServerSidePropsContext) => {
     let accessToken = '';
     if (isServer()) {
       try {
-        const result = await fetch('http://server:8080/refresh_token', {
+        const result = await fetch(
+          process.env.NEXT_PUBLIC_API_CONTAINER_REFRESH_TOKEN,
+          {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              cookie: 'jid=' + refreshToken,
+            },
+          }
+        );
+        const data = await result.json();
+        accessToken = data.accessToken ? data.accessToken : '';
+      } catch (err) {
+        console.log(err.message);
+      }
+    } else {
+      try {
+        const result = await fetch(process.env.NEXT_PUBLIC_API_REFRESH_TOKEN, {
           method: 'POST',
           credentials: 'include',
-          headers: {
-            cookie: 'jid=' + refreshToken,
-          },
         });
         const data = await result.json();
         accessToken = data.accessToken ? data.accessToken : '';

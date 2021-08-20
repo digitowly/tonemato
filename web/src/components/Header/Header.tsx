@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useAuthedUserQuery } from '../../generated/codegen_types';
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
 import ProfileMenu from '../Navigations/ProfileMenu/ProfileMenu';
 import * as S from './Header.style';
 
 const Header: React.FC = () => {
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-  let loggedIn = false;
+  const { data, loading, error } = useAuthedUserQuery();
+
   return (
     <>
       <S.Header>
@@ -18,9 +20,10 @@ const Header: React.FC = () => {
           <Link href='/posts'>posts</Link>
         </nav>
         <div>
-          {loggedIn ? (
-            <div onClick={() => {}}>
+          {data && data.authedUser ? (
+            <div onClick={() => setProfileMenuOpen((sn) => !sn)}>
               {/* <img src={session.user.image} /> */}
+              {data.authedUser.email}
             </div>
           ) : (
             <SecondaryButton
@@ -28,7 +31,7 @@ const Header: React.FC = () => {
               onClick={() => setProfileMenuOpen((sn) => !sn)}
             />
           )}
-          {isProfileMenuOpen && <ProfileMenu />}
+          {isProfileMenuOpen && <ProfileMenu userData={data} />}
         </div>
       </S.Header>
     </>
