@@ -4,11 +4,11 @@ import FormField from '../FormComponents/FormField/FormField';
 import PrimaryButton from '../../Buttons/PrimaryButton/PrimaryButton';
 import LinkButton from '../../Buttons/LinkButton/LinkButton';
 import { useRouter } from 'next/router';
-import { useLogin } from '../../../hooks/useLogin';
+import { useLogin } from '../../../hooks/auth/useLogin';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
-  const { handleLogin } = useLogin();
+  const { handleLogin, isLoading } = useLogin();
 
   return (
     <Formik initialValues={{ email: '', password: '' }} onSubmit={handleLogin}>
@@ -32,6 +32,7 @@ const LoginForm: React.FC = () => {
             label='sign up'
             onClick={() => router.push('/register')}
           />
+          {isLoading && <p>loading</p>}
         </Form>
       )}
     </Formik>

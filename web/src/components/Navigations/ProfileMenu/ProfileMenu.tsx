@@ -1,20 +1,17 @@
 import React from 'react';
 import * as S from './ProfileMenu.style';
 import LoginForm from '../../Forms/LoginForm/LoginForm';
-import { AuthedUserQuery } from '../../../generated/codegen_types';
-import { useLogout } from '../../../hooks/useLogout';
+import { useLogout } from '../../../hooks/auth/useLogout';
+import { useAuth } from '../../../hooks/auth/useAuth';
 
-interface ProfileMenuProps {
-  userData: AuthedUserQuery;
-}
-
-const ProfileMenu: React.FC<ProfileMenuProps> = ({ userData }) => {
+const ProfileMenu: React.FC = () => {
   const { handleLogout } = useLogout();
+  const { isAuth } = useAuth();
   return (
     <S.ProfileMenu>
       <S.SubnavWrapper>
         <S.SubnavInner>
-          {userData.authedUser ? (
+          {isAuth ? (
             <ul>
               <li>profile</li>
               <li>settings</li>

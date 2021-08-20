@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import {
   AuthedUserDocument,
   AuthedUserQuery,
   useLoginUserMutation,
-} from '../generated/codegen_types';
+} from '../../generated/codegen_types';
 
 export function useLogin() {
   const [loginUser] = useLoginUserMutation();
+  const [isLoading, setLoading] = useState(false);
 
   const handleLogin = async ({ email, password }) => {
+    setLoading(true);
     try {
       await loginUser({
         variables: { loginEmail: email, loginPassword: password },
@@ -23,9 +26,11 @@ export function useLogin() {
     } catch (err) {
       console.log(err.message);
     }
+    setLoading(false);
   };
 
   return {
     handleLogin,
+    isLoading,
   };
 }

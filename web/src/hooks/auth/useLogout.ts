@@ -1,4 +1,4 @@
-import { useLogoutUserMutation } from '../generated/codegen_types';
+import { useLogoutUserMutation } from '../../generated/codegen_types';
 
 export function useLogout() {
   const [logoutUser, { client }] = useLogoutUserMutation();

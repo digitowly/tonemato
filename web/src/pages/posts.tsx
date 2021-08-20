@@ -8,11 +8,11 @@ import { useSecretQuery } from '../generated/codegen_types';
 import SECRET from '../graphql/queries/Secret.graphql';
 
 const PostsPage: React.FC = () => {
-  const { data, loading, error } = useSecretQuery();
+  //   const { data, loading, error } = useSecretQuery();
 
   return (
     <Layout>
-      <p>{data && data.secretConent}</p>
+      {/* <p>{data && data.secretConent}</p> */}
       <PostCreator />
       <PostsView />
     </Layout>
