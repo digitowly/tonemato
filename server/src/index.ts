@@ -9,11 +9,17 @@ import { UserResolver } from './resolvers/UserResolver';
 import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
 import { User } from './entities/UserEntity';
-import { createAccessToken, sendRefreshToken } from './auth';
+import {
+  createAccessToken,
+  createRefreshToken,
+  sendRefreshToken,
+} from './auth';
+
+const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com'];
 
 (async () => {
   const app = express();
-  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+  app.use(cors({ origin: whitelist, credentials: true }));
   app.use(cookieParser());
 
   await createConnection();
@@ -53,19 +59,21 @@ import { createAccessToken, sendRefreshToken } from './auth';
     const user = await User.findOne({ id: payload.userId });
 
     if (!user) {
+      console.log('no user found');
       return res.send({ ok: false, accessToken: '' });
     }
 
     if (user.tokenVersion !== payload.tokenVersion) {
-      return res.send({ ok: false, accessToken: '' });
+      console.log('mismatching token versions');
+      //   return res.send({ ok: false, accessToken: '' });
     }
 
-    sendRefreshToken(res, user);
+    sendRefreshToken(res, createRefreshToken(user));
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
   app.listen(8080, () => {
-    console.log('🚀 tonemato server is running! 🍅');
+    console.log('🍅 tonemato server is running! 🚀');
   });
 })();

@@ -1,4 +1,5 @@
 import { compare, hash } from 'bcryptjs';
+import { verify } from 'jsonwebtoken';
 import {
   Arg,
   Ctx,
@@ -24,15 +25,40 @@ import { AppContext } from '../types';
 class LoginResponse {
   @Field()
   accessToken: string;
+
+  @Field(() => User)
+  user: User;
 }
 
 @Resolver()
 export class UserResolver {
+  //USERS
   @Query(() => [User])
   users() {
     return User.find();
   }
 
+  //AUTHED USER
+  @Query(() => User, { nullable: true })
+  authedUser(@Ctx() context: AppContext) {
+    const authorization = context.req.headers.authorization;
+
+    if (!authorization) {
+      console.log('failed auth');
+      return null;
+    }
+
+    try {
+      const token = authorization.split(' ')[1];
+      const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET);
+      return User.findOne(payload.userId);
+    } catch (err) {
+      console.log(err.message);
+      return null;
+    }
+  }
+
+  // TEST SECRET
   @Query(() => String)
   @UseMiddleware(isAuth)
   secretConent(@Ctx() { payload }: AppContext) {
@@ -68,13 +94,21 @@ export class UserResolver {
       throw new Error('invalid password');
     }
 
-    sendRefreshToken(res, user);
+    sendRefreshToken(res, createRefreshToken(user));
 
     res.cookie('jid', createRefreshToken(user), { httpOnly: true });
 
     return {
       accessToken: createAccessToken(user),
+      user,
     };
+  }
+
+  //LOGOUT
+  @Mutation(() => Boolean)
+  async logout(@Ctx() { res }: AppContext) {
+    sendRefreshToken(res, '');
+    return true;
   }
 
   // REGISTER
