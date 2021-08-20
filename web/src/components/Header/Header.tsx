@@ -1,13 +1,17 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useAuthedUserQuery } from '../../generated/codegen_types';
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
 import ProfileMenu from '../Navigations/ProfileMenu/ProfileMenu';
 import * as S from './Header.style';
 
 const Header: React.FC = () => {
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-  const { data, loading, error } = useAuthedUserQuery();
+  const { data } = useAuthedUserQuery();
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+
+  useDetectOutsideClick(profileMenuRef, () => setProfileMenuOpen(false));
 
   return (
     <>
@@ -19,7 +23,7 @@ const Header: React.FC = () => {
         <nav>
           <Link href='/posts'>posts</Link>
         </nav>
-        <div>
+        <div ref={profileMenuRef}>
           {data && data.authedUser ? (
             <div onClick={() => setProfileMenuOpen((sn) => !sn)}>
               {/* <img src={session.user.image} /> */}
