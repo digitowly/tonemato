@@ -19,12 +19,22 @@ export type Query = {
   users: Array<User>;
   authedUser?: Maybe<User>;
   secretConent: Scalars['String'];
+  posts: Array<Post>;
 };
 
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+  posts: Array<Post>;
+};
+
+export type Post = {
+  __typename?: 'Post';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  body: Scalars['String'];
+  author: User;
 };
 
 export type Mutation = {
@@ -34,6 +44,8 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   register: Scalars['Boolean'];
   remove: Scalars['Boolean'];
+  createPost: Post;
+  deletePost: Scalars['Boolean'];
 };
 
 
@@ -58,11 +70,42 @@ export type MutationRemoveArgs = {
   id: Scalars['Float'];
 };
 
+
+export type MutationCreatePostArgs = {
+  authorId: Scalars['Float'];
+  body: Scalars['String'];
+  title: Scalars['String'];
+};
+
+
+export type MutationDeletePostArgs = {
+  postId: Scalars['Float'];
+};
+
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   accessToken: Scalars['String'];
   user: User;
 };
+
+export type CreatePostMutationVariables = Exact<{
+  title: Scalars['String'];
+  body: Scalars['String'];
+  authorId: Scalars['Float'];
+}>;
+
+
+export type CreatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { createPost: (
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'title' | 'body'>
+    & { author: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email'>
+    ) }
+  ) }
+);
 
 export type CreateNewUserMutationVariables = Exact<{
   registerPassword: Scalars['String'];
@@ -112,6 +155,21 @@ export type AuthedUserQuery = (
   )> }
 );
 
+export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListPostsQuery = (
+  { __typename?: 'Query' }
+  & { posts: Array<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'title' | 'body'>
+    & { author: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email'>
+    ) }
+  )> }
+);
+
 export type ListUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -132,6 +190,47 @@ export type SecretQuery = (
 );
 
 
+export const CreatePostDocument = gql`
+    mutation CreatePost($title: String!, $body: String!, $authorId: Float!) {
+  createPost(title: $title, body: $body, authorId: $authorId) {
+    id
+    title
+    body
+    author {
+      id
+      email
+    }
+  }
+}
+    `;
+export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      body: // value for 'body'
+ *      authorId: // value for 'authorId'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, options);
+      }
+export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
+export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
+export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
 export const CreateNewUserDocument = gql`
     mutation CreateNewUser($registerPassword: String!, $registerEmail: String!) {
   register(password: $registerPassword, email: $registerEmail)
@@ -267,6 +366,46 @@ export function useAuthedUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AuthedUserQueryHookResult = ReturnType<typeof useAuthedUserQuery>;
 export type AuthedUserLazyQueryHookResult = ReturnType<typeof useAuthedUserLazyQuery>;
 export type AuthedUserQueryResult = Apollo.QueryResult<AuthedUserQuery, AuthedUserQueryVariables>;
+export const ListPostsDocument = gql`
+    query ListPosts {
+  posts {
+    id
+    title
+    body
+    author {
+      id
+      email
+    }
+  }
+}
+    `;
+
+/**
+ * __useListPostsQuery__
+ *
+ * To run a query within a React component, call `useListPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListPostsQuery(baseOptions?: Apollo.QueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
+      }
+export function useListPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
+        }
+export type ListPostsQueryHookResult = ReturnType<typeof useListPostsQuery>;
+export type ListPostsLazyQueryHookResult = ReturnType<typeof useListPostsLazyQuery>;
+export type ListPostsQueryResult = Apollo.QueryResult<ListPostsQuery, ListPostsQueryVariables>;
 export const ListUsersDocument = gql`
     query ListUsers {
   users {

@@ -1,18 +1,13 @@
 import { GetServerSidePropsContext } from 'next';
-import { useEffect } from 'react';
 import { addApolloState, initializeApollo } from '../lib/apollo';
 import PostCreator from '../components/Forms/PostCreator/PostCreator';
 import Layout from '../components/Layout/Layout';
 import PostsView from '../components/PostsView/PostsView';
-import { useSecretQuery } from '../generated/codegen_types';
-import SECRET from '../graphql/queries/Secret.graphql';
+import LIST_POSTS from '../graphql/queries/ListPosts.graphql';
 
 const PostsPage: React.FC = () => {
-  //   const { data, loading, error } = useSecretQuery();
-
   return (
     <Layout>
-      {/* <p>{data && data.secretConent}</p> */}
       <PostCreator />
       <PostsView />
     </Layout>
@@ -26,11 +21,13 @@ const PostsPage: React.FC = () => {
 
 //   try {
 //     const response = await client.query({
-//       query: SECRET,
+//       query: LIST_POSTS,
 //     });
 //     console.log('RESP:', response.data);
 //     return addApolloState(client, {
-//       props: {},
+//       props: {
+//         posts: response.data,
+//       },
 //     });
 //   } catch (err) {
 //     console.log('Error:', err.message);
