@@ -14,6 +14,8 @@ import {
   createRefreshToken,
   sendRefreshToken,
 } from './auth';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { PostResolver } from './resolvers/PostResolver';
 
 const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com'];
 
@@ -26,9 +28,10 @@ const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com'];
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, PostResolver],
     }),
     context: ({ req, res }) => ({ req, res }),
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   });
   await apolloServer.start();
   apolloServer.applyMiddleware({ app, cors: false });
