@@ -1,4 +1,4 @@
-schema: ${GRAPHQL_API}
+schema: 'http://localhost:8080/graphql'
 documents: ./src/**/*.graphql
 generates:
   ./src/generated/codegen_types.ts:
