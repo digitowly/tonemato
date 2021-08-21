@@ -1,7 +1,8 @@
-import { Arg, Mutation, Query } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { Post } from '../entities/PostEntitiy';
 import { User } from '../entities/UserEntity';
 
+@Resolver()
 export class PostResolver {
   //ALL POSTS
   @Query(() => [Post])
@@ -10,7 +11,7 @@ export class PostResolver {
   }
 
   //CREATE POST
-  @Mutation(() => Boolean)
+  @Mutation(() => Post)
   async createPost(
     @Arg('title') title: string,
     @Arg('body') body: string,
@@ -18,11 +19,14 @@ export class PostResolver {
   ) {
     try {
       const author = await User.findOne(authorId);
-      await Post.insert({ title, body, author });
-      return true;
+      const post = new Post();
+      post.title = title;
+      post.body = body;
+      post.author = author;
+      await Post.insert(post);
+      return post;
     } catch (err) {
-      console.log(err.message);
-      return false;
+      throw new Error(err.message);
     }
   }
 

@@ -20,7 +20,7 @@ export class User extends BaseEntity {
   email: string;
 
   @Field(() => [Post])
-  @OneToMany(() => Post, (post) => post.author)
+  @OneToMany(() => Post, (post: Post) => post.author)
   posts: Post[];
 
   @Column()

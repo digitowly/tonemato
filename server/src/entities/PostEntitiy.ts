@@ -5,7 +5,6 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  RelationId,
 } from 'typeorm';
 import { User } from './UserEntity';
 
@@ -25,6 +24,6 @@ export class Post extends BaseEntity {
   body: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, (author) => author.posts)
+  @ManyToOne(() => User, (author: User) => author.posts)
   author: User;
 }

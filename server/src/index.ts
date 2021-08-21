@@ -37,7 +37,7 @@ const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com'];
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.get('/', (_req, res) => {
-    res.send('hello from tonemato');
+    res.send('hello from tonemato 🍅');
   });
 
   app.post('/refresh_token', async (req, res) => {
