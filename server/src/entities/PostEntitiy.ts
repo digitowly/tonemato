@@ -5,6 +5,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
 import { User } from './UserEntity';
 
@@ -23,11 +24,7 @@ export class Post extends BaseEntity {
   @Column()
   body: string;
 
-  @Field({ nullable: true })
-  @Column('int', { nullable: true })
-  authorId: number;
-
-  @Field(() => User, { nullable: true })
+  @Field(() => User)
   @ManyToOne(() => User, (author) => author.posts)
   author: User;
 }

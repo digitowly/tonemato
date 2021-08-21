@@ -35,7 +35,7 @@ export class UserResolver {
   //USERS
   @Query(() => [User])
   users() {
-    return User.find();
+    return User.find({ relations: ['posts'] });
   }
 
   //AUTHED USER

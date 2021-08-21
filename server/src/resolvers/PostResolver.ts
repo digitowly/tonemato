@@ -1,5 +1,4 @@
 import { Arg, Mutation, Query } from 'type-graphql';
-import { Connection } from 'typeorm';
 import { Post } from '../entities/PostEntitiy';
 import { User } from '../entities/UserEntity';
 
@@ -7,7 +6,7 @@ export class PostResolver {
   //ALL POSTS
   @Query(() => [Post])
   async posts() {
-    return Post.find();
+    return Post.find({ relations: ['author'] });
   }
 
   //CREATE POST
@@ -19,7 +18,7 @@ export class PostResolver {
   ) {
     try {
       const author = await User.findOne(authorId);
-      await Post.insert({ title, body, authorId });
+      await Post.insert({ title, body, author });
       return true;
     } catch (err) {
       console.log(err.message);
