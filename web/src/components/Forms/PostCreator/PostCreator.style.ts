@@ -11,3 +11,9 @@ export const PostCreatorWrapper = styled.div`
   width: 80%;
   z-index: ${depth.modal};
 `;
+
+export const PostCreatorHeader = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+`;

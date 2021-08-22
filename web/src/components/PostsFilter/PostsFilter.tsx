@@ -2,6 +2,7 @@ import { Formik, Form, Field } from 'formik';
 import React, { useReducer } from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
 import { FormWrapper } from '../Forms/FormComponents/FormWrapper.style';
+import { H1 } from '../Text/Headline';
 import FilterTabs from './FilterTabs';
 import * as S from './PostsFilter.style';
 import {
@@ -30,7 +31,7 @@ const PostsFilter: React.FC = () => {
 
   return (
     <div>
-      <h1>Search</h1>
+      <H1>Search</H1>
       <FormWrapper>
         <S.FilterWrapper>
           <FilterTabs filterTabs={filter.tabs} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import LinkButton from '../Buttons/LinkButton/LinkButton';
+import { H2 } from '../Text/Headline';
 import styles from './Post.module.scss';
 
 interface PostProps {
@@ -18,7 +19,7 @@ const Post: React.FC<PostProps> = ({ title, body, author }) => {
         {/* {author.image ? <img src={author.image} /> : <span>no image</span>} */}
         <b>{author.email}</b>
       </div>
-      <h2>{title}</h2>
+      <H2>{title}</H2>
       <p>{body}</p>
       <LinkButton label='more' />
     </div>
