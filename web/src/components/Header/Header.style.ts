@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../../styles/globals';
+import { colors, depth } from '../../styles/globals';
 
 export const Header = styled.header`
   align-items: center;
@@ -11,7 +11,7 @@ export const Header = styled.header`
   padding: 1rem 2rem;
   position: relative;
   width: 100%;
-  z-index: 100;
+  z-index: ${depth.header};
 
   div:last-child {
     display: flex;

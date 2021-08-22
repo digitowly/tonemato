@@ -1,0 +1,31 @@
+import { InMemoryCache, makeVar } from '@apollo/client';
+
+type Backdrop = {
+  display: boolean;
+  hideOnClick: boolean;
+};
+
+export const cache: InMemoryCache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        displayPostCreator: {
+          read() {
+            return displayPostCreatorVar();
+          },
+        },
+        backdrop: {
+          read() {
+            return backdropVar();
+          },
+        },
+      },
+    },
+  },
+});
+
+export const displayPostCreatorVar = makeVar<Boolean>(false);
+export const backdropVar = makeVar<Backdrop>({
+  display: false,
+  hideOnClick: false,
+});

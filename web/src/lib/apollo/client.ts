@@ -7,6 +7,8 @@ import type { NormalizedCacheObject } from '@apollo/client';
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import fetch from 'isomorphic-unfetch';
+import typeDefs from './typeDefs.graphql';
+import { cache } from './cache';
 
 interface PageProps {
   props?: Record<string, any>;
@@ -82,7 +84,8 @@ const createApolloClient = (ctx?: GetServerSidePropsContext) => {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache,
+    typeDefs,
   });
 };
 

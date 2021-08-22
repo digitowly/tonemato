@@ -1,5 +1,6 @@
 import React from 'react';
 import { useListPostsQuery } from '../../generated/codegen_types';
+import { displayPostCreatorVar } from '../../lib/apollo/cache';
 import PrimaryButton from '../Buttons/PrimaryButton/PrimaryButton';
 import Post from '../Post/Post';
 import BandPostsList from './BandPostsList';
@@ -13,7 +14,10 @@ const PostsList: React.FC = () => {
     <div className={style['posts-list']}>
       <div className={style['posts-list__header']}>
         <h1>Posts</h1>
-        <PrimaryButton label='create' />
+        <PrimaryButton
+          label='create'
+          onClick={() => displayPostCreatorVar(true)}
+        />
       </div>
       {data?.posts.map((post) => (
         <Post

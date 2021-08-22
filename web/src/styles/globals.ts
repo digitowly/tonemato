@@ -11,3 +11,10 @@ export const colors = Object.freeze({
 export const heights = Object.freeze({
   formField: 55,
 });
+
+export const depth = Object.freeze({
+  modal: 10,
+  backdrop: 8,
+  header: 5,
+  high: 3,
+});
