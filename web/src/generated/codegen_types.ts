@@ -16,10 +16,11 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  users: Array<User>;
   authedUser?: Maybe<User>;
-  secretConent: Scalars['String'];
+  displayPostCreator: Scalars['Boolean'];
   posts: Array<Post>;
+  secretConent: Scalars['String'];
+  users: Array<User>;
 };
 
 export type User = {
@@ -87,6 +88,14 @@ export type LoginResponse = {
   accessToken: Scalars['String'];
   user: User;
 };
+
+export type DisplayPostCreatorQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DisplayPostCreatorQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'displayPostCreator'>
+);
 
 export type CreatePostMutationVariables = Exact<{
   title: Scalars['String'];
@@ -190,6 +199,38 @@ export type SecretQuery = (
 );
 
 
+export const DisplayPostCreatorDocument = gql`
+    query DisplayPostCreator {
+  displayPostCreator @client
+}
+    `;
+
+/**
+ * __useDisplayPostCreatorQuery__
+ *
+ * To run a query within a React component, call `useDisplayPostCreatorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDisplayPostCreatorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDisplayPostCreatorQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDisplayPostCreatorQuery(baseOptions?: Apollo.QueryHookOptions<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>(DisplayPostCreatorDocument, options);
+      }
+export function useDisplayPostCreatorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>(DisplayPostCreatorDocument, options);
+        }
+export type DisplayPostCreatorQueryHookResult = ReturnType<typeof useDisplayPostCreatorQuery>;
+export type DisplayPostCreatorLazyQueryHookResult = ReturnType<typeof useDisplayPostCreatorLazyQuery>;
+export type DisplayPostCreatorQueryResult = Apollo.QueryResult<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>;
 export const CreatePostDocument = gql`
     mutation CreatePost($title: String!, $body: String!, $authorId: Float!) {
   createPost(title: $title, body: $body, authorId: $authorId) {
