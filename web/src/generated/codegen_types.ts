@@ -18,6 +18,7 @@ export type Query = {
   __typename?: 'Query';
   authedUser?: Maybe<User>;
   displayPostCreator: Scalars['Boolean'];
+  instruments: Array<Instrument>;
   posts: Array<Post>;
   secretConent: Scalars['String'];
   users: Array<User>;
@@ -36,6 +37,13 @@ export type Post = {
   title: Scalars['String'];
   body: Scalars['String'];
   author: User;
+};
+
+export type Instrument = {
+  __typename?: 'Instrument';
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  category: Scalars['String'];
 };
 
 export type Mutation = {
@@ -161,6 +169,17 @@ export type AuthedUserQuery = (
   & { authedUser?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'email' | 'id'>
+  )> }
+);
+
+export type ListInstrumentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListInstrumentsQuery = (
+  { __typename?: 'Query' }
+  & { instruments: Array<(
+    { __typename?: 'Instrument' }
+    & Pick<Instrument, 'id' | 'name'>
   )> }
 );
 
@@ -407,6 +426,41 @@ export function useAuthedUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AuthedUserQueryHookResult = ReturnType<typeof useAuthedUserQuery>;
 export type AuthedUserLazyQueryHookResult = ReturnType<typeof useAuthedUserLazyQuery>;
 export type AuthedUserQueryResult = Apollo.QueryResult<AuthedUserQuery, AuthedUserQueryVariables>;
+export const ListInstrumentsDocument = gql`
+    query ListInstruments {
+  instruments {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useListInstrumentsQuery__
+ *
+ * To run a query within a React component, call `useListInstrumentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListInstrumentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListInstrumentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListInstrumentsQuery(baseOptions?: Apollo.QueryHookOptions<ListInstrumentsQuery, ListInstrumentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListInstrumentsQuery, ListInstrumentsQueryVariables>(ListInstrumentsDocument, options);
+      }
+export function useListInstrumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListInstrumentsQuery, ListInstrumentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListInstrumentsQuery, ListInstrumentsQueryVariables>(ListInstrumentsDocument, options);
+        }
+export type ListInstrumentsQueryHookResult = ReturnType<typeof useListInstrumentsQuery>;
+export type ListInstrumentsLazyQueryHookResult = ReturnType<typeof useListInstrumentsLazyQuery>;
+export type ListInstrumentsQueryResult = Apollo.QueryResult<ListInstrumentsQuery, ListInstrumentsQueryVariables>;
 export const ListPostsDocument = gql`
     query ListPosts {
   posts {

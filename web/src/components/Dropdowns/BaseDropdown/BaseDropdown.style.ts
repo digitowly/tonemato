@@ -1,8 +1,9 @@
-import styled, { css } from 'styled-components';
-import { colors, depth, spaceing } from '../../../../styles/globals';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
+import { colors, depth, spaceing } from '../../../styles/globals';
 
 type FormDropdownStyle = {
   isActive: boolean;
+  customStyle?: FlattenSimpleInterpolation;
 };
 
 const dropdownColor = '#ededff';
@@ -14,7 +15,6 @@ export const FormDropdownWrapper = styled.div`
 `;
 
 export const FormDropdownInner = styled.div<FormDropdownStyle>`
-  /* background-color: ${colors.grey}; */
   background-color: ${dropdownColor};
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
@@ -25,6 +25,8 @@ export const FormDropdownInner = styled.div<FormDropdownStyle>`
     css`
       border-radius: 0.5rem 0.5rem 0 0;
     `}
+
+  ${(props) => props.customStyle}
 `;
 
 export const FromDropdownSelect = styled.div`
@@ -40,6 +42,8 @@ export const FormDropdownExpand = styled.ul<FormDropdownStyle>`
   padding: 0.5rem 1rem;
   position: absolute;
   width: inherit;
+
+  ${(props) => props.customStyle}
 `;
 
 export const FormDropdownOption = styled.li<FormDropdownStyle>`

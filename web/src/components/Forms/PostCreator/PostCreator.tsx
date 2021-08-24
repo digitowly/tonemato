@@ -9,7 +9,8 @@ import { useBackdrop } from '../../../hooks/useBackdrop';
 import React from 'react';
 import { H2 } from '../../Text/Headline';
 import FormField from '../FormComponents/FormField/FormField';
-import FormDropdown from '../FormComponents/FormDropdown/FormDropdown';
+import FormDropdown from '../../Dropdowns/BaseDropdown/BaseDropdown';
+import InstrumentsDropdown from '../../Dropdowns/InstrumentsDropdown/InstrumentsDropdown';
 
 const PostCreator: React.FC = () => {
   const { isAuth } = useAuth();
@@ -40,10 +41,7 @@ const PostCreator: React.FC = () => {
               {({ values, handleChange }) => (
                 <Form>
                   <p>I am a ... looking for ...</p>
-                  <FormDropdown
-                    name='lookingFor'
-                    options={['bass', 'guitar', 'piano']}
-                  />
+                  <InstrumentsDropdown name='lookingFor' />
                   <FormDropdown
                     name='reason'
                     options={['jamming', 'teaching', 'test 3']}
