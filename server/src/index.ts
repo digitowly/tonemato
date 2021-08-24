@@ -16,6 +16,8 @@ import {
 } from './auth';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { PostResolver } from './resolvers/PostResolver';
+import { initInstrumentInsert } from './init/init';
+import { InstrumentResolver } from './resolvers/InstrumentResolver';
 
 const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com'];
 
@@ -25,10 +27,11 @@ const whitelist = ['http://localhost:3000', 'https://studio.apollographql.com'];
   app.use(cookieParser());
 
   await createConnection();
+  //   initInstrumentInsert();
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver, PostResolver],
+      resolvers: [UserResolver, PostResolver, InstrumentResolver],
     }),
     context: ({ req, res }) => ({ req, res }),
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
