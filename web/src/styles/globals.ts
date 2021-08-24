@@ -13,6 +13,13 @@ export const heights = Object.freeze({
   formField: 55,
 });
 
+export const spaceing = Object.freeze({
+  tiny: 1,
+  small: 1.25,
+  quite: 1.5,
+  decent: 2,
+});
+
 export const depth = Object.freeze({
   modal: 10,
   backdrop: 8,

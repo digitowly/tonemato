@@ -17,8 +17,10 @@ const LoginForm: React.FC = () => {
           <FormField
             id='login-email'
             name='email'
+            type='text'
             value={values.email}
             onChange={handleChange}
+            fieldType='labeled'
           />
           <FormField
             id='login-password'
@@ -26,6 +28,7 @@ const LoginForm: React.FC = () => {
             type='password'
             value={values.password}
             onChange={handleChange}
+            fieldType='labeled'
           />
           <PrimaryButton label='login' type='submit' />
           <LinkButton
