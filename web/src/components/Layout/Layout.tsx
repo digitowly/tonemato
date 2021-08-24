@@ -1,16 +1,16 @@
 import React from 'react';
 import Header from '../Header/Header';
 import Backdrop from './Backdrop/Backdrop';
-import styles from './Layout.module.scss';
-
-interface LayoutProps {}
+import { GlobalStyle } from './Layout.style';
+import * as S from './Layout.style';
 
 const Layout: React.FC = ({ children }) => {
   return (
     <>
+      <GlobalStyle />
       <Backdrop />
       <Header />
-      <div className={styles.layout}>{children}</div>
+      <S.LayoutWrapper>{children}</S.LayoutWrapper>
     </>
   );
 };
