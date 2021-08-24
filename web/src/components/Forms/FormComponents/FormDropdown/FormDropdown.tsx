@@ -14,6 +14,11 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ options, name }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   useDetectOutsideClick(dropdownRef, () => setOpen(false));
 
+  const handleSelect = (option: string) => {
+    setOpen(false);
+    setValue(option);
+  };
+
   return (
     <S.FormDropdownWrapper ref={dropdownRef}>
       <S.FormDropdownInner isActive={isOpen} onClick={() => setOpen((o) => !o)}>
@@ -24,7 +29,7 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ options, name }) => {
           <S.FormDropdownOption
             key={index}
             isActive={value === option}
-            onClick={() => setValue(option)}>
+            onClick={() => handleSelect(option)}>
             {option}
           </S.FormDropdownOption>
         ))}

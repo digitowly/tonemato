@@ -14,10 +14,10 @@ import FormDropdown from '../FormComponents/FormDropdown/FormDropdown';
 const PostCreator: React.FC = () => {
   const { isAuth } = useAuth();
   const { handlePostCreate } = usePostCreator();
-  const handleSubmit = ({ title, body, lookingFor, testDropDown }) => {
+  const handleSubmit = ({ title, body, lookingFor, reason }) => {
     // handlePostCreate({ title, body });
     // displayPostCreatorVar(false);
-    console.log(title, body, lookingFor, testDropDown);
+    console.log(title, body, lookingFor, reason);
   };
   useBackdrop();
   return (
@@ -34,7 +34,7 @@ const PostCreator: React.FC = () => {
                 title: '',
                 body: '',
                 lookingFor: 'default',
-                testDropDown: 'test',
+                reason: 'jamming',
               }}
               onSubmit={handleSubmit}>
               {({ values, handleChange }) => (
@@ -42,11 +42,11 @@ const PostCreator: React.FC = () => {
                   <p>I am a ... looking for ...</p>
                   <FormDropdown
                     name='lookingFor'
-                    options={['longer value', 'test 2', 'test 3']}
+                    options={['bass', 'guitar', 'piano']}
                   />
                   <FormDropdown
-                    name='testDropDown'
-                    options={['bass', 'guitar', 'piano']}
+                    name='reason'
+                    options={['jamming', 'teaching', 'test 3']}
                   />
                   <FormField
                     id='post-title'

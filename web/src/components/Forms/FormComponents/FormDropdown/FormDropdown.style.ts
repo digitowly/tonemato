@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { colors, spaceing } from '../../../../styles/globals';
+import { colors, depth, spaceing } from '../../../../styles/globals';
 
 type FormDropdownStyle = {
   isActive: boolean;
@@ -32,7 +32,7 @@ export const FromDropdownSelect = styled.div`
   font-weight: bold;
 `;
 
-export const FormDropdownExpand = styled.div<FormDropdownStyle>`
+export const FormDropdownExpand = styled.ul<FormDropdownStyle>`
   background-color: ${colors.lightgrey};
   border: 1px solid ${dropdownColor};
   border-radius: 0 0 0.5rem 0.5rem;
@@ -42,7 +42,13 @@ export const FormDropdownExpand = styled.div<FormDropdownStyle>`
   width: inherit;
 `;
 
-export const FormDropdownOption = styled.div<FormDropdownStyle>`
+export const FormDropdownOption = styled.li<FormDropdownStyle>`
+  padding: 0.15rem 0;
+
+  &:hover {
+    color: ${colors.clash};
+  }
+
   ${(props) =>
     props.isActive &&
     css`

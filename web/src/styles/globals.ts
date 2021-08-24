@@ -25,4 +25,5 @@ export const depth = Object.freeze({
   backdrop: 8,
   header: 5,
   high: 3,
+  default: 0,
 });
