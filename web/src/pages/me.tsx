@@ -39,9 +39,7 @@ const MePage: React.FC = () => {
 
           <div>email: {data.authedUser.email}</div>
           <div>
-            <Formik
-              initialValues={{ test: 'sds' }}
-              onSubmit={() => console.log()}>
+            <Formik initialValues={{ test: '' }} onSubmit={() => console.log()}>
               <InstrumentFilterDropdown name='test' />
             </Formik>
             <p>instruments:</p>

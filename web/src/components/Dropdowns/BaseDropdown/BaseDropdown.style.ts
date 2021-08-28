@@ -32,6 +32,16 @@ export const FormDropdownInner = styled.div<FormDropdownStyle>`
 export const FromDropdownSelect = styled.div`
   color: ${colors.highlight};
   font-weight: bold;
+
+  input {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    color: ${colors.highlight};
+    font-weight: bold;
+  }
 `;
 
 export const FormDropdownExpand = styled.ul<FormDropdownStyle>`

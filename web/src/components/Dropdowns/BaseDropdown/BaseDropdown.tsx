@@ -1,7 +1,6 @@
-import { useField } from 'formik';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { FlattenSimpleInterpolation } from 'styled-components';
-import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
+import { filterOptions, useDropdown } from '../../../hooks/useDropdown';
 import * as S from './BaseDropdown.style';
 
 export interface DropdownExtendProps {
@@ -9,44 +8,47 @@ export interface DropdownExtendProps {
 }
 
 export interface BaseDropdownProps extends WithDropdownType {
-  options: string[];
   name: string;
+  filter?: filterOptions;
 }
 
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
-  options,
+  children,
   name,
+  filter = { isActive: false, initExpand: true },
   innerStyle,
   expandStyle,
 }) => {
-  const [isOpen, setOpen] = useState(false);
-  const [_, { value }, { setValue }] = useField(name);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  useDetectOutsideClick(dropdownRef, () => setOpen(false));
-
-  const handleSelect = (option: string) => {
-    setOpen(false);
-    setValue(option);
-  };
+  const {
+    filterRef,
+    dropdownRef,
+    isOpen,
+    setOpen,
+    value,
+    setFilterValue,
+    filteredOptions,
+  } = useDropdown(name, { ...filter, list: children });
 
   return (
     <S.FormDropdownWrapper ref={dropdownRef}>
       <S.FormDropdownInner
         isActive={isOpen}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => filter.initExpand && setOpen((o) => !o)}
         customStyle={innerStyle}>
-        <S.FromDropdownSelect>{value}</S.FromDropdownSelect>
+        <S.FromDropdownSelect>
+          {!filter.isActive ? (
+            value
+          ) : (
+            <input
+              ref={filterRef}
+              placeholder='search'
+              onChange={(e) => setFilterValue(e.target.value)}
+            />
+          )}
+        </S.FromDropdownSelect>
       </S.FormDropdownInner>
       <S.FormDropdownExpand isActive={isOpen} customStyle={expandStyle}>
-        {options &&
-          options.map((option, index) => (
-            <S.FormDropdownOption
-              key={index}
-              isActive={value === option}
-              onClick={() => handleSelect(option)}>
-              {option}
-            </S.FormDropdownOption>
-          ))}
+        {filter.isActive ? filteredOptions : children}
       </S.FormDropdownExpand>
     </S.FormDropdownWrapper>
   );

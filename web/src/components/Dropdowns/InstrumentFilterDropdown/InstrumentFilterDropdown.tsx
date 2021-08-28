@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 import { css } from 'styled-components';
 import { useListInstrumentsQuery } from '../../../generated/codegen_types';
 import { useDropdown } from '../../../hooks/useDropdown';
@@ -9,16 +9,18 @@ import {
 } from '../BaseDropdown/BaseDropdown';
 import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
-const InstrumentDropdownElement: ComponentType<BaseDropdownProps> = withDropdown(
+const InstrumentFilterDropdownElement: ComponentType<BaseDropdownProps> = withDropdown(
   {}
 );
 
-const InstrumentDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
+const InstrumentFilterDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
   const { data } = useListInstrumentsQuery();
   const { setValue, value } = useDropdown(name);
 
   return (
-    <InstrumentDropdownElement name={name}>
+    <InstrumentFilterDropdownElement
+      filter={{ isActive: true, initExpand: false, list: data?.instruments }}
+      name={name}>
       {data &&
         data.instruments.map((instrument) => (
           <FormDropdownOption
@@ -28,8 +30,8 @@ const InstrumentDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
             {instrument.name}
           </FormDropdownOption>
         ))}
-    </InstrumentDropdownElement>
+    </InstrumentFilterDropdownElement>
   );
 };
 
-export default InstrumentDropdown;
+export default InstrumentFilterDropdown;
