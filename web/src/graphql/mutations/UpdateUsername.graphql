@@ -1,0 +1,5 @@
+mutation UpdateUsername($newUsername: String!, $userId: Float!) {
+  updateUsename(newUsername: $newUsername, userId: $userId) {
+    username
+  }
+}

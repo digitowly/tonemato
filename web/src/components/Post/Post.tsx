@@ -7,7 +7,7 @@ interface PostProps {
   title: string;
   body: string;
   author: {
-    email: string;
+    username: string;
     id: number;
   };
 }
@@ -17,7 +17,7 @@ const Post: React.FC<PostProps> = ({ title, body, author }) => {
     <div className={styles.post}>
       <div className={styles['post__author']}>
         {/* {author.image ? <img src={author.image} /> : <span>no image</span>} */}
-        <b>{author.email}</b>
+        <b>{author.username}</b>
       </div>
       <H2>{title}</H2>
       <p>{body}</p>

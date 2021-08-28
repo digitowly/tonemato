@@ -1,0 +1,11 @@
+query UserProfile {
+  authedUser {
+    username
+    email
+    id
+    instruments {
+      id
+      name
+    }
+  }
+}

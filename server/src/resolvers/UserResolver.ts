@@ -17,6 +17,7 @@ import {
   createRefreshToken,
   sendRefreshToken,
 } from '../auth';
+import { Instrument } from '../entities/InstrumentEntity';
 import { User } from '../entities/UserEntity';
 import { isAuth } from '../middleware/isAuth';
 import { AppContext } from '../types';
@@ -35,7 +36,7 @@ export class UserResolver {
   //USERS
   @Query(() => [User])
   users() {
-    return User.find({ relations: ['posts'] });
+    return User.find({ relations: ['posts', 'instruments'] });
   }
 
   //AUTHED USER
@@ -51,7 +52,7 @@ export class UserResolver {
     try {
       const token = authorization.split(' ')[1];
       const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET);
-      return User.findOne(payload.userId);
+      return User.findOne(payload.userId, { relations: ['instruments'] });
     } catch (err) {
       console.log(err.message);
       return null;
@@ -104,7 +105,7 @@ export class UserResolver {
     };
   }
 
-  //LOGOUT
+  // LOGOUT
   @Mutation(() => Boolean)
   async logout(@Ctx() { res }: AppContext) {
     sendRefreshToken(res, '');
@@ -142,6 +143,68 @@ export class UserResolver {
     try {
       const removedUser = await User.remove(userToRemove);
       console.log(`removed ${removedUser.email} from database`);
+      return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  // UPDATE USERNAME
+  @Mutation(() => User)
+  async updateUsename(
+    @Arg('newUsername') newUsername: string,
+    @Arg('userId') userId: number
+  ) {
+    const nameExists = await User.findOne({ where: { username: newUsername } });
+    if (nameExists) {
+      throw new Error('name already exists!');
+    }
+    try {
+      const user = await User.findOne(userId);
+      user.username = newUsername;
+      user.save();
+      return user;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  // UPDATE EMAIL
+  @Mutation(() => User)
+  async updateEmail(
+    @Arg('newEmail') newEmail: string,
+    @Arg('userId') userId: number
+  ) {
+    const emailExists = await User.findOne({ where: { email: newEmail } });
+    if (emailExists) {
+      throw new Error('email already in use!');
+    }
+    try {
+      const user = await User.findOne(userId);
+      user.email = newEmail;
+      user.save();
+      return user;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  // ADD INSTRUMENT
+  @Mutation(() => Boolean)
+  async addInstrument(
+    @Arg('instrumentId') instrumentId: number,
+    @Arg('userId') userId: number
+  ) {
+    try {
+      const user = await User.findOne(userId);
+      const newInstrument = await Instrument.findOne(instrumentId);
+      console.log(newInstrument);
+      if (user.instruments) {
+        user.instruments.push(newInstrument);
+      } else {
+        user.instruments = [newInstrument];
+      }
+      await user.save();
       return true;
     } catch (err) {
       throw new Error(err.message);

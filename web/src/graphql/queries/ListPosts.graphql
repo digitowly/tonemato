@@ -5,7 +5,7 @@ query ListPosts {
     body
     author {
       id
-      email
+      username
     }
   }
 }

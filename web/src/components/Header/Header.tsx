@@ -27,7 +27,7 @@ const Header: React.FC = () => {
           {data && data.authedUser ? (
             <div onClick={() => setProfileMenuOpen((sn) => !sn)}>
               {/* <img src={session.user.image} /> */}
-              {data.authedUser.email}
+              {data.authedUser.username}
             </div>
           ) : (
             <SecondaryButton
