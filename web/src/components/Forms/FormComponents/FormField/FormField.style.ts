@@ -7,10 +7,13 @@ export const FormFieldLabWrapper = styled.div`
   border-radius: 0.5rem;
   height: ${heights.formField}px;
   margin-bottom: 1rem;
+
   input {
     font-size: 1rem;
     outline: none;
     border: none;
+    padding: 0;
+    border-radius: 0;
     margin-top: ${heights.formField / 2}px;
     margin-left: 0.5rem;
     margin-right: 0.5rem;

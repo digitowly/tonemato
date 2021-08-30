@@ -1,24 +1,17 @@
-import { ComponentType } from 'react';
+import { useField } from 'formik';
 import { css } from 'styled-components';
 import { useListInstrumentsQuery } from '../../../generated/codegen_types';
-import { useDropdown } from '../../../hooks/useDropdown';
-import {
-  withDropdown,
-  BaseDropdownProps,
+import BaseDropdown, {
   DropdownExtendProps,
 } from '../BaseDropdown/BaseDropdown';
 import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
-const InstrumentDropdownElement: ComponentType<BaseDropdownProps> = withDropdown(
-  {}
-);
-
 const InstrumentDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
   const { data } = useListInstrumentsQuery();
-  const { setValue, value } = useDropdown(name);
+  const [_, { value }, { setValue }] = useField(name);
 
   return (
-    <InstrumentDropdownElement name={name}>
+    <BaseDropdown name={name}>
       {data &&
         data.instruments.map((instrument) => (
           <FormDropdownOption
@@ -28,7 +21,7 @@ const InstrumentDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
             {instrument.name}
           </FormDropdownOption>
         ))}
-    </InstrumentDropdownElement>
+    </BaseDropdown>
   );
 };
 

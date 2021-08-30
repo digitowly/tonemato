@@ -1,7 +1,5 @@
-import { Formik } from 'formik';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import InstrumentFilterDropdown from '../components/Dropdowns/InstrumentFilterDropdown/InstrumentFilterDropdown';
+import React, { useState } from 'react';
+import InstrumentSelector from '../components/Forms/InstrumentSelector/InstrumentSelector';
 import Layout from '../components/Layout/Layout';
 import {
   useUpdateUsernameMutation,
@@ -24,11 +22,6 @@ const MePage: React.FC = () => {
     }
   };
 
-  useEffect(() => console.log(data));
-
-  if (!data || !data.authedUser) {
-  }
-
   return (
     <Layout>
       {data && data.authedUser && (
@@ -39,15 +32,13 @@ const MePage: React.FC = () => {
 
           <div>email: {data.authedUser.email}</div>
           <div>
-            <Formik initialValues={{ test: '' }} onSubmit={() => console.log()}>
-              <InstrumentFilterDropdown name='test' />
-            </Formik>
             <p>instruments:</p>
             <ul>
               {data.authedUser.instruments.map((instrument) => (
                 <li key={instrument.id}>{instrument.name}</li>
               ))}
             </ul>
+            <InstrumentSelector instrumentsData={data.authedUser.instruments} />
           </div>
         </div>
       )}

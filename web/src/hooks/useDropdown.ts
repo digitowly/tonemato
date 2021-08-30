@@ -1,64 +1,29 @@
 import { useField } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
-import { useDetectOutsideClick } from './useDetectOutsideClick';
+import { useState } from 'react';
+import { filterOptions } from '../components/Dropdowns/BaseDropdown/BaseDropdown';
 
-export type filterOptions = {
-  isActive: boolean;
-  initExpand?: boolean;
-  list: any;
-};
-
-export function useDropdown(name: string, filter?: filterOptions) {
-  const [isOpen, setOpen] = useState(false);
-  const [filterValue, setFilterValue] = useState('');
+export function useDropdown(name: string) {
   const [_, { value }, { setValue }] = useField(name);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<HTMLInputElement>(null);
-  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [filterValue, setFilterValue] = useState('');
 
-  useDetectOutsideClick(dropdownRef, () => setOpen(false));
+  const resetValue = () => {
+    setValue('');
+    setFilterValue('');
+  };
 
-  useEffect(() => {
-    setOpen(false);
-    if (filterRef && filter && filter.isActive) {
-      filterRef.current.value = value;
-    }
-  }, [value]);
-
-  /**
-   * matches local state options with given array
-   */
-  useEffect(() => {
-    filter && setFilteredOptions(filter.list);
-  }, []);
-
-  /**
-   * filter options on updated filter value
-   */
-  useEffect(() => {
-    filter &&
-      filter.list &&
-      setFilteredOptions(
-        filter.list.filter((option) =>
-          option.props.children.startsWith(filterValue)
-        )
-      );
-
-    filter && console.log(filteredOptions, filterValue);
-
-    // hide expand on empty value (if filter option is enabled)
-    filter && !filter.initExpand && setOpen(filterValue !== '');
-  }, [filterValue]);
+  const filter: filterOptions = {
+    isActive: true,
+    initExpand: false,
+    value: filterValue,
+    update: setFilterValue,
+    reset: () => resetValue(),
+  };
 
   return {
-    filterRef,
-    dropdownRef,
-    isOpen,
-    setOpen,
     value,
+    setValue,
     filterValue,
     setFilterValue,
-    setValue,
-    filteredOptions,
+    filter,
   };
 }

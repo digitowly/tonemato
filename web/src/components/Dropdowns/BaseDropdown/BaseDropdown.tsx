@@ -1,10 +1,20 @@
-import React from 'react';
+import { useField } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlattenSimpleInterpolation } from 'styled-components';
-import { filterOptions, useDropdown } from '../../../hooks/useDropdown';
+import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
 import * as S from './BaseDropdown.style';
+
+export type filterOptions = {
+  isActive: boolean;
+  initExpand?: boolean;
+  value: string;
+  update: React.Dispatch<React.SetStateAction<string>>;
+  reset: () => void;
+};
 
 export interface DropdownExtendProps {
   name: string;
+  preFilter?: string[];
 }
 
 export interface BaseDropdownProps extends WithDropdownType {
@@ -15,40 +25,65 @@ export interface BaseDropdownProps extends WithDropdownType {
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
   children,
   name,
-  filter = { isActive: false, initExpand: true },
+  filter,
   innerStyle,
   expandStyle,
 }) => {
-  const {
-    filterRef,
-    dropdownRef,
-    isOpen,
-    setOpen,
-    value,
-    setFilterValue,
-    filteredOptions,
-  } = useDropdown(name, { ...filter, list: children });
+  const [isOpen, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const filterRef = useRef<HTMLInputElement>(null);
+  useDetectOutsideClick(dropdownRef, () => setOpen(false));
+  const [_, { value }] = useField(name);
+
+  useEffect(() => {
+    setOpen(false);
+    if (filterRef.current) filterRef.current.value = value;
+    value && filter.update(value);
+
+    if (value === '' && filterRef.current) {
+      filterRef.current.focus();
+    }
+  }, [value]);
 
   return (
     <S.FormDropdownWrapper ref={dropdownRef}>
       <S.FormDropdownInner
         isActive={isOpen}
-        onClick={() => filter.initExpand && setOpen((o) => !o)}
-        customStyle={innerStyle}>
+        customStyle={innerStyle}
+        onClick={() => filter.initExpand && setOpen((o) => !o)}>
         <S.FromDropdownSelect>
           {!filter.isActive ? (
             value
           ) : (
-            <input
-              ref={filterRef}
-              placeholder='search'
-              onChange={(e) => setFilterValue(e.target.value)}
-            />
+            <div style={{ display: 'flex' }}>
+              <input
+                ref={filterRef}
+                placeholder='search'
+                value={filter.value}
+                disabled={value}
+                onChange={(e) => {
+                  setOpen(!!e.target.value);
+                  filter.update(e.target.value);
+                }}
+              />
+              {value && (
+                <button
+                  onClick={() => {
+                    filter.reset();
+                    filterRef.current.focus();
+                  }}>
+                  x
+                </button>
+              )}
+            </div>
           )}
         </S.FromDropdownSelect>
       </S.FormDropdownInner>
-      <S.FormDropdownExpand isActive={isOpen} customStyle={expandStyle}>
-        {filter.isActive ? filteredOptions : children}
+      <S.FormDropdownExpand
+        isActive={isOpen}
+        customStyle={expandStyle}
+        onClick={() => setOpen(false)}>
+        {children}
       </S.FormDropdownExpand>
     </S.FormDropdownWrapper>
   );

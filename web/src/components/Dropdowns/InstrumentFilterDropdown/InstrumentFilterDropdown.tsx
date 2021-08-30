@@ -1,36 +1,33 @@
-import React, { ComponentType } from 'react';
-import { css } from 'styled-components';
+import React from 'react';
 import { useListInstrumentsQuery } from '../../../generated/codegen_types';
 import { useDropdown } from '../../../hooks/useDropdown';
-import {
-  withDropdown,
-  BaseDropdownProps,
+import BaseDropdown, {
   DropdownExtendProps,
 } from '../BaseDropdown/BaseDropdown';
 import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
-const InstrumentFilterDropdownElement: ComponentType<BaseDropdownProps> = withDropdown(
-  {}
-);
-
-const InstrumentFilterDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
+const InstrumentFilterDropdown: React.FC<DropdownExtendProps> = ({
+  name,
+  preFilter,
+}) => {
   const { data } = useListInstrumentsQuery();
-  const { setValue, value } = useDropdown(name);
+  const { filter, value, setValue } = useDropdown(name);
 
   return (
-    <InstrumentFilterDropdownElement
-      filter={{ isActive: true, initExpand: false, list: data?.instruments }}
-      name={name}>
+    <BaseDropdown filter={filter} name={name}>
       {data &&
-        data.instruments.map((instrument) => (
-          <FormDropdownOption
-            isActive={instrument.name === value}
-            key={instrument.id}
-            onClick={() => setValue(instrument.name)}>
-            {instrument.name}
-          </FormDropdownOption>
-        ))}
-    </InstrumentFilterDropdownElement>
+        data.instruments
+          .filter((instrument) => !preFilter.includes(instrument.name))
+          .filter((instrument) => instrument.name.startsWith(filter.value))
+          .map((instrument) => (
+            <FormDropdownOption
+              isActive={instrument.name === value}
+              key={instrument.id}
+              onClick={() => setValue(instrument.name)}>
+              {instrument.name}
+            </FormDropdownOption>
+          ))}
+    </BaseDropdown>
   );
 };
 
