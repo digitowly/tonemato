@@ -12,8 +12,6 @@ export function useDropdown(name: string) {
   };
 
   const filter: filterOptions = {
-    isActive: true,
-    initExpand: false,
     value: filterValue,
     update: setFilterValue,
     reset: () => resetValue(),

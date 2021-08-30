@@ -5,11 +5,13 @@ import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
 import * as S from './BaseDropdown.style';
 
 export type filterOptions = {
-  isActive: boolean;
-  initExpand?: boolean;
   value: string;
   update: React.Dispatch<React.SetStateAction<string>>;
   reset: () => void;
+};
+
+export type dropdownConfig = {
+  initExpand: boolean;
 };
 
 export interface DropdownExtendProps {
@@ -19,12 +21,14 @@ export interface DropdownExtendProps {
 
 export interface BaseDropdownProps extends WithDropdownType {
   name: string;
+  config?: dropdownConfig;
   filter?: filterOptions;
 }
 
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
   children,
   name,
+  config = { initExpand: true },
   filter,
   innerStyle,
   expandStyle,
@@ -37,8 +41,8 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
 
   useEffect(() => {
     setOpen(false);
-    if (filterRef.current) filterRef.current.value = value;
-    value && filter.update(value);
+    if (filterRef.current) filterRef.current.value = value.name ?? '';
+    value && filter?.update(value.name ?? '');
 
     if (value === '' && filterRef.current) {
       filterRef.current.focus();
@@ -50,9 +54,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       <S.FormDropdownInner
         isActive={isOpen}
         customStyle={innerStyle}
-        onClick={() => filter.initExpand && setOpen((o) => !o)}>
+        onClick={() => config.initExpand && setOpen((o) => !o)}>
         <S.FromDropdownSelect>
-          {!filter.isActive ? (
+          {!filter ? (
             value
           ) : (
             <div style={{ display: 'flex' }}>
@@ -63,13 +67,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
                 disabled={value}
                 onChange={(e) => {
                   setOpen(!!e.target.value);
-                  filter.update(e.target.value);
+                  filter?.update(e.target.value);
                 }}
               />
               {value && (
                 <button
                   onClick={() => {
-                    filter.reset();
+                    filter?.reset();
                     filterRef.current.focus();
                   }}>
                   x

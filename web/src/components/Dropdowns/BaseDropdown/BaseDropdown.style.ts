@@ -17,7 +17,7 @@ export const FormDropdownWrapper = styled.div`
 export const FormDropdownInner = styled.div<FormDropdownStyle>`
   background-color: ${dropdownColor};
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   transition: 0.2s;
 
   ${(props) =>

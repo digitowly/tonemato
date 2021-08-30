@@ -1,6 +1,5 @@
-import { useField } from 'formik';
-import { css } from 'styled-components';
 import { useListInstrumentsQuery } from '../../../generated/codegen_types';
+import { useDropdown } from '../../../hooks/useDropdown';
 import BaseDropdown, {
   DropdownExtendProps,
 } from '../BaseDropdown/BaseDropdown';
@@ -8,7 +7,7 @@ import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
 const InstrumentDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
   const { data } = useListInstrumentsQuery();
-  const [_, { value }, { setValue }] = useField(name);
+  const { value, setValue } = useDropdown(name);
 
   return (
     <BaseDropdown name={name}>

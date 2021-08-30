@@ -14,16 +14,16 @@ const InstrumentFilterDropdown: React.FC<DropdownExtendProps> = ({
   const { filter, value, setValue } = useDropdown(name);
 
   return (
-    <BaseDropdown filter={filter} name={name}>
+    <BaseDropdown filter={filter} name={name} config={{ initExpand: false }}>
       {data &&
         data.instruments
           .filter((instrument) => !preFilter.includes(instrument.name))
           .filter((instrument) => instrument.name.startsWith(filter.value))
           .map((instrument) => (
             <FormDropdownOption
-              isActive={instrument.name === value}
+              isActive={instrument === value}
               key={instrument.id}
-              onClick={() => setValue(instrument.name)}>
+              onClick={() => setValue(instrument)}>
               {instrument.name}
             </FormDropdownOption>
           ))}

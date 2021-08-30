@@ -42,10 +42,10 @@ const PostCreator: React.FC = () => {
                 <Form>
                   <p>I am a ... looking for ...</p>
                   <InstrumentsDropdown name='lookingFor' />
-                  <FormDropdown
+                  {/* <FormDropdown
                     name='reason'
                     options={['jamming', 'teaching', 'test 3']}
-                  />
+                  /> */}
                   <FormField
                     id='post-title'
                     type='text'

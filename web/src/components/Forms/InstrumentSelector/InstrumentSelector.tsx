@@ -2,6 +2,7 @@ import React from 'react';
 import { FieldArray, Form, Formik } from 'formik';
 import { Instrument } from '../../../generated/codegen_types';
 import InstrumentFilterDropdown from '../../Dropdowns/InstrumentFilterDropdown/InstrumentFilterDropdown';
+import RemoveButton from '../../Buttons/RemoveButton/RemoveButton';
 
 interface InstrumentSelectorProps {
   instrumentsData: Pick<Instrument, 'name' | 'id'>[];
@@ -10,14 +11,10 @@ interface InstrumentSelectorProps {
 const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
   instrumentsData,
 }) => {
-  const instrumentsPreFiler = instrumentsData.map(
-    (instrument) => instrument.name
-  );
-
   return (
     <div>
       <Formik
-        initialValues={{ instruments: instrumentsPreFiler }}
+        initialValues={{ instruments: instrumentsData }}
         onSubmit={({ instruments }) => console.log(instruments)}>
         {({ values }) => (
           <Form>
@@ -28,14 +25,12 @@ const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
                     <div style={{ display: 'flex' }} key={index}>
                       <InstrumentFilterDropdown
                         name={`instruments.${index}`}
-                        preFilter={[
-                          ...instrumentsPreFiler,
-                          ...values.instruments,
-                        ]}
+                        preFilter={[...values.instruments.map((v) => v.name)]}
                       />
-                      <button onClick={() => arrayHelpers.remove(index)}>
-                        remove
-                      </button>
+                      <RemoveButton
+                        label='remove'
+                        onClick={() => arrayHelpers.remove(index)}
+                      />
                     </div>
                   ))}
                   <a
