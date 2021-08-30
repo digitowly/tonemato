@@ -17,7 +17,7 @@ const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
   return (
     <div>
       <Formik
-        initialValues={{ instruments: [] }}
+        initialValues={{ instruments: instrumentsPreFiler }}
         onSubmit={({ instruments }) => console.log(instruments)}>
         {({ values }) => (
           <Form>
