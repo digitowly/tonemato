@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
+    "@react-spring/web": "^9.2.4",
     "@types/styled-components": "^5.1.10",
     "formik": "^2.2.6",
     "graphql": "^15.5.0",

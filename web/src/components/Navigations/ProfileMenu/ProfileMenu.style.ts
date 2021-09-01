@@ -1,7 +1,14 @@
+import { animated, SpringValue } from '@react-spring/web';
 import styled from 'styled-components';
 import { colors } from '../../../styles/globals';
 
-export const ProfileMenu = styled.div`
+export const transitionConfig = {
+  from: { y: 50, opacity: 0 },
+  enter: { y: 0, opacity: 1 },
+  leave: { y: 50, opacity: 0 },
+};
+
+export const ProfileMenu = styled(animated.div)`
   position: absolute;
   top: 4rem;
 
@@ -26,7 +33,6 @@ export const SubnavWrapper = styled.div`
 `;
 
 export const SubnavInner = styled.div`
-  animation: slideIn 0.2s;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   position: relative;
@@ -35,14 +41,4 @@ export const SubnavInner = styled.div`
   border: 1px solid ${colors.lightgrey};
   box-shadow: 0px 8px 11px rgba(0, 0, 0, 0.1);
   z-index: 50;
-
-  @keyframes slideIn {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
 `;

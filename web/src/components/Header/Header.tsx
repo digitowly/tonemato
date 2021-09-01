@@ -35,7 +35,7 @@ const Header: React.FC = () => {
               onClick={() => setProfileMenuOpen((sn) => !sn)}
             />
           )}
-          {isProfileMenuOpen && <ProfileMenu />}
+          <ProfileMenu isOpen={isProfileMenuOpen} />
         </div>
       </S.Header>
     </>
