@@ -1,0 +1,12 @@
+mutation UpdateUserInstruments(
+  $updatedInstrumentIds: [Float!]!
+  $userId: Float!
+) {
+  updateInstruments(
+    updatedInstrumentIds: $updatedInstrumentIds
+    userId: $userId
+  ) {
+    id
+    name
+  }
+}

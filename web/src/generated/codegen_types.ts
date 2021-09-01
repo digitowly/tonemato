@@ -58,6 +58,7 @@ export type Mutation = {
   updateUsename: User;
   updateEmail: User;
   addInstrument: Scalars['Boolean'];
+  updateInstruments: Array<Instrument>;
   createPost: Post;
   deletePost: Scalars['Boolean'];
 };
@@ -100,6 +101,12 @@ export type MutationUpdateEmailArgs = {
 export type MutationAddInstrumentArgs = {
   userId: Scalars['Float'];
   instrumentId: Scalars['Float'];
+};
+
+
+export type MutationUpdateInstrumentsArgs = {
+  userId: Scalars['Float'];
+  updatedInstrumentIds: Array<Scalars['Float']>;
 };
 
 
@@ -171,7 +178,7 @@ export type LoginUserMutation = (
     & Pick<LoginResponse, 'accessToken'>
     & { user: (
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'email'>
+      & Pick<User, 'id' | 'username' | 'email'>
     ) }
   ) }
 );
@@ -182,6 +189,20 @@ export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
 export type LogoutUserMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'logout'>
+);
+
+export type UpdateUserInstrumentsMutationVariables = Exact<{
+  updatedInstrumentIds: Array<Scalars['Float']> | Scalars['Float'];
+  userId: Scalars['Float'];
+}>;
+
+
+export type UpdateUserInstrumentsMutation = (
+  { __typename?: 'Mutation' }
+  & { updateInstruments: Array<(
+    { __typename?: 'Instrument' }
+    & Pick<Instrument, 'id' | 'name'>
+  )> }
 );
 
 export type UpdateUsernameMutationVariables = Exact<{
@@ -381,6 +402,7 @@ export const LoginUserDocument = gql`
     accessToken
     user {
       id
+      username
       email
     }
   }
@@ -443,6 +465,41 @@ export function useLogoutUserMutation(baseOptions?: Apollo.MutationHookOptions<L
 export type LogoutUserMutationHookResult = ReturnType<typeof useLogoutUserMutation>;
 export type LogoutUserMutationResult = Apollo.MutationResult<LogoutUserMutation>;
 export type LogoutUserMutationOptions = Apollo.BaseMutationOptions<LogoutUserMutation, LogoutUserMutationVariables>;
+export const UpdateUserInstrumentsDocument = gql`
+    mutation UpdateUserInstruments($updatedInstrumentIds: [Float!]!, $userId: Float!) {
+  updateInstruments(updatedInstrumentIds: $updatedInstrumentIds, userId: $userId) {
+    id
+    name
+  }
+}
+    `;
+export type UpdateUserInstrumentsMutationFn = Apollo.MutationFunction<UpdateUserInstrumentsMutation, UpdateUserInstrumentsMutationVariables>;
+
+/**
+ * __useUpdateUserInstrumentsMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserInstrumentsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserInstrumentsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserInstrumentsMutation, { data, loading, error }] = useUpdateUserInstrumentsMutation({
+ *   variables: {
+ *      updatedInstrumentIds: // value for 'updatedInstrumentIds'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useUpdateUserInstrumentsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserInstrumentsMutation, UpdateUserInstrumentsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserInstrumentsMutation, UpdateUserInstrumentsMutationVariables>(UpdateUserInstrumentsDocument, options);
+      }
+export type UpdateUserInstrumentsMutationHookResult = ReturnType<typeof useUpdateUserInstrumentsMutation>;
+export type UpdateUserInstrumentsMutationResult = Apollo.MutationResult<UpdateUserInstrumentsMutation>;
+export type UpdateUserInstrumentsMutationOptions = Apollo.BaseMutationOptions<UpdateUserInstrumentsMutation, UpdateUserInstrumentsMutationVariables>;
 export const UpdateUsernameDocument = gql`
     mutation UpdateUsername($newUsername: String!, $userId: Float!) {
   updateUsename(newUsername: $newUsername, userId: $userId) {

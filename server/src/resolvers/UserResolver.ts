@@ -4,6 +4,7 @@ import {
   Arg,
   Ctx,
   Field,
+  Float,
   Int,
   Mutation,
   ObjectType,
@@ -198,14 +199,30 @@ export class UserResolver {
     try {
       const user = await User.findOne(userId);
       const newInstrument = await Instrument.findOne(instrumentId);
-      console.log(newInstrument);
-      if (user.instruments) {
+      if (user.instruments && !user.instruments.includes(newInstrument)) {
         user.instruments.push(newInstrument);
       } else {
         user.instruments = [newInstrument];
       }
       await user.save();
       return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  // UPDATE INSTRUMENTS
+  @Mutation(() => [Instrument])
+  async updateInstruments(
+    @Arg('updatedInstrumentIds', () => [Float]) updatedInstrumentIds: number[],
+    @Arg('userId') userId: number
+  ) {
+    try {
+      const user = await User.findOne(userId);
+      const newInstruments = await Instrument.findByIds(updatedInstrumentIds);
+      user.instruments = newInstruments;
+      await user.save();
+      return newInstruments;
     } catch (err) {
       throw new Error(err.message);
     }

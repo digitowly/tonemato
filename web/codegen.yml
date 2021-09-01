@@ -1,6 +1,6 @@
 schema:
-  - ./src/lib/apollo/typeDefs.graphql
   - http://localhost:8080/graphql
+  - ./src/lib/apollo/typeDefs.graphql
 documents: ./src/**/*.graphql
 generates:
   ./src/generated/codegen_types.ts:
