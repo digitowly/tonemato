@@ -17,6 +17,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   authedUser?: Maybe<User>;
+  backdrop: Scalars['Boolean'];
   displayPostCreator: Scalars['Boolean'];
   instruments: Array<Instrument>;
   posts: Array<Post>;
@@ -126,6 +127,14 @@ export type LoginResponse = {
   accessToken: Scalars['String'];
   user: User;
 };
+
+export type DisplayBackdropQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DisplayBackdropQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'backdrop'>
+);
 
 export type DisplayPostCreatorQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -291,6 +300,38 @@ export type UserProfileQuery = (
 );
 
 
+export const DisplayBackdropDocument = gql`
+    query DisplayBackdrop {
+  backdrop @client
+}
+    `;
+
+/**
+ * __useDisplayBackdropQuery__
+ *
+ * To run a query within a React component, call `useDisplayBackdropQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDisplayBackdropQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDisplayBackdropQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDisplayBackdropQuery(baseOptions?: Apollo.QueryHookOptions<DisplayBackdropQuery, DisplayBackdropQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DisplayBackdropQuery, DisplayBackdropQueryVariables>(DisplayBackdropDocument, options);
+      }
+export function useDisplayBackdropLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DisplayBackdropQuery, DisplayBackdropQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DisplayBackdropQuery, DisplayBackdropQueryVariables>(DisplayBackdropDocument, options);
+        }
+export type DisplayBackdropQueryHookResult = ReturnType<typeof useDisplayBackdropQuery>;
+export type DisplayBackdropLazyQueryHookResult = ReturnType<typeof useDisplayBackdropLazyQuery>;
+export type DisplayBackdropQueryResult = Apollo.QueryResult<DisplayBackdropQuery, DisplayBackdropQueryVariables>;
 export const DisplayPostCreatorDocument = gql`
     query DisplayPostCreator {
   displayPostCreator @client

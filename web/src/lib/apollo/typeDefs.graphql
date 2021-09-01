@@ -1,3 +1,4 @@
 extend type Query {
   displayPostCreator: Boolean!
+  backdrop: Boolean!
 }

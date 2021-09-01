@@ -4,13 +4,14 @@ import { useAuth } from '../../../hooks/auth/useAuth';
 import { usePostCreator } from '../../../hooks/posts/usePostCreator';
 import * as S from './PostCreator.style';
 import PrimaryButton from '../../Buttons/PrimaryButton/PrimaryButton';
-import { displayPostCreatorVar } from '../../../lib/apollo/cache';
+import { backdropVar, displayPostCreatorVar } from '../../../lib/apollo/cache';
 import { useBackdrop } from '../../../hooks/useBackdrop';
-import React from 'react';
+import React, { useRef } from 'react';
 import { H2 } from '../../Text/Headline';
 import FormField from '../FormComponents/FormField/FormField';
 import FormDropdown from '../../Dropdowns/BaseDropdown/BaseDropdown';
 import InstrumentsDropdown from '../../Dropdowns/InstrumentsDropdown/InstrumentsDropdown';
+import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
 
 const PostCreator: React.FC = () => {
   const { isAuth } = useAuth();
@@ -20,11 +21,16 @@ const PostCreator: React.FC = () => {
     // displayPostCreatorVar(false);
     console.log(title, body, lookingFor, reason);
   };
+  const postCreatorRef = useRef(null);
   useBackdrop();
+  useDetectOutsideClick(postCreatorRef, () => {
+    displayPostCreatorVar(false);
+    backdropVar(false);
+  });
   return (
     <>
       {isAuth && (
-        <S.PostCreatorWrapper>
+        <S.PostCreatorWrapper ref={postCreatorRef}>
           <S.PostCreatorHeader>
             <H2> Create Post</H2>
             <button onClick={() => displayPostCreatorVar(false)}>close</button>

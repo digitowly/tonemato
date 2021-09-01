@@ -3,9 +3,9 @@ import { backdropVar } from '../lib/apollo/cache';
 
 export function useBackdrop() {
   useEffect(() => {
-    backdropVar({ display: true, hideOnClick: false });
+    backdropVar(true);
     return () => {
-      backdropVar({ display: false, hideOnClick: false });
+      backdropVar(false);
     };
   }, []);
 }
