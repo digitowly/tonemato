@@ -1,14 +1,16 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { useAuthedUserQuery } from '../../generated/codegen_types';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
+import UserProfileButton from '../Buttons/UserProfileButton/UserProfileButton';
 import ProfileMenu from '../Navigations/ProfileMenu/ProfileMenu';
 import * as S from './Header.style';
 
 const Header: React.FC = () => {
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-  const { data } = useAuthedUserQuery();
+  const { data, loading } = useAuthedUserQuery();
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   useDetectOutsideClick(profileMenuRef, () => setProfileMenuOpen(false));
@@ -25,15 +27,22 @@ const Header: React.FC = () => {
         </nav>
         <div ref={profileMenuRef}>
           {data && data.authedUser ? (
-            <div onClick={() => setProfileMenuOpen((sn) => !sn)}>
-              {/* <img src={session.user.image} /> */}
+            <UserProfileButton onClick={() => setProfileMenuOpen((sn) => !sn)}>
               {data.authedUser.username}
-            </div>
+              <S.UserImage>
+                <Image
+                  width={S.profileImgSize}
+                  height={S.profileImgSize}
+                  src='http://www.canada-work.com/_/rsrc/1531284300421/assistants/male_generic_profile.png'></Image>
+              </S.UserImage>
+            </UserProfileButton>
           ) : (
-            <SecondaryButton
-              label='login'
-              onClick={() => setProfileMenuOpen((sn) => !sn)}
-            />
+            !loading && (
+              <SecondaryButton
+                label='login'
+                onClick={() => setProfileMenuOpen((sn) => !sn)}
+              />
+            )
           )}
           <ProfileMenu isOpen={isProfileMenuOpen} />
         </div>

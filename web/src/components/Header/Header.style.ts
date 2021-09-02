@@ -27,3 +27,16 @@ export const Header = styled.header`
     cursor: pointer;
   }
 `;
+
+export const profileImgSize = 28;
+export const UserImage = styled.div`
+  border-radius: 50%;
+  height: ${profileImgSize}px;
+  margin-left: 1rem;
+  width: ${profileImgSize}px;
+
+  img {
+    border-radius: 50%;
+    object-fit: contain;
+  }
+`;

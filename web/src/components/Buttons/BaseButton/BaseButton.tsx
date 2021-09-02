@@ -27,7 +27,7 @@ interface ButtonIcon {
 interface BottonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ButtonIcon;
   customStyle: FlattenSimpleInterpolation;
-  label: string;
+  label?: string;
   onClick?: () => void;
 }
 
@@ -35,6 +35,7 @@ const Button: React.FC<BottonProps> = ({
   label,
   customStyle,
   icon,
+  children,
   onClick,
   ...props
 }) => {
@@ -42,6 +43,7 @@ const Button: React.FC<BottonProps> = ({
     <BaseButton customStyle={customStyle} onClick={onClick} {...props}>
       {icon && icon.before && icon.before}
       {label}
+      {children}
       {icon && icon.after && icon.after}
     </BaseButton>
   );
