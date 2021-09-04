@@ -4,7 +4,7 @@ import { depth } from '../../../styles/globals';
 
 export const transitionConfig = {
   from: { opacity: 0 },
-  enter: { opacity: 1 },
+  enter: { opacity: 0.7 },
   leave: { opacity: 0 },
 };
 
@@ -14,6 +14,6 @@ export const BackdropStyle = styled(animated.div)`
   top: 0;
   left: 0;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgb(0, 0, 0);
   z-index: ${depth.backdrop};
 `;
