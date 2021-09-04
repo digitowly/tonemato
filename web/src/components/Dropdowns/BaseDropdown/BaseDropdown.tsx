@@ -2,6 +2,7 @@ import { useField } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlattenSimpleInterpolation } from 'styled-components';
 import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
+import { useDropdown } from '../../../hooks/useDropdown';
 import * as S from './BaseDropdown.style';
 
 export type filterOptions = {
@@ -50,12 +51,12 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   }, [value]);
 
   return (
-    <S.FormDropdownWrapper ref={dropdownRef}>
+    <S.FormDropdownWrapper data-testid='basedropdown-wrapper' ref={dropdownRef}>
       <S.FormDropdownInner
         isActive={isOpen}
         customStyle={innerStyle}
         onClick={() => config.initExpand && setOpen((o) => !o)}>
-        <S.FromDropdownSelect>
+        <S.FromDropdownSelect data-testid='basedropdown-select'>
           {!filter ? (
             value
           ) : (
@@ -105,6 +106,24 @@ export const withDropdown = ({ innerStyle, expandStyle }: WithDropdownType) => {
       expandStyle={expandStyle}
       {...props}
     />
+  );
+};
+
+interface BaseDropdownElementProps {
+  name: string;
+  value: any;
+}
+
+export const BaseDropdownElement: React.FC<BaseDropdownElementProps> = ({
+  name,
+  value,
+  children,
+}) => {
+  const { setValue } = useDropdown(name);
+  return (
+    <div data-testid='basedropdown-element' onClick={() => setValue(value)}>
+      {children}
+    </div>
   );
 };
 

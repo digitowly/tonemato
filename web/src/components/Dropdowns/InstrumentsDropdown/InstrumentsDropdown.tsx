@@ -1,24 +1,26 @@
 import { useListInstrumentsQuery } from '../../../generated/codegen_types';
 import { useDropdown } from '../../../hooks/useDropdown';
 import BaseDropdown, {
+  BaseDropdownElement,
   DropdownExtendProps,
 } from '../BaseDropdown/BaseDropdown';
 import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
 const InstrumentDropdown: React.FC<DropdownExtendProps> = ({ name }) => {
   const { data } = useListInstrumentsQuery();
-  const { value, setValue } = useDropdown(name);
+  const { value } = useDropdown(name);
 
   return (
     <BaseDropdown name={name}>
       {data &&
         data.instruments.map((instrument) => (
-          <FormDropdownOption
-            isActive={instrument.name === value}
-            key={instrument.id}
-            onClick={() => setValue(instrument.name)}>
-            {instrument.name}
-          </FormDropdownOption>
+          <BaseDropdownElement value={instrument.name} name={name}>
+            <FormDropdownOption
+              isActive={instrument.name === value}
+              key={instrument.id}>
+              {instrument.name}
+            </FormDropdownOption>
+          </BaseDropdownElement>
         ))}
     </BaseDropdown>
   );
