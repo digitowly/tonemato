@@ -16,12 +16,14 @@ export type dropdownConfig = {
 };
 
 export interface DropdownExtendProps {
+  isEditMode: boolean;
   name: string;
   preFilter?: string[];
 }
 
 export interface BaseDropdownProps extends WithDropdownType {
   name: string;
+  isEditMode: boolean;
   config?: dropdownConfig;
   filter?: filterOptions;
 }
@@ -31,6 +33,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   name,
   config = { initExpand: true },
   filter,
+  isEditMode,
   innerStyle,
   expandStyle,
 }) => {
@@ -42,7 +45,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
 
   useEffect(() => {
     setOpen(false);
-    if (filterRef.current) filterRef.current.value = value.name ?? '';
+    if (filterRef.current && value) filterRef.current.value = value.name ?? '';
     value && filter?.update(value.name ?? '');
 
     if (value === '' && filterRef.current) {
@@ -71,7 +74,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
                   filter?.update(e.target.value);
                 }}
               />
-              {value && (
+              {value && isEditMode && (
                 <button
                   onClick={() => {
                     filter?.reset();

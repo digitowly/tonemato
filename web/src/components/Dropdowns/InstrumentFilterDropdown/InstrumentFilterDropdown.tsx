@@ -8,6 +8,7 @@ import BaseDropdown, {
 import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
 const InstrumentFilterDropdown: React.FC<DropdownExtendProps> = ({
+  isEditMode,
   name,
   preFilter,
 }) => {
@@ -15,16 +16,21 @@ const InstrumentFilterDropdown: React.FC<DropdownExtendProps> = ({
   const { filter, value } = useDropdown(name);
 
   return (
-    <BaseDropdown filter={filter} name={name} config={{ initExpand: false }}>
+    <BaseDropdown
+      isEditMode={isEditMode}
+      filter={filter}
+      name={name}
+      config={{ initExpand: false }}>
       {data &&
         data.instruments
           .filter((instrument) => !preFilter.includes(instrument.name))
           .filter((instrument) => instrument.name.startsWith(filter.value))
           .map((instrument) => (
-            <BaseDropdownElement value={instrument} name={name}>
-              <FormDropdownOption
-                isActive={instrument === value}
-                key={instrument.id}>
+            <BaseDropdownElement
+              key={instrument.id}
+              value={instrument}
+              name={name}>
+              <FormDropdownOption isActive={instrument === value}>
                 {instrument.name}
               </FormDropdownOption>
             </BaseDropdownElement>
