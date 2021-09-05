@@ -30,7 +30,7 @@ export const FormDropdownInner = styled.div<FormDropdownStyle>`
 `;
 
 export const FromDropdownSelect = styled.div`
-  color: ${colors.highlight};
+  color: ${colors.presley};
   font-weight: bold;
 
   input {
@@ -39,13 +39,13 @@ export const FromDropdownSelect = styled.div`
     background: transparent;
     border: 0;
     border-radius: 0;
-    color: ${colors.highlight};
+    color: ${colors.presley};
     font-weight: bold;
   }
 `;
 
 export const FormDropdownExpand = styled.ul<FormDropdownStyle>`
-  background-color: ${colors.lightgrey};
+  background-color: ${colors.snow};
   border: 1px solid ${dropdownColor};
   border-radius: 0 0 0.5rem 0.5rem;
   display: ${(props) => (props.isActive ? 'block' : ' none')};
@@ -60,12 +60,12 @@ export const FormDropdownOption = styled.li<FormDropdownStyle>`
   padding: 0.15rem 0;
 
   &:hover {
-    color: ${colors.clash};
+    color: ${colors.hendrix};
   }
 
   ${(props) =>
     props.isActive &&
     css`
-      color: ${colors.highlight};
+      color: ${colors.presley};
     `}
 `;

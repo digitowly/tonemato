@@ -8,7 +8,7 @@ interface BaseButton {
 
 const BaseButton = styled.button<BaseButton>`
   align-items: center;
-  background-color: ${colors.white};
+  background-color: ${colors.snow};
   border: transparent;
   border-radius: 5rem;
   cursor: pointer;
@@ -29,6 +29,7 @@ interface BottonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   customStyle: FlattenSimpleInterpolation;
   label?: string;
   onClick?: () => void;
+  preventDefault?: boolean;
 }
 
 const Button: React.FC<BottonProps> = ({
@@ -37,10 +38,15 @@ const Button: React.FC<BottonProps> = ({
   icon,
   children,
   onClick,
+  preventDefault = false,
   ...props
 }) => {
+  const handleClick = (e) => {
+    preventDefault && e && e.preventDefault();
+    onClick();
+  };
   return (
-    <BaseButton customStyle={customStyle} onClick={onClick} {...props}>
+    <BaseButton customStyle={customStyle} onClick={handleClick} {...props}>
       {icon && icon.before && icon.before}
       {label}
       {children}

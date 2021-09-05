@@ -22,6 +22,7 @@ interface IconProps {
   width?: string;
   height?: string;
   fill?: string;
+  viewBox?: string;
 }
 
 const Icon: React.FC<IconProps> = ({

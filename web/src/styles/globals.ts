@@ -1,12 +1,12 @@
 export const colors = Object.freeze({
-  clash: '#55c79e',
-  who: '#5855c7',
-  primary: '#55c79e',
-  highlight: '#5855C7',
-  lightgrey: '#f8f8f8',
-  grey: '#cecece',
-  black: '#2b2b2b',
+  jimmy: '#B9FFF2',
+  hendrix: '#03CFAA',
+  elvis: '#E6E5FF',
+  presley: '#5855C7',
+  wolf: '#9B9B9B',
+  onyx: '#3E3E3E',
   white: 'white',
+  snow: '#FBFBFB',
 });
 
 export const heights = Object.freeze({

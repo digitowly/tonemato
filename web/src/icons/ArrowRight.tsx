@@ -3,7 +3,7 @@ import { colors } from '../styles/globals';
 import Icon, { withIcon } from '../utils/Icon';
 
 const ArrowRight: ComponentType<any> = withIcon(Icon, {
-  fill: colors.highlight,
+  fill: colors.presley,
   width: '35',
   height: '24',
   path:
