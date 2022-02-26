@@ -3,10 +3,12 @@ import {
     BaseEntity,
     Column,
     Entity,
+    JoinTable,
+    ManyToMany,
     ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Genre } from './GenreEntity';
 import { Instrument } from './InstrumentEntity';
 import { User } from './UserEntity';
 
@@ -33,10 +35,12 @@ export abstract class Post extends BaseEntity {
 @Entity('musician_posts')
 export class MusicianPost extends Post {
     @Field(() => [Instrument])
-    @OneToMany(() => Instrument, (instrument: Instrument) => instrument.name)
+    @ManyToMany(() => Instrument, { eager: true })
+    @JoinTable()
     preferredInstruments: Instrument[];
 
-    // @Field(() => [String])
-    // @Column()
-    // preferredGenres: string[];
+    @Field(() => [Genre])
+    @ManyToMany(() => Genre, { eager: true, nullable: true })
+    @JoinTable()
+    preferredGenres: Genre[];
 }

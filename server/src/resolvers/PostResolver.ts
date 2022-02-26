@@ -1,5 +1,7 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { MusicianPost, Post } from '../entities/PostEntitiy';
+import { Arg, Float, Mutation, Query, Resolver } from 'type-graphql';
+import { Genre } from '../entities/GenreEntity';
+import { Instrument } from '../entities/InstrumentEntity';
+import { MusicianPost } from '../entities/PostEntitiy';
 import { User } from '../entities/UserEntity';
 
 @Resolver()
@@ -17,15 +19,22 @@ export class PostResolver {
     async createMusicianPost(
         @Arg('title') title: string,
         @Arg('body') body: string,
-        @Arg('authorId') authorId: number
+        @Arg('authorId') authorId: number,
+        @Arg('instrumentIds', () => [Float]) instrumentIds: number[],
+        @Arg('genreIds', () => [Float]) genreIds: number[]
     ) {
         try {
             const author = await User.findOne(authorId);
             const post = new MusicianPost();
+            const instruments = await Instrument.findByIds(instrumentIds);
+            const genres = await Genre.findByIds(genreIds);
             post.title = title;
             post.body = body;
             post.author = author;
+            post.preferredGenres = genres;
+            post.preferredInstruments = instruments;
             await MusicianPost.insert(post);
+            await post.save();
             return post;
         } catch (err) {
             throw new Error(err.message);

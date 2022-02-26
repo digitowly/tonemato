@@ -2,8 +2,8 @@ import { Field, ObjectType } from 'type-graphql';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
-@Entity('instruments')
-export class Instrument extends BaseEntity {
+@Entity('genres')
+export class Genre extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
     id: number;
@@ -11,8 +11,4 @@ export class Instrument extends BaseEntity {
     @Field()
     @Column()
     name: string;
-
-    @Field()
-    @Column()
-    category: string;
 }
