@@ -19,6 +19,7 @@ export type Query = {
   authedUser?: Maybe<User>;
   backdrop: Scalars['Boolean'];
   displayPostCreator: Scalars['Boolean'];
+  genres: Array<Genre>;
   instruments: Array<Instrument>;
   musicianPosts: Array<MusicianPost>;
   secretConent: Scalars['String'];
@@ -41,6 +42,7 @@ export type MusicianPost = {
   body: Scalars['String'];
   author: User;
   preferredInstruments: Array<Instrument>;
+  preferredGenres: Array<Genre>;
 };
 
 export type Instrument = {
@@ -48,6 +50,12 @@ export type Instrument = {
   id: Scalars['Float'];
   name: Scalars['String'];
   category: Scalars['String'];
+};
+
+export type Genre = {
+  __typename?: 'Genre';
+  id: Scalars['Float'];
+  name: Scalars['String'];
 };
 
 export type Mutation = {
@@ -114,6 +122,8 @@ export type MutationUpdateInstrumentsArgs = {
 
 
 export type MutationCreateMusicianPostArgs = {
+  genreIds: Array<Scalars['Float']>;
+  instrumentIds: Array<Scalars['Float']>;
   authorId: Scalars['Float'];
   body: Scalars['String'];
   title: Scalars['String'];
@@ -150,6 +160,8 @@ export type CreateMusicianPostMutationVariables = Exact<{
   title: Scalars['String'];
   body: Scalars['String'];
   authorId: Scalars['Float'];
+  instrumentIds: Array<Scalars['Float']> | Scalars['Float'];
+  genreIds: Array<Scalars['Float']> | Scalars['Float'];
 }>;
 
 
@@ -239,6 +251,17 @@ export type AuthedUserQuery = (
   & { authedUser?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'username' | 'email' | 'id'>
+  )> }
+);
+
+export type GenresQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GenresQuery = (
+  { __typename?: 'Query' }
+  & { genres: Array<(
+    { __typename?: 'Genre' }
+    & Pick<Genre, 'id' | 'name'>
   )> }
 );
 
@@ -368,8 +391,14 @@ export type DisplayPostCreatorQueryHookResult = ReturnType<typeof useDisplayPost
 export type DisplayPostCreatorLazyQueryHookResult = ReturnType<typeof useDisplayPostCreatorLazyQuery>;
 export type DisplayPostCreatorQueryResult = Apollo.QueryResult<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>;
 export const CreateMusicianPostDocument = gql`
-    mutation CreateMusicianPost($title: String!, $body: String!, $authorId: Float!) {
-  createMusicianPost(title: $title, body: $body, authorId: $authorId) {
+    mutation CreateMusicianPost($title: String!, $body: String!, $authorId: Float!, $instrumentIds: [Float!]!, $genreIds: [Float!]!) {
+  createMusicianPost(
+    title: $title
+    body: $body
+    authorId: $authorId
+    instrumentIds: $instrumentIds
+    genreIds: $genreIds
+  ) {
     id
     title
     body
@@ -398,6 +427,8 @@ export type CreateMusicianPostMutationFn = Apollo.MutationFunction<CreateMusicia
  *      title: // value for 'title'
  *      body: // value for 'body'
  *      authorId: // value for 'authorId'
+ *      instrumentIds: // value for 'instrumentIds'
+ *      genreIds: // value for 'genreIds'
  *   },
  * });
  */
@@ -619,6 +650,41 @@ export function useAuthedUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AuthedUserQueryHookResult = ReturnType<typeof useAuthedUserQuery>;
 export type AuthedUserLazyQueryHookResult = ReturnType<typeof useAuthedUserLazyQuery>;
 export type AuthedUserQueryResult = Apollo.QueryResult<AuthedUserQuery, AuthedUserQueryVariables>;
+export const GenresDocument = gql`
+    query Genres {
+  genres {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGenresQuery__
+ *
+ * To run a query within a React component, call `useGenresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGenresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGenresQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGenresQuery(baseOptions?: Apollo.QueryHookOptions<GenresQuery, GenresQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GenresQuery, GenresQueryVariables>(GenresDocument, options);
+      }
+export function useGenresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GenresQuery, GenresQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GenresQuery, GenresQueryVariables>(GenresDocument, options);
+        }
+export type GenresQueryHookResult = ReturnType<typeof useGenresQuery>;
+export type GenresLazyQueryHookResult = ReturnType<typeof useGenresLazyQuery>;
+export type GenresQueryResult = Apollo.QueryResult<GenresQuery, GenresQueryVariables>;
 export const ListInstrumentsDocument = gql`
     query ListInstruments {
   instruments {

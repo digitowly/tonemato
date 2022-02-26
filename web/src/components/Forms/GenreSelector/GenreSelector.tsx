@@ -1,24 +1,24 @@
 import React from 'react';
-import { Instrument } from '../../../generated/codegen_types';
-import InstrumentFilterDropdown from '../../Dropdowns/InstrumentFilterDropdown/InstrumentFilterDropdown';
-import { useUpdateInstruments } from '../../../hooks/user/useUpdateInstruments';
+import { Genre } from '../../../generated/codegen_types';
+
 import DropdownSelector from '../../Dropdowns/DropdownSelector/DropdownSelector';
 import ListItem from '../../ListItem/ListItem';
 import BassGuitar from '../../../icons/instruments/BassGuitar';
+import GenreFilterDropdown from '../../Dropdowns/GenreFilterDropdown/GenreFilterDropdown';
 
-interface InstrumentSelectorProps {
-    instrumentsData: Pick<Instrument, 'name' | 'id'>[];
+interface GenreSelectorProps {
+    genreData: Pick<Genre, 'name' | 'id'>[];
     onSubmit: (ids: number[]) => Promise<void>;
 }
 
-const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
-    instrumentsData,
+const GenreSelector: React.FC<GenreSelectorProps> = ({
+    genreData,
     onSubmit,
 }) => {
     return (
         <div>
             <DropdownSelector
-                dataList={instrumentsData}
+                dataList={genreData}
                 handleSubmit={onSubmit}
                 renderDefault={formData =>
                     formData.map((inst, index) => (
@@ -28,7 +28,7 @@ const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
                     ))
                 }
                 renderEditable={(index, formData, isEditMode) => (
-                    <InstrumentFilterDropdown
+                    <GenreFilterDropdown
                         isEditMode={isEditMode}
                         name={`formData.${index}`}
                         preFilter={[...formData.map((v: any) => v.name)]}
@@ -39,4 +39,4 @@ const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
     );
 };
 
-export default InstrumentSelector;
+export default GenreSelector;

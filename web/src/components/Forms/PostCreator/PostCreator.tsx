@@ -12,20 +12,34 @@ import FormField from '../FormComponents/FormField/FormField';
 import FormDropdown from '../../Dropdowns/BaseDropdown/BaseDropdown';
 import InstrumentsDropdown from '../../Dropdowns/InstrumentsDropdown/InstrumentsDropdown';
 import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
+import InstrumentSelector from '../InstrumentSelector/InstrumentSelector';
+import GenreSelector from '../GenreSelector/GenreSelector';
 
 const PostCreator: React.FC = () => {
     const { isAuth } = useAuth();
     const { handlePostCreate } = usePostCreator();
-    const handleSubmit = ({ title, body, lookingFor, reason }) => {
-        handlePostCreate({ title, body });
+    const handleSubmit = ({
+        title,
+        body,
+        lookingFor,
+        reason,
+        preferredInstruments,
+        preferredGenres,
+    }) => {
+        handlePostCreate({
+            title,
+            body,
+            instrumentIds: preferredInstruments,
+            genreIds: preferredGenres,
+        });
         displayPostCreatorVar(false);
         console.log(title, body, lookingFor, reason);
     };
     const postCreatorRef = useRef(null);
     useBackdrop();
     useDetectOutsideClick(postCreatorRef, () => {
-        displayPostCreatorVar(false);
-        backdropVar(false);
+        // displayPostCreatorVar(false);
+        // backdropVar(false);
     });
     return (
         <>
@@ -44,12 +58,31 @@ const PostCreator: React.FC = () => {
                                 body: '',
                                 lookingFor: 'default',
                                 reason: 'jamming',
+                                preferredInstruments: [],
+                                preferredGenres: [],
                             }}
                             onSubmit={handleSubmit}>
-                            {({ values, handleChange }) => (
+                            {({ values, handleChange, setFieldValue }) => (
                                 <Form>
                                     <p>I am a ... looking for ...</p>
-                                    <InstrumentsDropdown name='lookingFor' />
+                                    <InstrumentSelector
+                                        onSubmit={async ids => {
+                                            setFieldValue(
+                                                'preferredInstruments',
+                                                ids
+                                            );
+                                        }}
+                                        instrumentsData={[]}
+                                    />
+                                    <GenreSelector
+                                        onSubmit={async ids => {
+                                            setFieldValue(
+                                                'preferredGenres',
+                                                ids
+                                            );
+                                        }}
+                                        genreData={[]}
+                                    />
                                     {/* <FormDropdown
                     name='reason'
                     options={['jamming', 'teaching', 'test 3']}
@@ -74,7 +107,7 @@ const PostCreator: React.FC = () => {
                                         onChange={handleChange}
                                     />
                                     {/* <PrimaryButton type='submit' label='submit' /> */}
-                                    <button>submit</button>
+                                    <button type='submit'>submit</button>
                                 </Form>
                             )}
                         </Formik>

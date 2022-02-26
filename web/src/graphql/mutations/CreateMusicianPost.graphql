@@ -1,0 +1,23 @@
+mutation CreateMusicianPost(
+    $title: String!
+    $body: String!
+    $authorId: Float!
+    $instrumentIds: [Float!]!
+    $genreIds: [Float!]!
+) {
+    createMusicianPost(
+        title: $title
+        body: $body
+        authorId: $authorId
+        instrumentIds: $instrumentIds
+        genreIds: $genreIds
+    ) {
+        id
+        title
+        body
+        author {
+            id
+            email
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { useListInstrumentsQuery } from '../../../generated/codegen_types';
+import { useGenresQuery } from '../../../generated/codegen_types';
 import { useDropdown } from '../../../hooks/useDropdown';
 import BaseDropdown, {
     BaseDropdownElement,
@@ -6,22 +6,19 @@ import BaseDropdown, {
 } from '../BaseDropdown/BaseDropdown';
 import { FormDropdownOption } from '../BaseDropdown/BaseDropdown.style';
 
-const InstrumentDropdown: React.FC<DropdownExtendProps> = ({
-    name,
-    isEditMode,
-}) => {
-    const { data } = useListInstrumentsQuery();
+const GenreDropdown: React.FC<DropdownExtendProps> = ({ name, isEditMode }) => {
+    const { data } = useGenresQuery();
     const { value } = useDropdown(name);
 
     return (
         <BaseDropdown isEditMode={isEditMode} name={name}>
             {data &&
-                data.instruments.map(instrument => (
-                    <BaseDropdownElement value={instrument.name} name={name}>
+                data.genres.map(genre => (
+                    <BaseDropdownElement value={genre.name} name={name}>
                         <FormDropdownOption
-                            isActive={instrument.name === value}
-                            key={instrument.id}>
-                            {instrument.name}
+                            isActive={genre.name === value}
+                            key={genre.id}>
+                            {genre.name}
                         </FormDropdownOption>
                     </BaseDropdownElement>
                 ))}
@@ -29,4 +26,4 @@ const InstrumentDropdown: React.FC<DropdownExtendProps> = ({
     );
 };
 
-export default InstrumentDropdown;
+export default GenreDropdown;

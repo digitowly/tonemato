@@ -9,11 +9,22 @@ export function usePostCreator() {
     const { userId } = useAuth();
     const [createPost] = useCreateMusicianPostMutation();
 
-    const handlePostCreate = async ({ title, body }) => {
+    const handlePostCreate = async ({
+        title,
+        body,
+        instrumentIds,
+        genreIds,
+    }) => {
         try {
             console.log('test');
             await createPost({
-                variables: { title, body, authorId: userId },
+                variables: {
+                    title,
+                    body,
+                    authorId: userId,
+                    instrumentIds,
+                    genreIds,
+                },
                 update: (cache, { data }) => {
                     const newPost = {
                         id: data.createMusicianPost.id,
