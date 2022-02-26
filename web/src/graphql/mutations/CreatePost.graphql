@@ -1,11 +1,15 @@
-mutation CreatePost($title: String!, $body: String!, $authorId: Float!) {
-  createPost(title: $title, body: $body, authorId: $authorId) {
-    id
-    title
-    body
-    author {
-      id
-      email
+mutation CreateMusicianPost(
+    $title: String!
+    $body: String!
+    $authorId: Float!
+) {
+    createMusicianPost(title: $title, body: $body, authorId: $authorId) {
+        id
+        title
+        body
+        author {
+            id
+            email
+        }
     }
-  }
 }

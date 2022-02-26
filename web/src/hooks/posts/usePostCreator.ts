@@ -1,43 +1,50 @@
 import {
-  ListPostsDocument,
-  ListPostsQuery,
-  useCreatePostMutation,
-  useListPostsQuery,
+    ListMusicianPostsDocument,
+    ListMusicianPostsQuery,
+    useCreateMusicianPostMutation,
 } from '../../generated/codegen_types';
 import { useAuth } from '../auth/useAuth';
 
 export function usePostCreator() {
-  const { userId } = useAuth();
-  const [createPost] = useCreatePostMutation();
-  const { data } = useListPostsQuery();
+    const { userId } = useAuth();
+    const [createPost] = useCreateMusicianPostMutation();
 
-  const postsData = data?.posts;
+    const handlePostCreate = async ({ title, body }) => {
+        try {
+            console.log('test');
+            await createPost({
+                variables: { title, body, authorId: userId },
+                update: (cache, { data }) => {
+                    const newPost = {
+                        id: data.createMusicianPost.id,
+                        body: data.createMusicianPost.body,
+                        title: data.createMusicianPost.title,
+                        author: data.createMusicianPost.author,
+                    };
 
-  const handlePostCreate = async ({ title, body }) => {
-    try {
-      await createPost({
-        variables: { title, body, authorId: userId },
-        update: (store, { data }) => {
-          const newPost = {
-            id: data.createPost.id,
-            body: data.createPost.body,
-            title: data.createPost.title,
-            author: data.createPost.author,
-          };
-          store.writeQuery<ListPostsQuery>({
-            query: ListPostsDocument,
-            data: {
-              posts: [...postsData, newPost],
-            },
-          });
-        },
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+                    const currentPostsQuery = cache.readQuery<ListMusicianPostsQuery>(
+                        {
+                            query: ListMusicianPostsDocument,
+                        }
+                    );
+                    const currentPosts = currentPostsQuery.musicianPosts;
 
-  return {
-    handlePostCreate,
-  };
+                    if (currentPosts && newPost) {
+                        cache.writeQuery<ListMusicianPostsQuery>({
+                            query: ListMusicianPostsDocument,
+                            data: {
+                                posts: [...currentPosts, newPost],
+                            },
+                        });
+                    }
+                },
+            });
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    return {
+        handlePostCreate,
+    };
 }

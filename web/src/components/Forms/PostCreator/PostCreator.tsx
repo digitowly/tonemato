@@ -14,72 +14,75 @@ import InstrumentsDropdown from '../../Dropdowns/InstrumentsDropdown/Instruments
 import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
 
 const PostCreator: React.FC = () => {
-  const { isAuth } = useAuth();
-  const { handlePostCreate } = usePostCreator();
-  const handleSubmit = ({ title, body, lookingFor, reason }) => {
-    // handlePostCreate({ title, body });
-    // displayPostCreatorVar(false);
-    console.log(title, body, lookingFor, reason);
-  };
-  const postCreatorRef = useRef(null);
-  useBackdrop();
-  useDetectOutsideClick(postCreatorRef, () => {
-    displayPostCreatorVar(false);
-    backdropVar(false);
-  });
-  return (
-    <>
-      {isAuth && (
-        <S.PostCreatorWrapper ref={postCreatorRef}>
-          <S.PostCreatorHeader>
-            <H2> Create Post</H2>
-            <button onClick={() => displayPostCreatorVar(false)}>close</button>
-          </S.PostCreatorHeader>
-          <FormWrapper>
-            <Formik
-              initialValues={{
-                title: '',
-                body: '',
-                lookingFor: 'default',
-                reason: 'jamming',
-              }}
-              onSubmit={handleSubmit}>
-              {({ values, handleChange }) => (
-                <Form>
-                  <p>I am a ... looking for ...</p>
-                  <InstrumentsDropdown name='lookingFor' />
-                  {/* <FormDropdown
+    const { isAuth } = useAuth();
+    const { handlePostCreate } = usePostCreator();
+    const handleSubmit = ({ title, body, lookingFor, reason }) => {
+        handlePostCreate({ title, body });
+        displayPostCreatorVar(false);
+        console.log(title, body, lookingFor, reason);
+    };
+    const postCreatorRef = useRef(null);
+    useBackdrop();
+    useDetectOutsideClick(postCreatorRef, () => {
+        displayPostCreatorVar(false);
+        backdropVar(false);
+    });
+    return (
+        <>
+            {isAuth && (
+                <S.PostCreatorWrapper ref={postCreatorRef}>
+                    <S.PostCreatorHeader>
+                        <H2> Create Post</H2>
+                        <button onClick={() => displayPostCreatorVar(false)}>
+                            close
+                        </button>
+                    </S.PostCreatorHeader>
+                    <FormWrapper>
+                        <Formik
+                            initialValues={{
+                                title: '',
+                                body: '',
+                                lookingFor: 'default',
+                                reason: 'jamming',
+                            }}
+                            onSubmit={handleSubmit}>
+                            {({ values, handleChange }) => (
+                                <Form>
+                                    <p>I am a ... looking for ...</p>
+                                    <InstrumentsDropdown name='lookingFor' />
+                                    {/* <FormDropdown
                     name='reason'
                     options={['jamming', 'teaching', 'test 3']}
                   /> */}
-                  <FormField
-                    id='post-title'
-                    type='text'
-                    name='title'
-                    value={values.title}
-                    fieldType='natural'
-                    placeholder='Catchy title...'
-                    onChange={handleChange}
-                  />
-                  <FormField
-                    id='post-body'
-                    as='textarea'
-                    type='text'
-                    name='body'
-                    value={values.body}
-                    fieldType='natural'
-                    placeholder='Write a bit about yourself and what you are looking for...'
-                    onChange={handleChange}
-                  />
-                  <PrimaryButton type='submit' label='submit' />
-                </Form>
-              )}
-            </Formik>
-          </FormWrapper>
-        </S.PostCreatorWrapper>
-      )}
-    </>
-  );
+                                    <FormField
+                                        id='post-title'
+                                        type='text'
+                                        name='title'
+                                        value={values.title}
+                                        fieldType='natural'
+                                        placeholder='Catchy title...'
+                                        onChange={handleChange}
+                                    />
+                                    <FormField
+                                        id='post-body'
+                                        as='textarea'
+                                        type='text'
+                                        name='body'
+                                        value={values.body}
+                                        fieldType='natural'
+                                        placeholder='Write a bit about yourself and what you are looking for...'
+                                        onChange={handleChange}
+                                    />
+                                    {/* <PrimaryButton type='submit' label='submit' /> */}
+                                    <button>submit</button>
+                                </Form>
+                            )}
+                        </Formik>
+                    </FormWrapper>
+                </S.PostCreatorWrapper>
+            )}
+        </>
+    );
 };
 
 export default PostCreator;

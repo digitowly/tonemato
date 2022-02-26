@@ -20,7 +20,7 @@ export type Query = {
   backdrop: Scalars['Boolean'];
   displayPostCreator: Scalars['Boolean'];
   instruments: Array<Instrument>;
-  posts: Array<Post>;
+  musicianPosts: Array<MusicianPost>;
   secretConent: Scalars['String'];
   users: Array<User>;
 };
@@ -30,16 +30,17 @@ export type User = {
   id: Scalars['Int'];
   username: Scalars['String'];
   email: Scalars['String'];
-  posts: Array<Post>;
+  posts: Array<MusicianPost>;
   instruments: Array<Instrument>;
 };
 
-export type Post = {
-  __typename?: 'Post';
+export type MusicianPost = {
+  __typename?: 'MusicianPost';
   id: Scalars['Int'];
   title: Scalars['String'];
   body: Scalars['String'];
   author: User;
+  preferredInstruments: Array<Instrument>;
 };
 
 export type Instrument = {
@@ -60,7 +61,7 @@ export type Mutation = {
   updateEmail: User;
   addInstrument: Scalars['Boolean'];
   updateInstruments: Array<Instrument>;
-  createPost: Post;
+  createMusicianPost: MusicianPost;
   deletePost: Scalars['Boolean'];
 };
 
@@ -78,6 +79,7 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   password: Scalars['String'];
+  username: Scalars['String'];
   email: Scalars['String'];
 };
 
@@ -111,7 +113,7 @@ export type MutationUpdateInstrumentsArgs = {
 };
 
 
-export type MutationCreatePostArgs = {
+export type MutationCreateMusicianPostArgs = {
   authorId: Scalars['Float'];
   body: Scalars['String'];
   title: Scalars['String'];
@@ -144,18 +146,18 @@ export type DisplayPostCreatorQuery = (
   & Pick<Query, 'displayPostCreator'>
 );
 
-export type CreatePostMutationVariables = Exact<{
+export type CreateMusicianPostMutationVariables = Exact<{
   title: Scalars['String'];
   body: Scalars['String'];
   authorId: Scalars['Float'];
 }>;
 
 
-export type CreatePostMutation = (
+export type CreateMusicianPostMutation = (
   { __typename?: 'Mutation' }
-  & { createPost: (
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'body'>
+  & { createMusicianPost: (
+    { __typename?: 'MusicianPost' }
+    & Pick<MusicianPost, 'id' | 'title' | 'body'>
     & { author: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email'>
@@ -166,6 +168,7 @@ export type CreatePostMutation = (
 export type CreateNewUserMutationVariables = Exact<{
   registerPassword: Scalars['String'];
   registerEmail: Scalars['String'];
+  registerUsername: Scalars['String'];
 }>;
 
 
@@ -250,14 +253,14 @@ export type ListInstrumentsQuery = (
   )> }
 );
 
-export type ListPostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListMusicianPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPostsQuery = (
+export type ListMusicianPostsQuery = (
   { __typename?: 'Query' }
-  & { posts: Array<(
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'body'>
+  & { musicianPosts: Array<(
+    { __typename?: 'MusicianPost' }
+    & Pick<MusicianPost, 'id' | 'title' | 'body'>
     & { author: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'username'>
@@ -364,9 +367,9 @@ export function useDisplayPostCreatorLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type DisplayPostCreatorQueryHookResult = ReturnType<typeof useDisplayPostCreatorQuery>;
 export type DisplayPostCreatorLazyQueryHookResult = ReturnType<typeof useDisplayPostCreatorLazyQuery>;
 export type DisplayPostCreatorQueryResult = Apollo.QueryResult<DisplayPostCreatorQuery, DisplayPostCreatorQueryVariables>;
-export const CreatePostDocument = gql`
-    mutation CreatePost($title: String!, $body: String!, $authorId: Float!) {
-  createPost(title: $title, body: $body, authorId: $authorId) {
+export const CreateMusicianPostDocument = gql`
+    mutation CreateMusicianPost($title: String!, $body: String!, $authorId: Float!) {
+  createMusicianPost(title: $title, body: $body, authorId: $authorId) {
     id
     title
     body
@@ -377,20 +380,20 @@ export const CreatePostDocument = gql`
   }
 }
     `;
-export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
+export type CreateMusicianPostMutationFn = Apollo.MutationFunction<CreateMusicianPostMutation, CreateMusicianPostMutationVariables>;
 
 /**
- * __useCreatePostMutation__
+ * __useCreateMusicianPostMutation__
  *
- * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateMusicianPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMusicianPostMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ * const [createMusicianPostMutation, { data, loading, error }] = useCreateMusicianPostMutation({
  *   variables: {
  *      title: // value for 'title'
  *      body: // value for 'body'
@@ -398,16 +401,20 @@ export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, C
  *   },
  * });
  */
-export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
+export function useCreateMusicianPostMutation(baseOptions?: Apollo.MutationHookOptions<CreateMusicianPostMutation, CreateMusicianPostMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, options);
+        return Apollo.useMutation<CreateMusicianPostMutation, CreateMusicianPostMutationVariables>(CreateMusicianPostDocument, options);
       }
-export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
-export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
-export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export type CreateMusicianPostMutationHookResult = ReturnType<typeof useCreateMusicianPostMutation>;
+export type CreateMusicianPostMutationResult = Apollo.MutationResult<CreateMusicianPostMutation>;
+export type CreateMusicianPostMutationOptions = Apollo.BaseMutationOptions<CreateMusicianPostMutation, CreateMusicianPostMutationVariables>;
 export const CreateNewUserDocument = gql`
-    mutation CreateNewUser($registerPassword: String!, $registerEmail: String!) {
-  register(password: $registerPassword, email: $registerEmail)
+    mutation CreateNewUser($registerPassword: String!, $registerEmail: String!, $registerUsername: String!) {
+  register(
+    password: $registerPassword
+    email: $registerEmail
+    username: $registerUsername
+  )
 }
     `;
 export type CreateNewUserMutationFn = Apollo.MutationFunction<CreateNewUserMutation, CreateNewUserMutationVariables>;
@@ -427,6 +434,7 @@ export type CreateNewUserMutationFn = Apollo.MutationFunction<CreateNewUserMutat
  *   variables: {
  *      registerPassword: // value for 'registerPassword'
  *      registerEmail: // value for 'registerEmail'
+ *      registerUsername: // value for 'registerUsername'
  *   },
  * });
  */
@@ -646,9 +654,9 @@ export function useListInstrumentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type ListInstrumentsQueryHookResult = ReturnType<typeof useListInstrumentsQuery>;
 export type ListInstrumentsLazyQueryHookResult = ReturnType<typeof useListInstrumentsLazyQuery>;
 export type ListInstrumentsQueryResult = Apollo.QueryResult<ListInstrumentsQuery, ListInstrumentsQueryVariables>;
-export const ListPostsDocument = gql`
-    query ListPosts {
-  posts {
+export const ListMusicianPostsDocument = gql`
+    query ListMusicianPosts {
+  musicianPosts {
     id
     title
     body
@@ -661,31 +669,31 @@ export const ListPostsDocument = gql`
     `;
 
 /**
- * __useListPostsQuery__
+ * __useListMusicianPostsQuery__
  *
- * To run a query within a React component, call `useListPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useListPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListMusicianPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListMusicianPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListPostsQuery({
+ * const { data, loading, error } = useListMusicianPostsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useListPostsQuery(baseOptions?: Apollo.QueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
+export function useListMusicianPostsQuery(baseOptions?: Apollo.QueryHookOptions<ListMusicianPostsQuery, ListMusicianPostsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
+        return Apollo.useQuery<ListMusicianPostsQuery, ListMusicianPostsQueryVariables>(ListMusicianPostsDocument, options);
       }
-export function useListPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListPostsQuery, ListPostsQueryVariables>) {
+export function useListMusicianPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListMusicianPostsQuery, ListMusicianPostsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, options);
+          return Apollo.useLazyQuery<ListMusicianPostsQuery, ListMusicianPostsQueryVariables>(ListMusicianPostsDocument, options);
         }
-export type ListPostsQueryHookResult = ReturnType<typeof useListPostsQuery>;
-export type ListPostsLazyQueryHookResult = ReturnType<typeof useListPostsLazyQuery>;
-export type ListPostsQueryResult = Apollo.QueryResult<ListPostsQuery, ListPostsQueryVariables>;
+export type ListMusicianPostsQueryHookResult = ReturnType<typeof useListMusicianPostsQuery>;
+export type ListMusicianPostsLazyQueryHookResult = ReturnType<typeof useListMusicianPostsLazyQuery>;
+export type ListMusicianPostsQueryResult = Apollo.QueryResult<ListMusicianPostsQuery, ListMusicianPostsQueryVariables>;
 export const ListUsersDocument = gql`
     query ListUsers {
   users {

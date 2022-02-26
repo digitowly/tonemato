@@ -1,3 +1,11 @@
-mutation CreateNewUser($registerPassword: String!, $registerEmail: String!) {
-  register(password: $registerPassword, email: $registerEmail)
+mutation CreateNewUser(
+    $registerPassword: String!
+    $registerEmail: String!
+    $registerUsername: String!
+) {
+    register(
+        password: $registerPassword
+        email: $registerEmail
+        username: $registerUsername
+    )
 }

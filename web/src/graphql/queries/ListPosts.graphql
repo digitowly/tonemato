@@ -1,11 +1,11 @@
-query ListPosts {
-  posts {
-    id
-    title
-    body
-    author {
-      id
-      username
+query ListMusicianPosts {
+    musicianPosts {
+        id
+        title
+        body
+        author {
+            id
+            username
+        }
     }
-  }
 }

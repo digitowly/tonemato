@@ -3,66 +3,66 @@ import styled, { FlattenSimpleInterpolation } from 'styled-components';
 import { colors } from '../../../styles/globals';
 
 interface BaseButton {
-  customStyle: FlattenSimpleInterpolation;
+    customStyle: FlattenSimpleInterpolation;
 }
 
 const BaseButton = styled.button<BaseButton>`
-  align-items: center;
-  background-color: ${colors.snow};
-  border: transparent;
-  border-radius: 5rem;
-  cursor: pointer;
-  display: flex;
-  font-size: 1rem;
-  padding: 0.75rem 1.25rem;
+    align-items: center;
+    background-color: ${colors.snow};
+    border: transparent;
+    border-radius: 5rem;
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
 
-  ${(props) => props.customStyle}
+    ${props => props.customStyle}
 `;
 
 interface ButtonIcon {
-  before?: ReactElement<any, any>;
-  after?: ReactElement<any, any>;
+    before?: ReactElement<any, any>;
+    after?: ReactElement<any, any>;
 }
 
 interface BottonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon?: ButtonIcon;
-  customStyle: FlattenSimpleInterpolation;
-  label?: string;
-  onClick?: () => void;
-  preventDefault?: boolean;
+    icon?: ButtonIcon;
+    customStyle: FlattenSimpleInterpolation;
+    label?: string;
+    onClick?: () => void;
+    preventDefault?: boolean;
 }
 
 const Button: React.FC<BottonProps> = ({
-  label,
-  customStyle,
-  icon,
-  children,
-  onClick,
-  preventDefault = false,
-  ...props
+    label,
+    customStyle,
+    icon,
+    children,
+    onClick,
+    preventDefault = false,
+    ...props
 }) => {
-  const handleClick = (e) => {
-    preventDefault && e && e.preventDefault();
-    onClick();
-  };
-  return (
-    <BaseButton customStyle={customStyle} onClick={handleClick} {...props}>
-      {icon && icon.before && icon.before}
-      {label}
-      {children}
-      {icon && icon.after && icon.after}
-    </BaseButton>
-  );
+    const handleClick = e => {
+        if (preventDefault && e) e.preventDefault();
+        onClick && onClick();
+    };
+    return (
+        <BaseButton customStyle={customStyle} onClick={handleClick} {...props}>
+            {icon && icon.before && icon.before}
+            {label}
+            {children}
+            {icon && icon.after && icon.after}
+        </BaseButton>
+    );
 };
 
 export default Button;
 
 export const withButton = (
-  Component: ComponentType,
-  customStyle: FlattenSimpleInterpolation,
-  icon?: ButtonIcon
+    Component: ComponentType,
+    customStyle: FlattenSimpleInterpolation,
+    icon?: ButtonIcon
 ) => {
-  return (props) => {
-    return <Component {...props} customStyle={customStyle} icon={icon} />;
-  };
+    return props => {
+        return <Component {...props} customStyle={customStyle} icon={icon} />;
+    };
 };
