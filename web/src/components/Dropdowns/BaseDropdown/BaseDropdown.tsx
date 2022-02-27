@@ -1,4 +1,4 @@
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlattenSimpleInterpolation } from 'styled-components';
 import { useDetectOutsideClick } from '../../../hooks/useDetectOutsideClick';
@@ -127,8 +127,13 @@ export const BaseDropdownElement: React.FC<BaseDropdownElementProps> = ({
     children,
 }) => {
     const { setValue } = useDropdown(name);
+
     return (
-        <div data-testid='basedropdown-element' onClick={() => setValue(value)}>
+        <div
+            data-testid='basedropdown-element'
+            onClick={() => {
+                setValue(value);
+            }}>
             {children}
         </div>
     );

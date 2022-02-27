@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { Colors } from '../../styles/Colors';
 import { colors } from '../../styles/globals';
 import { Spacing } from '../../styles/Spacing';
 
@@ -15,11 +16,23 @@ input {
     border-radius: .5rem;
 }
 
+textarea {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
 button {
     background-color: transparent;
     border: none;
     text-align: left;
 }
+
+form {
+        input,
+        select {
+            color: ${Colors.onyx};
+        }
+    }
 
 `;
 

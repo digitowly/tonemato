@@ -8,18 +8,16 @@ import GenreFilterDropdown from '../../Dropdowns/GenreFilterDropdown/GenreFilter
 
 interface GenreSelectorProps {
     genreData: Pick<Genre, 'name' | 'id'>[];
-    onSubmit: (ids: number[]) => Promise<void>;
+    name: string;
 }
 
-const GenreSelector: React.FC<GenreSelectorProps> = ({
-    genreData,
-    onSubmit,
-}) => {
+const GenreSelector: React.FC<GenreSelectorProps> = ({ genreData, name }) => {
     return (
         <div>
             <DropdownSelector
+                name={name}
                 dataList={genreData}
-                handleSubmit={onSubmit}
+                isEditMode={true}
                 renderDefault={formData =>
                     formData.map((inst, index) => (
                         <ListItem Before={BassGuitar} key={index}>
@@ -30,7 +28,7 @@ const GenreSelector: React.FC<GenreSelectorProps> = ({
                 renderEditable={(index, formData, isEditMode) => (
                     <GenreFilterDropdown
                         isEditMode={isEditMode}
-                        name={`formData.${index}`}
+                        name={`${name}.${index}`}
                         preFilter={[...formData.map((v: any) => v.name)]}
                     />
                 )}

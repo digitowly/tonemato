@@ -3,11 +3,14 @@ import { Colors } from '../../styles/Colors';
 import Tag from '../Tag/Tag';
 import {
     PostTileAuthorName,
+    PostTileDate,
+    PostTileFooter,
     PostTileLink,
     PostTileLocation,
     PostTileLocationDot,
     PostTileTagsWrapper,
     PostTileTitle,
+    PostTileTitleSection,
     PostTileWrapper,
 } from './PostTile.style';
 
@@ -42,12 +45,10 @@ const PostTile: React.FC<PostTileProps> = ({ postTileData }) => {
     return (
         <PostTileLink>
             <PostTileWrapper>
-                <Tag backgroundColor={Colors.white} color={Colors.onyx}>
-                    <PostTileLocation>
-                        <PostTileLocationDot />
-                        <p>Köln</p>
-                    </PostTileLocation>
-                </Tag>
+                <PostTileTitleSection>
+                    <PostTileAuthorName>{author.username}</PostTileAuthorName>
+                    <PostTileTitle>{title}</PostTileTitle>
+                </PostTileTitleSection>
                 <div>
                     <PostTileTagsWrapper>
                         {preferredInstruments.map(instrument => (
@@ -71,8 +72,13 @@ const PostTile: React.FC<PostTileProps> = ({ postTileData }) => {
                     </PostTileTagsWrapper>
                 </div>
             </PostTileWrapper>
-            <PostTileAuthorName>{author.username}</PostTileAuthorName>
-            <PostTileTitle>{title}</PostTileTitle>
+            <PostTileFooter>
+                <PostTileLocation>
+                    <PostTileLocationDot />
+                    <small>Köln</small>
+                </PostTileLocation>
+                <PostTileDate>vor 2 Tagen</PostTileDate>
+            </PostTileFooter>
         </PostTileLink>
     );
 };
