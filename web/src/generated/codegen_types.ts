@@ -284,7 +284,13 @@ export type ListMusicianPostsQuery = (
   & { musicianPosts: Array<(
     { __typename?: 'MusicianPost' }
     & Pick<MusicianPost, 'id' | 'title' | 'body'>
-    & { author: (
+    & { preferredInstruments: Array<(
+      { __typename?: 'Instrument' }
+      & Pick<Instrument, 'id' | 'name'>
+    )>, preferredGenres: Array<(
+      { __typename?: 'Genre' }
+      & Pick<Genre, 'id' | 'name'>
+    )>, author: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'username'>
     ) }
@@ -726,6 +732,14 @@ export const ListMusicianPostsDocument = gql`
     id
     title
     body
+    preferredInstruments {
+      id
+      name
+    }
+    preferredGenres {
+      id
+      name
+    }
     author {
       id
       username

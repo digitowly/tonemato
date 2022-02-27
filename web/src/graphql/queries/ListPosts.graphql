@@ -3,6 +3,14 @@ query ListMusicianPosts {
         id
         title
         body
+        preferredInstruments {
+            id
+            name
+        }
+        preferredGenres {
+            id
+            name
+        }
         author {
             id
             username
