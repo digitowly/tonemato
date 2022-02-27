@@ -14,6 +14,19 @@ export class PostResolver {
         });
     }
 
+    // SINGLE POST
+    @Query(() => MusicianPost)
+    async musicianPost(@Arg('postId') postId: string) {
+        try {
+            const post = await MusicianPost.findOne(postId, {
+                relations: ['author', 'author.instruments'],
+            });
+            return post;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     //CREATE POST
     @Mutation(() => MusicianPost)
     async createMusicianPost(
