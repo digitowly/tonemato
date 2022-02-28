@@ -37,7 +37,7 @@ export class UserResolver {
     //USERS
     @Query(() => [User])
     users() {
-        return User.find({ relations: ['musician_posts', 'instruments'] });
+        return User.find({ relations: ['posts', 'instruments'] });
     }
 
     //AUTHED USER
