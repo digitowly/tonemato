@@ -1,3 +1,4 @@
+import { Formik } from 'formik';
 import React, { useState } from 'react';
 import InstrumentSelector from '../components/Forms/InstrumentSelector/InstrumentSelector';
 import Layout from '../components/Layout/Layout';
@@ -43,10 +44,34 @@ const MePage: React.FC = () => {
                                 <li key={instrument.id}>{instrument.name}</li>
                             ))}
                         </ul>
-                        <InstrumentSelector
-                            onSubmit={handleUpdateInstruments}
-                            instrumentsData={data.authedUser.instruments}
-                        />
+
+                        <Formik
+                            initialValues={{
+                                instruments: data.authedUser.instruments,
+                            }}
+                            onSubmit={() => console.log('test')}>
+                            {({ values }) => (
+                                <div>
+                                    <InstrumentSelector
+                                        name='instruments'
+                                        instrumentsData={
+                                            data.authedUser.instruments
+                                        }
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            const instrumentIds = values.instruments.map(
+                                                instrument => instrument.id
+                                            );
+                                            handleUpdateInstruments(
+                                                instrumentIds
+                                            );
+                                        }}>
+                                        update instruments
+                                    </button>
+                                </div>
+                            )}
+                        </Formik>
                     </div>
                 </div>
             )}
