@@ -12,6 +12,10 @@ import InstrumentSelector from '../InstrumentSelector/InstrumentSelector';
 import GenreSelector from '../GenreSelector/GenreSelector';
 import LoginPromptModal from '../../Modal/Presets/LoginPromptModal/LoginPromptModal';
 import Modal from '../../Modal/Modal';
+import { Colors } from '../../../styles/Colors';
+import PrimaryButton from '../../Buttons/PrimaryButton/PrimaryButton';
+import CrossIcon from '../../../icons/ui/CrossIcon';
+import CrossButton from '../../Buttons/CloseButton/CrossButton';
 
 const PostCreator: React.FC = () => {
     const { isAuth } = useAuth();
@@ -44,10 +48,10 @@ const PostCreator: React.FC = () => {
             {isAuth ? (
                 <Modal>
                     <S.PostCreatorHeader>
-                        <H2> Create Post</H2>
-                        <button onClick={() => displayPostCreatorVar(false)}>
-                            close
-                        </button>
+                        <H2 color={Colors.hendrix}> Create Post</H2>
+                        <CrossButton
+                            onClick={() => displayPostCreatorVar(false)}
+                        />
                     </S.PostCreatorHeader>
                     <Formik
                         initialValues={{
@@ -65,7 +69,7 @@ const PostCreator: React.FC = () => {
                                     <S.PostCreatorFormSection>
                                         <S.PostCreatorFormElement>
                                             <S.PostCreatorFormElementLabel>
-                                                <div>I play</div>
+                                                <p>I play</p>
                                             </S.PostCreatorFormElementLabel>
                                             <InstrumentSelector
                                                 name='preferredInstruments'
@@ -106,8 +110,12 @@ const PostCreator: React.FC = () => {
                                         />
                                     </S.PostCreatorFormSection>
                                 </S.PostCreatorFormWrapper>
-                                {/* <PrimaryButton type='submit' label='submit' /> */}
-                                <button type='submit'>submit</button>
+                                <S.PostCreatorFooter>
+                                    <PrimaryButton
+                                        type='submit'
+                                        label='create'
+                                    />
+                                </S.PostCreatorFooter>
                             </Form>
                         )}
                     </Formik>

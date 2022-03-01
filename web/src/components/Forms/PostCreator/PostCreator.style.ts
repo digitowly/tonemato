@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Colors } from '../../../styles/Colors';
 import { colors, depth } from '../../../styles/globals';
 
 export const PostCreatorWrapper = styled.div`
@@ -18,6 +19,11 @@ export const PostCreatorHeader = styled.div`
     justify-content: space-between;
 `;
 
+export const PostCreatorFooter = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
 export const PostCreatorFormWrapper = styled.div`
     display: flex;
     justify-content: space-between;
@@ -25,6 +31,7 @@ export const PostCreatorFormWrapper = styled.div`
 
 export const PostCreatorFormSection = styled.div`
     width: 50%;
+    padding-top: 3rem;
 `;
 
 export const PostCreatorFormElement = styled.div`
@@ -35,4 +42,6 @@ export const PostCreatorFormElement = styled.div`
 export const PostCreatorFormElementLabel = styled.div`
     width: 100px;
     padding-top: 5px;
+    color: ${Colors.presley};
+    font-weight: bold;
 `;

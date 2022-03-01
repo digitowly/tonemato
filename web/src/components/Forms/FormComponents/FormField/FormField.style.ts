@@ -51,6 +51,7 @@ export const FormFieldNatWrapper = styled.div<NaturalInput>`
     input,
     textarea {
         font-size: 1.5rem;
+        font-weight: bold;
         outline: 0;
         border: 0;
         margin-left: 0.5rem;
@@ -64,10 +65,16 @@ export const FormFieldNatWrapper = styled.div<NaturalInput>`
 
     textarea {
         font-size: 1rem;
-        height: 150px;
+        height: 250px;
+        font-weight: normal;
         resize: none;
         background-color: ${Colors.white};
         padding: 1rem;
+        color: ${Colors.onyx};
         border-radius: 0.5rem;
+
+        &::placeholder {
+            font-weight: normal;
+        }
     }
 `;
