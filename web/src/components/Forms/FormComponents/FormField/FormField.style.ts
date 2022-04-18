@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Colors } from '../../../../styles/Colors';
-import { heights, spaceing } from '../../../../styles/globals';
+import { heights } from '../../../../styles/globals';
 
 // LABELED
 export const FormFieldLabWrapper = styled.div`
@@ -27,6 +27,7 @@ export const FormFieldLabLabelWrapper = styled.div`
     display: flex;
     justify-content: flex-start !important;
     align-self: start;
+    background-color: transparent;
 `;
 
 export const FormFieldLabLabelName = styled.div<{ isActive: boolean }>`
@@ -56,7 +57,7 @@ export const FormFieldNatWrapper = styled.div<NaturalInput>`
         border: 0;
         margin-left: 0.5rem;
         width: 100%;
-        background-color: rgba(0, 0, 0, 0);
+        background-color: transparent;
 
         &::placeholder {
             color: ${Colors.wolf};

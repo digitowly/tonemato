@@ -13,15 +13,12 @@ const PostsList: React.FC = () => {
                 <H1>Suche Band</H1>
             </div>
             <PostListWrapper>
-                {data?.musicianPosts.map(post => {
-                    console.log(post);
-                    return (
-                        <PostTile
-                            key={post.id}
-                            postTileData={post as PostTileType}
-                        />
-                    );
-                })}
+                {data?.musicianPosts.map(post => (
+                    <PostTile
+                        key={post.id}
+                        postTileData={post as PostTileType}
+                    />
+                ))}
             </PostListWrapper>
         </div>
     );

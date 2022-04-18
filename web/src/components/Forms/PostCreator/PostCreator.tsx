@@ -46,13 +46,10 @@ const PostCreator: React.FC = () => {
     return (
         <>
             {isAuth ? (
-                <Modal>
-                    <S.PostCreatorHeader>
-                        <H2 color={Colors.hendrix}> Create Post</H2>
-                        <CrossButton
-                            onClick={() => displayPostCreatorVar(false)}
-                        />
-                    </S.PostCreatorHeader>
+                <Modal
+                    title='Create Post'
+                    titleColor={Colors.hendrix}
+                    closeModal={() => displayPostCreatorVar(false)}>
                     <Formik
                         initialValues={{
                             title: '',

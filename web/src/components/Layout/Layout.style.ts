@@ -14,6 +14,7 @@ input {
     padding: .25rem .5rem;
     font-size: 1rem;
     border-radius: .5rem;
+    background-color: transparent;
 }
 
 textarea {

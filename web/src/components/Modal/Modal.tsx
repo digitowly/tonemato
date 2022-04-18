@@ -1,9 +1,29 @@
-import { ModalOuter, ModalWrapper } from './Modal.style';
+import { Colors } from '../../styles/Colors';
+import CrossButton from '../Buttons/CloseButton/CrossButton';
+import { H2 } from '../Text/Headline';
+import { ModalOuter, ModalTopRow, ModalWrapper } from './Modal.style';
 
-const Modal: React.FC = ({ children }) => {
+interface ModalProps {
+    closeModal?: () => void;
+    title?: string;
+    titleColor?: Colors;
+}
+
+const Modal: React.FC<ModalProps> = ({
+    children,
+    title,
+    titleColor,
+    closeModal,
+}) => {
     return (
         <ModalOuter>
-            <ModalWrapper>{children}</ModalWrapper>
+            <ModalWrapper>
+                <ModalTopRow>
+                    <H2 color={titleColor}>{title}</H2>
+                    <CrossButton onClick={() => closeModal()} />
+                </ModalTopRow>
+                {children}
+            </ModalWrapper>
         </ModalOuter>
     );
 };

@@ -8,6 +8,12 @@ export const ModalWrapper = styled.div`
     border-radius: 0.5rem;
 `;
 
+export const ModalTopRow = styled.div`
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: ${Spacing.xs};
+`;
+
 export const ModalOuter = styled.div`
     position: absolute;
     z-index: 100;

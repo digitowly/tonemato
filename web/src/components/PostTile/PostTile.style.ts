@@ -4,13 +4,13 @@ import { Colors } from '../../styles/Colors';
 export const PostTileWrapper = styled.div`
     background-color: ${Colors.snow};
     border: 3px solid ${Colors.snow};
-    height: 224px;
-    width: 300px;
     border-radius: 1rem;
     padding: 1.25rem;
     transition: all 0.25s ease-in-out;
     margin-bottom: 0.35rem;
     display: flex;
+    height: 100%;
+    width: 100%;
     justify-content: space-between;
     flex-direction: column;
     background: linear-gradient(
@@ -25,8 +25,9 @@ export const PostTileWrapper = styled.div`
 
 export const PostTileLink = styled.a`
     cursor: pointer;
-    margin-right: 2.75rem;
     margin-bottom: 2.75rem;
+    width: 100%;
+    height: 224px;
 
     &:hover ${PostTileWrapper} {
         border: 3px solid ${Colors.jimmy};
@@ -61,8 +62,8 @@ export const PostTileTitleSection = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 50%;
 `;
+
 export const PostTileFooter = styled.div`
     display: flex;
     justify-content: space-between;

@@ -1,6 +1,5 @@
 import { Formik, Form, Field } from 'formik';
 import { useEffect } from 'react';
-import { FormWrapper } from '../FormComponents/FormWrapper.style';
 import {
     useCreateNewUserMutation,
     useListUsersQuery,
@@ -15,7 +14,7 @@ const RegisterForm: React.FC = () => {
     }, [data]);
 
     return (
-        <FormWrapper>
+        <>
             <h1>Register</h1>
             <Formik
                 initialValues={{ password: '', email: '', username: '' }}
@@ -55,7 +54,7 @@ const RegisterForm: React.FC = () => {
                     </Form>
                 )}
             </Formik>
-        </FormWrapper>
+        </>
     );
 };
 

@@ -26,12 +26,21 @@ export const PostCreatorFooter = styled.div`
 
 export const PostCreatorFormWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+
+    @media (min-width: 900px) {
+        flex-direction: row;
+    }
 `;
 
 export const PostCreatorFormSection = styled.div`
-    width: 50%;
+    width: 100%;
     padding-top: 3rem;
+
+    @media (min-width: 900px) {
+        width: 50%;
+    }
 `;
 
 export const PostCreatorFormElement = styled.div`

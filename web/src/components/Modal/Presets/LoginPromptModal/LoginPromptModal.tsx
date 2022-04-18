@@ -4,8 +4,7 @@ import Modal from '../../Modal';
 
 const LoginPromptModal: React.FC = () => {
     return (
-        <Modal>
-            <button onClick={() => displayPostCreatorVar(false)}>close</button>
+        <Modal title='Login' closeModal={() => displayPostCreatorVar(false)}>
             <LoginForm />
         </Modal>
     );

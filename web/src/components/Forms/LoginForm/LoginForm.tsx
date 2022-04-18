@@ -7,39 +7,42 @@ import { useRouter } from 'next/router';
 import { useLogin } from '../../../hooks/auth/useLogin';
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
-  const { handleLogin, isLoading } = useLogin();
+    const router = useRouter();
+    const { handleLogin, isLoading, errorMessage } = useLogin();
 
-  return (
-    <Formik initialValues={{ email: '', password: '' }} onSubmit={handleLogin}>
-      {({ values, handleChange }) => (
-        <Form>
-          <FormField
-            id='login-email'
-            name='email'
-            type='text'
-            value={values.email}
-            onChange={handleChange}
-            fieldType='labeled'
-          />
-          <FormField
-            id='login-password'
-            name='password'
-            type='password'
-            value={values.password}
-            onChange={handleChange}
-            fieldType='labeled'
-          />
-          <PrimaryButton label='login' type='submit' />
-          <LinkButton
-            label='sign up'
-            onClick={() => router.push('/register')}
-          />
-          {isLoading && <p>loading</p>}
-        </Form>
-      )}
-    </Formik>
-  );
+    return (
+        <Formik
+            initialValues={{ email: '', password: '' }}
+            onSubmit={handleLogin}>
+            {({ values, handleChange }) => (
+                <Form>
+                    <FormField
+                        id='login-email'
+                        name='email'
+                        type='text'
+                        value={values.email}
+                        onChange={handleChange}
+                        fieldType='labeled'
+                    />
+                    <FormField
+                        id='login-password'
+                        name='password'
+                        type='password'
+                        value={values.password}
+                        onChange={handleChange}
+                        fieldType='labeled'
+                    />
+                    <PrimaryButton label='login' type='submit' />
+                    <LinkButton
+                        label='sign up'
+                        onClick={() => router.push('/register')}
+                    />
+                    {errorMessage && <p>{errorMessage}</p>}
+                    {isLoading && <p>loading</p>}
+                </Form>
+            )}
+        </Formik>
+    );
 };
 
 export default LoginForm;
