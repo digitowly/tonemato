@@ -5,14 +5,14 @@ import { GlobalStyle } from './Layout.style';
 import * as S from './Layout.style';
 
 const Layout: React.FC = ({ children }) => {
-  return (
-    <>
-      <GlobalStyle />
-      <Backdrop />
-      <Header />
-      <S.LayoutWrapper>{children}</S.LayoutWrapper>
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <Backdrop />
+            <Header />
+            <S.LayoutWrapper>{children}</S.LayoutWrapper>
+        </>
+    );
 };
 
 export default Layout;
