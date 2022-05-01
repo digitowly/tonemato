@@ -4,7 +4,6 @@ export const PostListWrapper = styled.div`
     align-items: center;
     display: grid;
     width: 100%;
-    margin-top: 2rem;
     grid-gap: 10px;
 
     @media (min-width: 500px) {

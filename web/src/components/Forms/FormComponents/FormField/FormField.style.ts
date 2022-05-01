@@ -43,21 +43,24 @@ export const FormFieldLabLabelName = styled.div<{ isActive: boolean }>`
 // NATURAL
 
 type NaturalInput = {
+    isLarge?: boolean;
+    backgroundColor?: Colors;
     type: string;
 };
 
 export const FormFieldNatWrapper = styled.div<NaturalInput>`
-    margin-bottom: 1rem;
-
     input,
     textarea {
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-size: ${({ isLarge }) => (isLarge ? '1.5rem' : '1rem')};
+        font-weight: ${({ isLarge }) => (isLarge ? 'bold' : 'regular')};
         outline: 0;
         border: 0;
-        margin-left: 0.5rem;
+        margin-left: ${({ isLarge }) => (isLarge ? '0.5rem' : '0rem')};
         width: 100%;
-        background-color: transparent;
+        background-color: ${({ backgroundColor }) =>
+            backgroundColor ?? 'transparent'};
+        padding: ${({ backgroundColor }) =>
+            backgroundColor ? `0.25rem 0.75rem` : '0'};
 
         &::placeholder {
             color: ${Colors.wolf};

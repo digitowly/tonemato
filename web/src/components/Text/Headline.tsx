@@ -9,6 +9,7 @@ export const H1 = styled.h1<Text>`
     font-size: 1.75rem;
     font-weight: 700;
     color: ${props => (props.color ? props.color : colors.onyx)};
+    padding-bottom: 2.5rem;
 `;
 
 export const H2 = styled.h2<Text>`

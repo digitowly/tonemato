@@ -21,9 +21,15 @@ export type Query = {
   displayPostCreator: Scalars['Boolean'];
   genres: Array<Genre>;
   instruments: Array<Instrument>;
+  musicianPost: MusicianPost;
   musicianPosts: Array<MusicianPost>;
   secretConent: Scalars['String'];
   users: Array<User>;
+};
+
+
+export type QueryMusicianPostArgs = {
+  postId: Scalars['String'];
 };
 
 export type User = {
@@ -31,7 +37,7 @@ export type User = {
   id: Scalars['Int'];
   username: Scalars['String'];
   email: Scalars['String'];
-  posts: Array<MusicianPost>;
+  posts?: Maybe<Array<MusicianPost>>;
   instruments: Array<Instrument>;
 };
 
@@ -327,7 +333,17 @@ export type UserProfileQuery = (
     & { instruments: Array<(
       { __typename?: 'Instrument' }
       & Pick<Instrument, 'id' | 'name'>
-    )> }
+    )>, posts?: Maybe<Array<(
+      { __typename?: 'MusicianPost' }
+      & Pick<MusicianPost, 'id' | 'title' | 'body'>
+      & { preferredInstruments: Array<(
+        { __typename?: 'Instrument' }
+        & Pick<Instrument, 'id' | 'name'>
+      )>, preferredGenres: Array<(
+        { __typename?: 'Genre' }
+        & Pick<Genre, 'id' | 'name'>
+      )> }
+    )>> }
   )> }
 );
 
@@ -850,6 +866,19 @@ export const UserProfileDocument = gql`
     instruments {
       id
       name
+    }
+    posts {
+      id
+      title
+      body
+      preferredInstruments {
+        id
+        name
+      }
+      preferredGenres {
+        id
+        name
+      }
     }
   }
 }

@@ -17,7 +17,7 @@ import {
 export type PostTileType = {
     title: string;
     body: string;
-    author: {
+    author?: {
         username: string;
         id: number;
     };
@@ -46,7 +46,7 @@ const PostTile: React.FC<PostTileProps> = ({ postTileData }) => {
         <PostTileLink>
             <PostTileWrapper>
                 <PostTileTitleSection>
-                    <PostTileAuthorName>{author.username}</PostTileAuthorName>
+                    <PostTileAuthorName>{author?.username}</PostTileAuthorName>
                     <PostTileTitle>{title}</PostTileTitle>
                 </PostTileTitleSection>
                 <div>

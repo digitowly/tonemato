@@ -1,44 +1,47 @@
 import { Field } from 'formik';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Colors } from '../../../../styles/Colors';
 import * as S from './FormField.style';
 
 type InputType = 'text' | 'password';
 type FieldType = 'natural' | 'labeled';
 
 interface FormFieldProps {
-    id: string;
-    value: string;
+    id?: string;
+    isLarge?: boolean;
     name: string;
     type: InputType;
     fieldType: FieldType;
     placeholder?: string;
+    backgroundColor?: Colors;
     as?: string;
-    onChange: (e: Event) => void;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
     id,
-    value,
     name,
     type = 'text',
     as = 'input',
-    onChange,
     placeholder,
+    isLarge = false,
+    backgroundColor,
     fieldType,
 }) => {
     const [isActive, setActive] = useState(false);
-    const handleBlur = () => !value && setActive(false);
-    const FieldElement = (
-        <Field
-            as={as}
-            id={id}
-            type={type}
-            value={value}
-            name={name}
-            placeholder={placeholder}
-            onChange={onChange}
-            onFocus={() => setActive(true)}
-            onBlur={handleBlur}></Field>
+    const handleBlur = () => setActive(false);
+    const FieldElement = useMemo(
+        () => (
+            <Field
+                as={as}
+                id={id}
+                type={type}
+                name={name}
+                placeholder={placeholder}
+                onFocus={() => setActive(true)}
+                onBlur={handleBlur}
+            />
+        ),
+        [as, id, type, name, placeholder]
     );
 
     if (fieldType === 'labeled') {
@@ -58,7 +61,10 @@ const FormField: React.FC<FormFieldProps> = ({
 
     if (fieldType === 'natural') {
         return (
-            <S.FormFieldNatWrapper type={as}>
+            <S.FormFieldNatWrapper
+                type={as}
+                isLarge={isLarge}
+                backgroundColor={backgroundColor}>
                 {FieldElement}
             </S.FormFieldNatWrapper>
         );

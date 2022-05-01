@@ -14,33 +14,27 @@ const LoginForm: React.FC = () => {
         <Formik
             initialValues={{ email: '', password: '' }}
             onSubmit={handleLogin}>
-            {({ values, handleChange }) => (
-                <Form>
-                    <FormField
-                        id='login-email'
-                        name='email'
-                        type='text'
-                        value={values.email}
-                        onChange={handleChange}
-                        fieldType='labeled'
-                    />
-                    <FormField
-                        id='login-password'
-                        name='password'
-                        type='password'
-                        value={values.password}
-                        onChange={handleChange}
-                        fieldType='labeled'
-                    />
-                    <PrimaryButton label='login' type='submit' />
-                    <LinkButton
-                        label='sign up'
-                        onClick={() => router.push('/register')}
-                    />
-                    {errorMessage && <p>{errorMessage}</p>}
-                    {isLoading && <p>loading</p>}
-                </Form>
-            )}
+            <Form>
+                <FormField
+                    id='login-email'
+                    name='email'
+                    type='text'
+                    fieldType='labeled'
+                />
+                <FormField
+                    id='login-password'
+                    name='password'
+                    type='password'
+                    fieldType='labeled'
+                />
+                <PrimaryButton label='login' type='submit' />
+                <LinkButton
+                    label='sign up'
+                    onClick={() => router.push('/register')}
+                />
+                {errorMessage && <p>{errorMessage}</p>}
+                {isLoading && <p>loading</p>}
+            </Form>
         </Formik>
     );
 };

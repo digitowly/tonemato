@@ -7,17 +7,19 @@ import ListItem from '../../ListItem/ListItem';
 interface InstrumentSelectorProps {
     instrumentsData: Pick<Instrument, 'name' | 'id'>[];
     name: string;
+    isEditMode: boolean;
 }
 
 const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
     instrumentsData,
     name,
+    isEditMode,
 }) => {
     return (
         <div>
             <DropdownSelector
                 name={name}
-                isEditMode={true}
+                isEditMode={isEditMode}
                 dataList={instrumentsData}
                 renderDefault={formData =>
                     formData.map((inst, index) => (
@@ -26,7 +28,7 @@ const InstrumentSelector: React.FC<InstrumentSelectorProps> = ({
                 }
                 renderEditable={(index, formData, isEditMode) => (
                     <InstrumentFilterDropdown
-                        isEditMode={true}
+                        isEditMode={isEditMode}
                         name={`${name}.${index}`}
                         preFilter={[...formData.map((v: any) => v.name)]}
                     />
