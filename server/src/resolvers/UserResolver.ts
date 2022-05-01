@@ -37,7 +37,9 @@ export class UserResolver {
     //USERS
     @Query(() => [User])
     users() {
-        return User.find({ relations: ['posts', 'instruments'] });
+        return User.find({
+            relations: ['instruments', 'posts'],
+        });
     }
 
     //AUTHED USER
@@ -53,7 +55,9 @@ export class UserResolver {
         try {
             const token = authorization.split(' ')[1];
             const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET);
-            return User.findOne(payload.userId, { relations: ['instruments'] });
+            return User.findOne(payload.userId, {
+                relations: ['instruments', 'posts'],
+            });
         } catch (err) {
             console.log(err.message);
             return null;

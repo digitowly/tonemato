@@ -33,8 +33,11 @@ export class User extends BaseEntity {
     @Column('int', { default: 0 })
     tokenVersion: number;
 
-    @Field(() => [MusicianPost])
-    @OneToMany(() => MusicianPost, (post: MusicianPost) => post.author)
+    @Field(() => [MusicianPost], { nullable: true })
+    @OneToMany(() => MusicianPost, (post: MusicianPost) => post.author, {
+        nullable: true,
+        // eager: true,
+    })
     posts: MusicianPost[];
 
     @Field(() => [Instrument])

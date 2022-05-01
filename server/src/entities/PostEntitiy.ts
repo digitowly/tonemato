@@ -13,6 +13,7 @@ import { Instrument } from './InstrumentEntity';
 import { User } from './UserEntity';
 
 @ObjectType()
+@Entity('posts')
 export abstract class Post extends BaseEntity {
     @Field(() => Int)
     @PrimaryGeneratedColumn()
